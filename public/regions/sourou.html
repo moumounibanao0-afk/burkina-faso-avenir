@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sourou - Burkina Terres d'Avenir</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="../css/style.css" rel="stylesheet">
+  <style>
+    body { font-family: 'Source Sans 3', sans-serif; }
+    h1,h2,h3 { font-family: 'Playfair Display', serif; }
+    .flag-stripe { height:6px; background: linear-gradient(90deg,#EF2B2D 50%,#009A00 50%); }
+    .hero-sourou {
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.75)),
+        url('https://images.unsplash.com/photo-1446329813274-7c9036bd9a1f?w=1400&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+    .img-card { position:relative; overflow:hidden; border-radius:16px; }
+    .img-card img { width:100%; height:240px; object-fit:cover; transition:transform 0.6s ease; display:block; }
+    .img-card:hover img { transform:scale(1.07); }
+    .overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,transparent 55%); }
+    .caption { position:absolute; bottom:0; left:0; right:0; padding:16px; color:white; }
+    .info-card { transition:all 0.35s ease; border-left:5px solid #00A1D6; }
+    .info-card:hover { transform:translateY(-5px); box-shadow:0 20px 40px rgba(0,161,214,0.15); }
+    .prog-bar { height:10px; border-radius:999px; background:#e5e7eb; overflow:hidden; }
+    .prog-fill { height:100%; border-radius:999px; background:linear-gradient(90deg,#00A1D6,#008751); width:0; transition:width 1.6s ease; }
+  </style>
+</head>
+<body class="bg-[#F5F0E8]">
+
+  <div class="flag-stripe fixed top-0 w-full z-[60]"></div>
+
+  <!-- NAVBAR -->
+  <nav class="bg-white shadow-md fixed w-full z-50 top-[6px]">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+      <a href="../index.html" class="flex items-center gap-3">
+        <span class="text-2xl w-10 h-7 rounded flex items-center justify-center shadow-sm bg-white">🇧🇫</span>
+        <div>
+          <p class="text-lg font-bold text-[#008751] leading-tight" style="font-family:'Playfair Display',serif">Burkina Terres d'Avenir</p>
+          <p class="text-xs text-gray-400 leading-tight">Valoriser nos 17 Régions</p>
+        </div>
+      </a>
+      <div class="hidden md:flex gap-6 text-sm font-semibold">
+        <a href="../index.html"      class="text-gray-600 hover:text-[#008751] transition">Accueil</a>
+        <a href="../regions.html"    class="text-[#008751] border-b-2 border-[#008751]">Les 17 Régions</a>
+        <a href="../potentiels.html" class="text-gray-600 hover:text-[#008751] transition">Potentiels</a>
+        <a href="../culture.html"    class="text-gray-600 hover:text-[#008751] transition">Culture</a>
+      </div>
+      <a href="../regions.html" class="flex items-center gap-2 text-[#008751] font-bold text-sm hover:underline">
+        ← Toutes les régions
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero-sourou min-h-[80vh] flex items-end text-white pt-24 pb-16 px-6">
+    <div class="max-w-5xl mx-auto w-full">
+      <span class="inline-block text-white text-xs font-bold px-4 py-1 rounded-full mb-4 uppercase tracking-widest" style="background:#A0522D">Zone Ouest — Nord-Ouest</span>
+      <h1 class="text-6xl md:text-8xl font-black mb-3">Sourou</h1>
+      <p class="text-2xl text-[#E8B923] font-bold mb-4">Chef-lieu : Tougan</p>
+      <p class="text-lg text-gray-200 max-w-2xl">Le grenier à riz du Burkina Faso. La vallée du Sourou, grâce à son système d'irrigation unique, produit du riz, des légumes et des fruits en abondance toute l'année.</p>
+      <div class="flex flex-wrap gap-4 mt-8">
+        <span class="bg-white/20 backdrop-blur px-4 py-2 rounded-full text-sm font-semibold">🌾 Riz irrigué — Grenier national</span>
+        <span class="bg-white/20 backdrop-blur px-4 py-2 rounded-full text-sm font-semibold">💧 Rivière Sourou</span>
+        <span class="bg-white/20 backdrop-blur px-4 py-2 rounded-full text-sm font-semibold">🐟 Pêche artisanale</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- CHIFFRES CLÉS -->
+  <section class="py-12 bg-white">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <div>
+        <p class="text-4xl font-black text-[#00A1D6]" style="font-family:'Playfair Display',serif">4</p>
+        <p class="text-gray-500 text-sm mt-1">Provinces</p>
+      </div>
+      <div>
+        <p class="text-4xl font-black text-[#E8B923]" style="font-family:'Playfair Display',serif">Sourou</p>
+        <p class="text-gray-500 text-sm mt-1">Rivière principale</p>
+      </div>
+      <div>
+        <p class="text-4xl font-black text-[#008751]" style="font-family:'Playfair Display',serif">Riz</p>
+        <p class="text-gray-500 text-sm mt-1">Culture principale</p>
+      </div>
+      <div>
+        <p class="text-4xl font-black text-[#EF2B2D]" style="font-family:'Playfair Display',serif">~900</p>
+        <p class="text-gray-500 text-sm mt-1">mm de pluie/an</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRÉSENTATION -->
+  <section class="py-20">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <p class="text-[#00A1D6] uppercase tracking-widest text-xs font-semibold mb-3">Présentation générale</p>
+          <h2 class="text-4xl font-bold mb-6">La Vallée du Sourou — Terre d'Eau et de Vie</h2>
+          <p class="text-gray-600 leading-relaxed mb-5">
+            La région du <strong>Sourou</strong> (Nord-Ouest) tire son nom de la rivière Sourou, affluent du Mouhoun. Cette rivière constitue l'épine dorsale de toute l'économie régionale grâce à son système d'irrigation aménagé qui permet une agriculture intensive toute l'année.
+          </p>
+          <p class="text-gray-600 leading-relaxed mb-5">
+            La <strong>plaine irriguée du Sourou</strong> est souvent appelée le <em>"grenier à riz"</em> du Burkina Faso. Des milliers d'hectares de rizières produisent plusieurs tonnes de riz chaque année, approvisionnant tout le pays. Le maraîchage y est également très développé.
+          </p>
+          <p class="text-gray-600 leading-relaxed">
+            <strong>Tougan</strong>, son chef-lieu, est une ville commerçante dynamique. La région est habitée par les peuples <strong>Samo</strong>, <strong>Nuna</strong> et <strong>Marka</strong>, chacun apportant sa richesse culturelle à ce territoire attachant.
+          </p>
+        </div>
+        <div class="space-y-4">
+          <div class="img-card shadow-xl">
+            <img src="data:image/jpeg;base64,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"
+                 alt="Vallée du Sourou — rizières"
+                 onerror="this.src='https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=640&h=400&fit=crop'">
+            <div class="overlay"></div>
+            <div class="caption">
+              <p class="font-bold">Plaine irriguée du Sourou</p>
+              <p class="text-sm opacity-75">Rizières et maraîchage — grenier national</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-3 text-sm">
+            <div class="bg-white rounded-xl p-4 shadow info-card">
+              <p class="text-gray-400 text-xs mb-1">Superficie</p>
+              <p class="font-bold text-lg">~16 572 km²</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 shadow info-card">
+              <p class="text-gray-400 text-xs mb-1">Pluviométrie</p>
+              <p class="font-bold text-lg">~800 mm/an</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 shadow info-card">
+              <p class="text-gray-400 text-xs mb-1">Rivière principale</p>
+              <p class="font-bold text-lg">Sourou</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 shadow info-card">
+              <p class="text-gray-400 text-xs mb-1">Langues locales</p>
+              <p class="font-bold text-lg">Samo / Nuni / Dioula</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PEUPLES -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <p class="text-[#00A1D6] uppercase tracking-widest text-xs font-semibold mb-3">Identité culturelle</p>
+      <h2 class="text-4xl font-bold mb-10">Peuples &amp; Traditions de Sourou</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-4 block">🌾</span>
+          <h3 class="font-bold text-xl mb-2">Samo</h3>
+          <p class="text-gray-600 text-sm">Peuple agriculteur du Nord-Ouest. Organisation sociale en clans. Masques et cérémonies spécifiques. Langue Sane très vivante. Cultivateurs de céréales et de riz.</p>
+          <p class="text-xs font-semibold text-[#00A1D6] mt-3">📍 Tougan, Toma, Gomboro, Di</p>
+        </div>
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-4 block">🎨</span>
+          <h3 class="font-bold text-xl mb-2">Nuna (Gurunsi)</h3>
+          <p class="text-gray-600 text-sm">Peuple connu pour leurs maisons décorées de peintures murales géométriques colorées. Art féminin ancestral unique. Agriculteurs et éleveurs.</p>
+          <p class="text-xs font-semibold text-[#00A1D6] mt-3">📍 Boromo, Poura, Biéha</p>
+        </div>
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-4 block">🌊</span>
+          <h3 class="font-bold text-xl mb-2">Marka</h3>
+          <p class="text-gray-600 text-sm">Peuple commerçant islamisé. Présents le long du Sourou. Architecture en banco caractéristique. Grands cultivateurs de riz dans la plaine irriguée.</p>
+          <p class="text-xs font-semibold text-[#00A1D6] mt-3">📍 Nouna, Barani, Lankoué</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LA RIVIÈRE SOUROU -->
+  <section class="py-20" style="background:linear-gradient(135deg,#00A1D6,#007fa8);">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-12 items-center text-white">
+        <div>
+          <p class="text-[#E8B923] uppercase tracking-widest text-xs font-semibold mb-3">Ressource vitale</p>
+          <h2 class="text-4xl font-bold mb-6">La Rivière Sourou — Source de Vie</h2>
+          <p class="leading-relaxed mb-5 opacity-90">
+            La rivière <strong>Sourou</strong> est un affluent du Mouhoun qui traverse la région du nord au sud. Son aménagement hydraulique — barrages, canaux d'irrigation — a transformé cette zone en l'une des plus productives du Burkina Faso.
+          </p>
+          <p class="leading-relaxed mb-5 opacity-90">
+            Le <strong>périmètre irrigué du Sourou</strong> s'étend sur plusieurs milliers d'hectares. Deux campagnes agricoles par an sont possibles grâce à l'irrigation — une en saison sèche, une en saison des pluies. Riz, maïs, oignon, tomate, chou y poussent en abondance.
+          </p>
+          <p class="leading-relaxed opacity-90">
+            La rivière est également un important lieu de <strong>pêche artisanale</strong>. Tilapia, capitaine, silure — les pêcheurs alimentent les marchés locaux et régionaux en poisson frais toute l'année.
+          </p>
+        </div>
+        <div class="space-y-4">
+          <div class="bg-white/20 backdrop-blur rounded-2xl p-6">
+            <h3 class="font-bold text-xl mb-4">💧 Système d'irrigation du Sourou</h3>
+            <div class="space-y-3 text-sm">
+              <div class="border-l-4 border-[#E8B923] pl-4">
+                <p class="font-bold">Barrage de dérivation</p>
+                <p class="opacity-80">Retient l'eau du Sourou pour l'irrigation des périmètres</p>
+              </div>
+              <div class="border-l-4 border-[#E8B923] pl-4">
+                <p class="font-bold">Canaux primaires et secondaires</p>
+                <p class="opacity-80">Réseau de distribution vers les parcelles agricoles</p>
+              </div>
+              <div class="border-l-4 border-[#E8B923] pl-4">
+                <p class="font-bold">Stations de pompage</p>
+                <p class="opacity-80">Pompages pour les zones plus élevées — maraîchage intensif</p>
+              </div>
+              <div class="border-l-4 border-[#E8B923] pl-4">
+                <p class="font-bold">Deux campagnes annuelles</p>
+                <p class="opacity-80">Hivernage (juillet-novembre) + contre-saison (janvier-juin)</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-[#E8B923] text-gray-800 rounded-2xl p-5 text-center">
+            <p class="font-bold text-lg">🌾 Sourou — Grenier à Riz du Burkina</p>
+            <p class="text-sm mt-2">Des milliers de tonnes de riz produits chaque année pour alimenter tout le pays</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POTENTIELS -->
+  <section class="py-20 bg-[#F5F0E8]">
+    <div class="max-w-7xl mx-auto px-6">
+      <p class="text-[#00A1D6] uppercase tracking-widest text-xs font-semibold mb-3">Économie & Ressources</p>
+      <h2 class="text-4xl font-bold mb-10">Potentiels de la Région</h2>
+      <div class="grid md:grid-cols-2 gap-10">
+        <div class="space-y-5">
+          <div>
+            <div class="flex justify-between mb-2 text-sm font-semibold">
+              <span>🌾 Riz irrigué — Culture phare</span>
+              <span class="text-[#00A1D6]">95%</span>
+            </div>
+            <div class="prog-bar"><div class="prog-fill" data-w="95"></div></div>
+            <p class="text-xs text-gray-400 mt-1">Périmètre irrigué — production nationale majeure</p>
+          </div>
+          <div>
+            <div class="flex justify-between mb-2 text-sm font-semibold">
+              <span>🥦 Maraîchage — Légumes & Fruits</span>
+              <span class="text-[#00A1D6]">88%</span>
+            </div>
+            <div class="prog-bar"><div class="prog-fill" data-w="88"></div></div>
+            <p class="text-xs text-gray-400 mt-1">Oignon, tomate, chou, piment — tout au long de l'année</p>
+          </div>
+          <div>
+            <div class="flex justify-between mb-2 text-sm font-semibold">
+              <span>🐟 Pêche artisanale</span>
+              <span class="text-[#00A1D6]">75%</span>
+            </div>
+            <div class="prog-bar"><div class="prog-fill" data-w="75"></div></div>
+            <p class="text-xs text-gray-400 mt-1">Tilapia, capitaine, silure — rivière Sourou très poissonneuse</p>
+          </div>
+          <div>
+            <div class="flex justify-between mb-2 text-sm font-semibold">
+              <span>🐄 Élevage</span>
+              <span class="text-[#00A1D6]">70%</span>
+            </div>
+            <div class="prog-bar"><div class="prog-fill" data-w="70"></div></div>
+            <p class="text-xs text-gray-400 mt-1">Bovins, ovins, caprins — élevage traditionnel actif</p>
+          </div>
+          <div>
+            <div class="flex justify-between mb-2 text-sm font-semibold">
+              <span>🌳 Karité & Produits forestiers</span>
+              <span class="text-[#00A1D6]">65%</span>
+            </div>
+            <div class="prog-bar"><div class="prog-fill" data-w="65"></div></div>
+            <p class="text-xs text-gray-400 mt-1">Beurre de karité, néré, fruits sauvages — filières à développer</p>
+          </div>
+          <div>
+            <div class="flex justify-between mb-2 text-sm font-semibold">
+              <span>🌾 Coton & Céréales sèches</span>
+              <span class="text-[#00A1D6]">60%</span>
+            </div>
+            <div class="prog-bar"><div class="prog-fill" data-w="60"></div></div>
+            <p class="text-xs text-gray-400 mt-1">Mil, sorgho, coton — zones non irriguées de la région</p>
+          </div>
+        </div>
+        <div class="space-y-6">
+          <div class="rounded-2xl p-6 text-white" style="background:#00A1D6">
+            <h3 class="font-bold text-xl mb-4">🏆 Atouts de Sourou</h3>
+            <ul class="space-y-3 text-sm">
+              <li class="flex gap-2"><span>✅</span> Rivière Sourou — système d'irrigation unique au Burkina</li>
+              <li class="flex gap-2"><span>✅</span> Périmètre irrigué — deux campagnes agricoles par an</li>
+              <li class="flex gap-2"><span>✅</span> Production rizicole — approvisionnement national</li>
+              <li class="flex gap-2"><span>✅</span> Pêche artisanale — ressource protéique locale</li>
+              <li class="flex gap-2"><span>✅</span> Forêts de karité — potentiel cosmétique mondial</li>
+              <li class="flex gap-2"><span>✅</span> Peintures murales Nuna — potentiel touristique unique</li>
+            </ul>
+          </div>
+          <div class="bg-white rounded-2xl p-6 shadow info-card">
+            <h3 class="font-bold text-lg mb-3">🌿 L'Oignon du Sourou</h3>
+            <p class="text-gray-600 text-sm">L'oignon produit dans la vallée du Sourou est réputé dans tout le Burkina Faso et exporté vers les pays voisins. Sa culture intensive grâce à l'irrigation en fait une culture très rentable pour les producteurs locaux.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SITES & ATTRACTIONS -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <p class="text-[#00A1D6] uppercase tracking-widest text-xs font-semibold mb-3">À visiter</p>
+      <h2 class="text-4xl font-bold mb-10">Sites &amp; Attractions de Sourou</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-3 block">💧</span>
+          <h3 class="font-bold text-xl mb-2">Vallée irriguée du Sourou</h3>
+          <p class="text-gray-600 text-sm">Promenade le long du périmètre irrigué. Vue sur les rizières verdoyantes, les canaux d'eau et les paysans au travail. Un spectacle paisible et authentique unique au Burkina.</p>
+        </div>
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-3 block">🐟</span>
+          <h3 class="font-bold text-xl mb-2">Pêche sur le Sourou</h3>
+          <p class="text-gray-600 text-sm">Sortie de pêche avec les pêcheurs traditionnels sur pirogues. Observer les techniques ancestrales de pêche au filet et à la nasse. Poisson frais à déguster sur place.</p>
+        </div>
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-3 block">🎨</span>
+          <h3 class="font-bold text-xl mb-2">Villages peints Nuna</h3>
+          <p class="text-gray-600 text-sm">Villages où les femmes Nuna décorent les maisons de peintures géométriques multicolores. Art ancestral vivant reconnu internationalement. Visite culturelle authentique.</p>
+        </div>
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-3 block">🛒</span>
+          <h3 class="font-bold text-xl mb-2">Marché de Tougan</h3>
+          <p class="text-gray-600 text-sm">Marché hebdomadaire très animé. Riz, oignons, poissons, légumes, bétail et artisanat Samo. Rencontres avec les producteurs de la vallée du Sourou.</p>
+        </div>
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-3 block">🌳</span>
+          <h3 class="font-bold text-xl mb-2">Forêts de karité</h3>
+          <p class="text-gray-600 text-sm">Vastes étendues de karités (arbres à beurre). En saison (juillet-septembre), collecte des noix par les femmes. Visite des unités de transformation artisanale du beurre de karité.</p>
+        </div>
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-3 block">🦅</span>
+          <h3 class="font-bold text-xl mb-2">Observation des oiseaux</h3>
+          <p class="text-gray-600 text-sm">La rivière Sourou attire une grande diversité d'oiseaux aquatiques — hérons, martins-pêcheurs, aigrettes, canards sauvages. Paradis pour les ornithologues et les amateurs de nature.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CITATION -->
+  <section class="py-16" style="background:linear-gradient(135deg,#00A1D6,#007fa8);">
+    <div class="max-w-4xl mx-auto px-6 text-center text-white">
+      <p class="text-3xl font-bold leading-relaxed mb-4" style="font-family:'Playfair Display',serif">
+        « Là où coule le Sourou, la terre donne sans compter. C'est la générosité de la nature au service des hommes. »
+      </p>
+      <p class="text-[#E8B923] font-semibold">— Sagesse du Sourou</p>
+    </div>
+  </section>
+
+  <!-- NAVIGATION -->
+  <section class="py-12 bg-[#F5F0E8]">
+    <div class="max-w-7xl mx-auto px-6">
+      <h3 class="text-2xl font-bold text-center mb-8">Découvrir les autres régions</h3>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="nando.html"     class="bg-white px-5 py-3 rounded-xl shadow text-sm font-semibold transition" onmouseover="this.style.background='#A0522D';this.style.color='white'" onmouseout="this.style.background='white';this.style.color=''">← Nando</a>
+        <a href="bankui.html"    class="bg-white px-5 py-3 rounded-xl shadow text-sm font-semibold transition" onmouseover="this.style.background='#A0522D';this.style.color='white'" onmouseout="this.style.background='white';this.style.color=''">Bankui →</a>
+        <a href="guiriko.html"   class="bg-white px-5 py-3 rounded-xl shadow text-sm font-semibold transition" onmouseover="this.style.background='#A0522D';this.style.color='white'" onmouseout="this.style.background='white';this.style.color=''">Guiriko →</a>
+        <a href="liptako.html"   class="bg-white px-5 py-3 rounded-xl shadow text-sm font-semibold transition" onmouseover="this.style.background='#EF2B2D';this.style.color='white'" onmouseout="this.style.background='white';this.style.color=''">Liptako →</a>
+        <a href="../regions.html" class="bg-[#008751] text-white px-5 py-3 rounded-xl shadow text-sm font-semibold hover:bg-[#006840] transition">← Toutes les régions</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#111827] text-white py-10 text-center">
+    <p class="font-bold mb-1" style="font-family:'Playfair Display',serif">Burkina Terres d'Avenir</p>
+    <p class="text-gray-400 text-sm">Projet L3 Informatique 2025-2026 — 🇧🇫 La Terre des Hommes Intègres</p>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    window.addEventListener('load', () => {
+      document.querySelectorAll('.prog-fill').forEach(bar => {
+        const w = bar.getAttribute('data-w');
+        if (w) setTimeout(() => { bar.style.width = w + '%'; }, 400);
+      });
+    });
+  </script>
+</body>
+</html>

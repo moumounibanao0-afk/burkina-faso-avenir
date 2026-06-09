@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oubri - Burkina Terres d'Avenir</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="../css/style.css" rel="stylesheet">
+  <style>
+    body { font-family: 'Source Sans 3', sans-serif; }
+    h1,h2,h3 { font-family: 'Playfair Display', serif; }
+    .flag-stripe { height:6px; background: linear-gradient(90deg,#EF2B2D 50%,#009A00 50%); }
+    .hero-ouibri {
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.75)),
+        url('https://images.unsplash.com/photo-1570541174495-cdeb9d1e5f1d?w=1400&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+    .img-card { position:relative; overflow:hidden; border-radius:16px; }
+    .img-card img { width:100%; height:240px; object-fit:cover; transition:transform 0.6s ease; display:block; }
+    .img-card:hover img { transform:scale(1.07); }
+    .overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,transparent 55%); }
+    .caption { position:absolute; bottom:0; left:0; right:0; padding:16px; color:white; }
+    .info-card { transition:all 0.35s ease; border-left:5px solid #008751; }
+    .info-card:hover { transform:translateY(-5px); box-shadow:0 20px 40px rgba(0,135,81,0.15); }
+    .prog-bar { height:10px; border-radius:999px; background:#e5e7eb; overflow:hidden; }
+    .prog-fill { height:100%; border-radius:999px; background:linear-gradient(90deg,#008751,#E8B923); width:0; transition:width 1.6s ease; }
+  </style>
+</head>
+<body class="bg-[#F5F0E8]">
+
+  <div class="flag-stripe fixed top-0 w-full z-[60]"></div>
+
+  <!-- NAVBAR -->
+  <nav class="bg-white shadow-md fixed w-full z-50 top-[6px]">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+      <a href="../index.html" class="flex items-center gap-3">
+        <span class="text-2xl w-10 h-7 rounded flex items-center justify-center shadow-sm bg-white">🇧🇫</span>
+        <div>
+          <p class="text-lg font-bold text-[#008751] leading-tight" style="font-family:'Playfair Display',serif">Burkina Terres d'Avenir</p>
+          <p class="text-xs text-gray-400 leading-tight">Valoriser nos 17 Régions</p>
+        </div>
+      </a>
+      <div class="hidden md:flex gap-6 text-sm font-semibold">
+        <a href="../index.html"      class="text-gray-600 hover:text-[#008751] transition">Accueil</a>
+        <a href="../regions.html"    class="text-[#008751] border-b-2 border-[#008751]">Les 17 Régions</a>
+        <a href="../potentiels.html" class="text-gray-600 hover:text-[#008751] transition">Potentiels</a>
+        <a href="../culture.html"    class="text-gray-600 hover:text-[#008751] transition">Culture</a>
+      </div>
+      <a href="../regions.html" class="flex items-center gap-2 text-[#008751] font-bold text-sm hover:underline">
+        ← Toutes les régions
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero-ouibri min-h-[80vh] flex items-end text-white pt-24 pb-16 px-6">
+    <div class="max-w-5xl mx-auto w-full">
+      <span class="inline-block bg-[#008751] text-white text-xs font-bold px-4 py-1 rounded-full mb-4 uppercase tracking-widest">Zone Centre — Plateau Central</span>
+      <h1 class="text-6xl md:text-8xl font-black mb-3">Oubri</h1>
+      <p class="text-2xl text-[#E8B923] font-bold mb-4">Chef-lieu : Ziniaré</p>
+      <p class="text-lg text-gray-200 max-w-2xl">Fief historique du Royaume Mossi du Plateau Central. Terre des traditions royales, de l'agriculture et de la résilience paysanne.</p>
+      <div class="flex flex-wrap gap-4 mt-8">
+        <span class="bg-white/20 backdrop-blur px-4 py-2 rounded-full text-sm font-semibold">👑 Mossi — Royaume du Mogho Naba</span>
+        <span class="bg-white/20 backdrop-blur px-4 py-2 rounded-full text-sm font-semibold">🌾 Agriculture céréalière</span>
+        <span class="bg-white/20 backdrop-blur px-4 py-2 rounded-full text-sm font-semibold">📍 Plateau Central</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- CHIFFRES CLÉS -->
+  <section class="py-12 bg-white">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <div>
+        <p class="text-4xl font-black text-[#008751]" style="font-family:'Playfair Display',serif">4</p>
+        <p class="text-gray-500 text-sm mt-1">Provinces</p>
+      </div>
+      <div>
+        <p class="text-4xl font-black text-[#E8B923]" style="font-family:'Playfair Display',serif">Ziniaré</p>
+        <p class="text-gray-500 text-sm mt-1">Chef-lieu régional</p>
+      </div>
+      <div>
+        <p class="text-4xl font-black text-[#A0522D]" style="font-family:'Playfair Display',serif">Mossi</p>
+        <p class="text-gray-500 text-sm mt-1">Peuple majoritaire</p>
+      </div>
+      <div>
+        <p class="text-4xl font-black text-[#EF2B2D]" style="font-family:'Playfair Display',serif">Barrage</p>
+        <p class="text-gray-500 text-sm mt-1">Loumbila & Ziga</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRÉSENTATION -->
+  <section class="py-20">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <p class="text-[#008751] uppercase tracking-widest text-xs font-semibold mb-3">Présentation générale</p>
+          <h2 class="text-4xl font-bold mb-6">Le Plateau Central — Cœur du Royaume Mossi</h2>
+          <p class="text-gray-600 leading-relaxed mb-5">
+            La région de l'<strong>Oubri</strong> (anciennement Plateau Central) est le berceau historique du puissant <strong>Royaume Mossi</strong>. Ziniaré, son chef-lieu, est une ville dynamique située à une quarantaine de kilomètres de Ouagadougou.
+          </p>
+          <p class="text-gray-600 leading-relaxed mb-5">
+            La région est connue pour ses traditions royales vivantes. Le <strong>Mogho Naba</strong>, chef suprême des Mossi, incarne depuis des siècles l'autorité morale et spirituelle de ce peuple. Sa cour à Ouagadougou reste un symbole fort d'unité.
+          </p>
+          <p class="text-gray-600 leading-relaxed">
+            La région bénéficie de la présence du <strong>barrage de Ziga</strong> (alimentation en eau de Ouagadougou) et du <strong>barrage de Loumbila</strong>, qui permettent l'irrigation et le développement du maraîchage.
+          </p>
+        </div>
+        <div class="space-y-4">
+          <div class="img-card shadow-xl">
+            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxAQEBUQEBAVFRAVFRAVFRUPEBAQFQ8WFRYWFxUVFRUYHiggGBolGxYVITEhJSkrLjouFx8zODMtNygtLisBCgoKDg0OGxAQGi0fICUtKy0tLSstLS0tLS0tLS0tLS0tLS0tLSstLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIALcBEwMBIgACEQEDEQH/xAAbAAADAAMBAQAAAAAAAAAAAAAAAQIDBAUGB//EADsQAAEDAwIEBAQFAgUEAwAAAAEAAhEDEiEEMSJBUWEFE3GBBjKRsSNCodHwFMEVM1Ji4QdygvFTkpP/xAAYAQEBAQEBAAAAAAAAAAAAAAAAAQIDBP/EACQRAQEAAgICAgICAwAAAAAAAAABAhEDIRITMUFRYQQiMjPR/9oADAMBAAIRAxEAPwD3SYSTC6ooKgkEwgaoFSmFBlD1QqFYk00u2XzSgVFjTTRtmFZBrFYU1NG2TzSn5xWFWxTQzNcSrtUB4VCsFGhaU7Cj+oCR1CCoSIUGupdWTVRkwoe9Yi9SSro2CUpQlK0yJQhJVDUppIBSU0IJSKZSKCSoKsqSqJQmhNmgqCiVbVnbSgmElSbNBMIa1VKmzRJpJhVDTQEIGhCEAmkhA00kIGhCSBpIQgEkIQJCEIEhNCBJJlSSgaSRcllAypKIQQqJKkqiFJQJCaFBJCYQmFGjCsFSFQRFXFEICaACpIJoGhCEDQhCIE0k0UIQhAIQhAIQhAkIQiEhBUmUFSlKUFOE2oSTQgSSZSQIqSrKkqiCFJCyKSglCaECQFbj2SWdroBUFAKoIik0kwgoJqU0FISQgaaSEDQklKCk5WOVTSmxSEw4KHFTamhTKaqGkiUIBCEIBCEpQNJEpIApISVASpJQVJQEq2tHNY0i4qUZcIWFCaXZlxSlSSmFBYVBQCmCqiwmFEqgUFoUygFBaaA4KHKKtCxyqlEUhTKcoGhJNA0ihCoISQhQELIymSoDlkFZFU6j0UFhVCsh1SVNqxgSqFIoBT8wptNJdTIUEKzU7rG56oRUpFIlVDSKRSKoalyFJUBchEIQSSmCh7pKdwUUwVUqAqBQNUCpTCIpCUpyqGhJMKACaRcNhv8AZa2m19Ko99NjwX0za4bEH05jumxtIhJNAwqUoQUhShA0JIQNCTcmFVWmWG0kEiMjY4QSiVMolBUpEpSglUCSJSlAypVY6qSUAkiUiUAVBTJUlA5QkhQSUwpJQCisgTlQCmgyBcH4o8Ra1jaYc7zHu4DSe1pDmEEySYjqF2wV4r4odRp1ajWEB7mh7mOioysfT8jon9OUrHJdQdvw/wCKdO+4Pfa5m5fDRUgZLeXst3w7x3T12Nc2oAXXcL+F0tEux2GZXyZta901PL4sWta1oM7GDGZP1WGtrHAtLQ6WNLW/lLQcEjmfmXCc9H2TUeL0GNLjUaQGh0NcCSDzA581qaz4ipMFzZc1tZtKoQD+HIm7uNsr466qX2B9R5gQDtaOgHT1XXZrbWw919NzGksbw3EA2BxESQQDKvuux7jTak/11SvSrsqU6rHNa0GOOk2Q0jsMz3Wz8F1jUpvq1GsbXqPJdY9ji8DZxA+XfYrwum1VAua8UX2307y2oWOEtgxuHN7RzGy9l8I+DupOdVdSohrh+GaYN7OrZMyD1lbxu6j1kolShdhaoBY7lQKBlEpEJSgqUpWKhXa8XMcHNkiW5EgwR9QrlByviLXVqDGVKRaOK11wnfY+0fqr8K1teq9/mlptDRwjmsHxQGupBhe1pLgReY26La8NoBpcRUY660gMdJEDn9V5srfdPw9WMnpv5dBCmUpXpeVUolShA5SlJOEBKJQUxCCSVJKowocgpoHNYtRqadMEuOzS6BuQOg57FMlaHi9FrqTi6flcDaJMOxtz5FSqf+O6X/5B9HfrjdC8C19OnwVXsFQEhwcKoO+CQNpEH3QufnV0+jqgV8f1XxHqqjR+K82nFptOdySN8L0/gHxswU2s1IIIEeYJeHREEjed/orOSI92EwvnPiH/AFDqNqOFKkw0weFzxUBcJ3Od+0LY8K/6itcY1FOAdjSnHq1xz7fRX2Yj3vmCbZF0TE5jaY6LxXxhoaQqms+q242kUiySRhsk8hg5WPxv4g0769N9Mv8Awx89J4pk3ZLHgtJjAMLy3ifjL6wPmEVXNdw1JDXWZEFoG2Z35d1y5OTGzQxazTtaRUgw4ksLn7wY9cf2WuXEPa+Igm44BDcEwTI/9rDU1Ze4tJDY2DpiYExO07rW1dRpwXBriSA4NJDo+64fY2/E/EGur1DQkMeARfG8SZt7/da7KpDuP5iAcFzogQNsFc9kU7ocC9uxB5Ech1WXzng7AiQSCLSJzJ75W8ptHYq1m1WtGGQXOuBzxC2J9pHqvpvwb4tS/p6VI1Qajr7WjcAGYgfLjOV82+GH0HVy/UngIJbTaCbnRgXflAyfoF9D+HtTo6dN1cPeHhgubWqGo5o6N/1Ekb9+S1xzV3tXrpSLoydl5bR/GFOrV8sC3I/zIZAjcmYXM+NfiXyngUKzbmgh4bnMtIzt7eq7eya2ae10WtZWaXUzIDi0+o6diIIPdbIK+MeBfE1bTQ5uWEgG7k24XWjYYxML6Cz400sAuvG35Q7fngpjyS/KOt4r4k6kHBtOoX2iwtpOqNkmBNvTc9l5qv46XO86newXUhUDSHeYWuaCHsi5oi4SP9JT+K/iak7TxpqxvJE2NeOEyDJxHX6dZXzka15hp4sHBJGCcG49SboXPPPvoe0+G6tKo99tWtTowHWTAbUM7FpkxM7AZggr1nhVlHgbXe9suIa5jjlxkkGJ3nHcrwHwzRIc90tuhuA64jMyT1/Zegf8R1G1Aw1SDzMiATOP1K895bMuns4uHHLCWu74/SoalraVR1Rtrg8FtJ84Dhzbtk/RZ9GKNIfhsfEQXGjUghvPbsuO7X1HC41nXdjG09PU/Vc+r8QPDvLNV8bHi68v1Wfdcrv7dvTJjrfT2J1wmA15PL8J+d/2P0WvWHG54ZVD3MFOQItAJILcRMu5rzf+I1MRUdPW53f9z9Vq67xl7CLiXH/vOB7rU58qzf4+Ee1GstZc5j7RAJtE5iOedws4e8nFJ/ux385Lwum1Re5sONpI2OOm382Wy/xupTc38QyfmIeRbkg/3U9+a+jCR6/zXA8VN+In8N+Nu3dN9YgSadT/APN/7LzdXxV4PmPqOcGlroL3Q6MgT3WSr8THUiGg043AqF13eYCs5743LdZvBj5THTuDVEzwOEbyx+BmeXYpM11NzrA7izwkFpxvgry7/GqjKlgqOgiHG93Of3/VeZ+JTUdqCWvINrCTeQSTK1x/yMt9ufNxY447j6c7VMBguEzGTsVg13itCiLqtVrRExMkiYw0ZOV8sGurgeXWcYGxElzu+e39lrVHNDyXVHOuzLoJ7yu153m1H1Kp4/piIbXZccNJmJOBmI3XIq/ElMO8t1YH8MjDAS6oPzCMRtzj6rxDzIuafYDruf51XNrOfeCDI3iRg9xss+6009E3Wjd7i5xJNzjVBMnEwYmI2QuAdbbgwD3ITWfK/hdIreHVQHFkZm7MCB3PbMpHw7UuNoEDAkkGDznqurR0lswcRniPDPzY2hdD+jcQLiJGxn6FS5yNXGfTz3+E1+QDhzJJyPfCzU/h97S3YTuXAPtxMjpnlPNenp+a2S2oQ6c5GduoMbIeXnBcI5ySZzM7YWPZCYz7cF/hhEQ8EnBOGyZg89v2WAeCuLjwiIHXcyeq9A9g6DEwATjvt6rVp0iKjneUbIEgEku7iduZWJdpcY87q/BH3NdMh/DhwJubP/C1j8PVvldE5LbXCcRt6z+i9RVeXObFO1jXE8Vtxkeu2317qSWE3Q+RMYIg9JhdZlSYx5x/hrqIa99BxcXNZ5bqzbTO0xk8+fNPXPo0/wATUaYioXx5TXQ1rABB4YGTP0W3Vo16tRjnSA17X5mHZaDA9BH/ALW/rqLNRSLm0y1xgBtRpzl0g5jaDjot+WtbNMT2xFSlpqRbAtAqOouEzuIz6ytyjp6pAqAMabajrGOvBj5TccHAcY6x76ZpOAALHBsWiC12Rgm0bDc/Zbmlc6i17A4OiAw2uEhxBtMjEHM91m2Ok1vthraKs5oe1zXkudzNOBggAwZMHPqtPU+GPfTcQ4yJ4Q0Okgwcg9cz0XpaD6bmhrolsZLiBtByN9gszKdFkgFmXSPmOIH7H6rl52M5YTfTwFPw2q2DaXDhIji5mbgPcLtDR1BBfUEZhuW+5yvTsNEkvhgMRmdgfTur86jFwDDkD5TulztZ9bzNdlgxn0JwY2WlTpCb2NN5wQQDBMRvt+i9m6rSBwKZOR8p5b8uqdGoxxIDWc+WDOZWd09dcX4dd+K5jgAQ0HGZyMz7qdfSJquIA3910rm+aarW8UFpAloEkHaNzA+ixVKIc4uIiSecrWNuN29E48cuKY5X4u3UGw9AvL63/OI/3H7jsvRvqwBAMRuYG0T91o19Exx8wkgkyBIzJPbsnDfC20/m/wB8ZMfqytqs8t8uBgkA8JPLtsuV4wC54IAPCNwJ+4XXrlpsiTEkw4DYHnzys7n0gzDc5m4AmOs9P3Cxhl4XbtyzDlxuNvTT8IEMZIjP90a0/iPHeeXMA/3Weg9sQBsT8s7781OqpNeTUnB6mMgZH2Vxysz2ueGHJhMbev8Aja1GdP8A+LP7LS8E3d7devclbFbUFlO14EQB87buGOXstHS+I0wOBpvcSIIA9oGVMZZx5Y/ljk/34576kq9bJqEA8x06KfF/DDVqXgzAaIc4tHPoFJrMc664SZJ3xAWWn4q24jhLjbncCdsH9le7r9RMseOy6vzduI+k0h1NxIIJHCRmDtMLlazw0F0sc+JaN9ge69j/AIk3JxI5TG3YLnazUvrANJp2cJIiJAg/XbK3jt5/V+3HoU6bpYx5LhzM57bpapoZxucJt+WLnTyjP3Xc0dGiwyWNAHOcSPX0WJ9Cm94/KGwc7kCCGnpn7K67PW87T8MpOE1pNQ/MbiPTHpCF7M1Zzw+4H7ITzqeDTGnDSYII5DGT3WKp5pp3gznYSSM9Oawso1XTG+8FuxAz+g/VUGutscI2uhhgZB4fefqpbC5bbQc+7JaGxMGByj+/2WPVNeI4gLojlH8/usNW97jkxIOBAMbQCdsfqoaypIdOBGTk5EOH86BTpnboGmDInMEdc8lYAbA2JDWxI5be+5+i57vNkuBklwkO2jnH85pUw+4lzp4iRBIgEAe5x903Pyvk6TDTG7Z9BBkb/ZYqbxuBA5DrPPtHVc+KhmSIjhjOxMbc4jKgeaNmYgNy66RIMiee/wCiJ5Om94BOM7HrAyJ+qdI0iBJnOeUH+FaPl1S+OItLWm1pEgbQRGcff65qXhdUEHynBvQNcZ6Ek9MKbi7/AEzalgLoI58hsJ/hWIaETIeRIAGTBEiSR7EKzptSHXEO8uJIIMRkDvElS/RODcwBgNmJkkyDvmZ+hTcSrp6aiOZmcTJ+vZXS0P5y7hbJ/cewkrDT0TtnPF2/NoaOpJwJ/us1Sq5oziR0/wBQEegU8jyjm1byTh1vItjPTHv9lDqDyyOIQDiA4kj0/mF06FOoN2uM4wCBO3ut12jqEi5jgDHLf0HXss+VYkrz1DT1Wkg3ZBgj5T39FkqVLCA90GDJLrRHIj7L0Y8ONpcTbg/lPse4K8/45pHPqtgC0sbJthrCZPX3Wsbu9rqz5b+g0NwNQVC4ECMiDG+Rz2UnSvk8sCM7+y1NDqDQb5bRcMkx36K6viJ3tdEwScAYEmeQyfor03/XRvc8Eh7TyzgBp6dYiPqnTrVAYMWSBI4g6c4+vXt0QNc5wBAdBAyNucHpyP1WPWue3hs4sREbkNcTnkARPv7yxm6/KtVXNwF7iDgYnbkf+VdVznj5gARzjG1p4tsytbTCs0cTRkgNBtE9gPTPsnU8xzoBbcJdaJJfEi0YhwuERPM7QkjO1aPUkh2RmCYnhbOZkwSP+FQrufBbxRLck5nIIJGBjl3WXyMXPLQ2I4IdJJGIGZJ5xySNG500nTlo2mQefcY9chOiWCpXa6mRYL4F2ACCMkD/AGzOe651B0bS7EANtMkROff+SuhS0shxzh5GQCW2joDA5pCl5ZmWXSdjJ+WTkYGCPqE6auUv258OJMm0ENbvtPURtP3TpaEQ6HbYx15gDM5W5W07nPweKRgktIxgEe4wg6N4gOa0G0kw+PcEYMmPdNs7jWboHHDXcsnkO0rY0/gjiP8AMAJwM526LJVBi24CCMzBGYtPTnudisun1FWMCTnBkkjI39f5KsyaxuO+2pqvC6tMAB12Z4iZ6n7BYP6KvJOBzyQZHsu/odWLiKgMk4JGI910XGlEwwQcAsycb7f35qXK76dLjL8V5T+iruzY50xm5on2KF6ttRsYDI/8UKeVXxn5ec/rG1GObceEAkkTjJ4TO43/AJnHq/FSyo8Aky6wWvmLYj2BPTkcLR0dVwfDqkCC0iCDkwBnlk/XKza/yyX1gySSJDjsIHFaMRjKupt591u09a97S6nwuaOIFwdbJIBEYJmNsRHJA1rnOLRU4SXAgSHPBIN20HOMco2U6V8tLSy0OaROzWTkTz25frutCm00nkFxbHMAAw2dgZ6u5jkom66lHXkPtg/NBucAT/tIIhuATvyWbV+IOdTa7JAAm2AWmeRjbByJytXVS8BkWEgiSQ7BLYDu+x9lqaOhTDy57ny2I/2w3AwIaTn+SU61s3XX8zzHYhtQXDIH4QLW7ieG4kjtaJ5LEdYx2C+S3liMAAQ2ecj9c4XO1VZ1N5ewC1xcAWncuy4ObEciYHQFbdei2qAGuEAcIfDYJiXE4nIGSOyDZfqXUoJuIkXuPDEAR8u42PtvELD/AIi2q8jziXZIJJaAHAAxtGTznbvK1XUqjWQ+4iXyAXPaQOGQeZ3z2HRbWlpXGWw1jy4GmA2RsW29TsJwp0dm3xRznNYHEtJa0klzg8EbbT6z/q2wnXrsw8ktZDXBxLgZN7oAdhxgx3nnso1FNlrWvcWPubkQ1wccOc71+zQFrMr2w8tD25IJGGQYmfqNvuidt/T1A5sQ2ALhBEgAutuJMHd2PtKxvY6mA4PBacZfORG2YGZx23ziKNdriWvbDYua4CLgDkmRzuwI5DuVdbTtaCHEPdBAtB/DwA3G28Z7oM2ieYa/DjLotFoZaPv37BX59UvD6heAXMIFzuIkRtvMXY23XHD6rHNYWvcDuBIw7DiP9WAB7Hmtxhe5oYXsbcLjILmvNNloE7xALZ9Y6ppe21rXuks8z8PD8bWgnhBjG8xtnnhPSsFWkXAluWzc8AtF0DG2zyfc8pWGlTcSA0tLBIs+YZzPWZ26StWvULSG0djh3FN3YgYgGI90GdtZrRFvAROzSQSBAuO2xz0HNZRqA4iCDJniDgcCWgCBPrH2WJlOOG64NAMWi3YEmW75Ax/DVCgWmWcT7nOEmAQAJLc8MRt2lRA95tAaYugcMbjJGD1O/QIoPLntwcF0tuvxi73MHt0yFiNem4gVAA4uBA4nZAM3TymJjp2RT0lR7hfWHl3WuAEwcySAJAESJ6hUZK1JxqxbNsm51jW2gCSYiZxv37pGJABILJbEtacxLaY3LhcPeYWFumJb87i8lwETjcYHckY6NQxryA1wM3cTiYGRDyQYxMRKppsaZ2DLXBgBEgWfKDI5HcuzjAK17nXA2gPLsubUucIAAh2Z2IIJ3affPJqZa/g5Wu4wSJMzzmRnqtapS4DUaYJMG7LtgSGiAQfm9woumXVap7XQQ5pAGHAfN+Y3HcyXCcrHqKjWNJDGloEODuGXTwuznn254wqpaJ723kmZtmZDgGmOh/vsro6YtGeYMgOJAMS4gET9equ4aauk1hIc5xyWim4E2xBImnncGN5ySU6b3yfMcGzs2Wm4FwLgHEknJEE9EUvD6N1zbgSJg/lAMmJ2m6d9yeSuv4XVeQ+WNpgxDgW7eu5O+6u4sxtYn6sNd5Q+UtLnW5DjYbNxz4Se/or1ZebWtJIcPk3I3x+h37rM7watVDC08LQQ6BGZMT13IwtjSeBVbS14kkkAyWhu4BxlG5xZX6crS1arbZNzWlwgyS4Amdv5uun4Lr3Rxi5lzrZa0wJjPuRjZdih4EwCKhaTECbztG3eVgqaei3ApwRAniHp16DCnTrjw2fNbbagAzRYT/2t/ZChlPHyk93XEn1ymo7+Ncj+lbWvZaA5lxOGxDYkgjM7la/9O1gg0wQS2ZggtJGD7jpz5oQr8vJf8NsNSlbdaMyWvbOARtB5jcclVSoxwALQTLSeETuADJ5wBgYwhCX42zlOtslWgac2lxph2DfBceU4xyWdmmbWJcILrXNIdJJGSCScYMbIQs/tkjo2NgVRJhpaNw0bcOcHBA9EU2hzYY82AcwM5IiCJ5Rv16oQrfhvPq6K0SSXEHikRIknOBz22VscMvHCIkWudk4mf/r9k0J9MMjyH1LXtuwHEzktLZGe4jELE7QlzrGhsYJlgAkEy0AHaST7b7IQp8N4zpranRYcA82AN4dpMAnYY3+/VLwch2HRkEkmST67zkO+qELX0mmy4uBxsGl0uFxMSfuW5WVuldVEttAgyRMAzHy+x5cwhCy1jjLl254Y+mS0u/K1zTkSDAukZHSOq3NOWX2mmJBEuEcJuaBj0+yEKkxm27U8Ohgql0AjIi64iTv3np6rkGi6m4m7D3BpiTz2ORIxyhCFJ8tZ4yZSN+nom03NdbgkBpMG66SWubyET+ixjTPYTxHDgYB3BkDi7wPryTQr9r655abWle4sYd3W3EnO0gR03AwlQaCxo3dF5uPU4E+gSQpromM0KFMPcWEAuteWEYiZDpPToo09MHDWi4OYc/mDsZEeqEIkx6ZG31fMYwWRIDWkD5XSDI5437DunToPLrAQDby/K7HMbzlCFrUdcePG/LeZo2h5L2y8ZBn8pAER/NlnoVKdMQZycHb6DomhZdL/AFnSnaqwxaCD+a5wn2hFhdsYncgnb0QhWN49kNM1phz3OMTGwj2wVFbWsp4aM9LRv6oQqzyXxnTCzW1HCQzB7t/dCEKOczy/L//Z"
+                 alt="Village du Plateau Central">
+            <div class="overlay"></div>
+            <div class="caption">
+              <p class="font-bold">Village Mossi — Plateau Central</p>
+              <p class="text-sm opacity-75">Architecture traditionnelle en banco</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-3 text-sm">
+            <div class="bg-white rounded-xl p-4 shadow info-card">
+              <p class="text-gray-400 text-xs mb-1">Superficie</p>
+              <p class="font-bold text-lg">~12 162 km²</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 shadow info-card">
+              <p class="text-gray-400 text-xs mb-1">Pluviométrie</p>
+              <p class="font-bold text-lg">~750 mm/an</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 shadow info-card">
+              <p class="text-gray-400 text-xs mb-1">Climat</p>
+              <p class="font-bold text-lg">Soudano-sahélien</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 shadow info-card">
+              <p class="text-gray-400 text-xs mb-1">Langue locale</p>
+              <p class="font-bold text-lg">Mooré</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PEUPLES -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <p class="text-[#008751] uppercase tracking-widest text-xs font-semibold mb-3">Identité culturelle</p>
+      <h2 class="text-4xl font-bold mb-10">Peuples &amp; Traditions</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-4 block">👑</span>
+          <h3 class="font-bold text-xl mb-2">Mossi du Plateau</h3>
+          <p class="text-gray-600 text-sm">Peuple organisé autour du chef (Naaba). Agriculture, respect des ancêtres et cohésion sociale sont les piliers de la société Mossi du Plateau Central.</p>
+        </div>
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-4 block">🎭</span>
+          <h3 class="font-bold text-xl mb-2">Masques Wango</h3>
+          <p class="text-gray-600 text-sm">Masques totémiques Mossi représentant des animaux sacrés (crocodile, oiseau). Utilisés lors des funérailles et des cérémonies d'initiation.</p>
+        </div>
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-4 block">🌾</span>
+          <h3 class="font-bold text-xl mb-2">Rites agraires</h3>
+          <p class="text-gray-600 text-sm">Avant chaque saison des pluies, des cérémonies sont organisées pour demander la bénédiction des ancêtres sur les récoltes. Tradition vivante dans tous les villages.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POTENTIELS -->
+  <section class="py-20">
+    <div class="max-w-7xl mx-auto px-6">
+      <p class="text-[#008751] uppercase tracking-widest text-xs font-semibold mb-3">Économie & Ressources</p>
+      <h2 class="text-4xl font-bold mb-10">Potentiels de la Région</h2>
+      <div class="grid md:grid-cols-2 gap-10">
+        <div class="space-y-5">
+          <div>
+            <div class="flex justify-between mb-2 text-sm font-semibold">
+              <span>🌾 Agriculture céréalière</span><span class="text-[#008751]">85%</span>
+            </div>
+            <div class="prog-bar"><div class="prog-fill" data-w="85"></div></div>
+            <p class="text-xs text-gray-400 mt-1">Mil, sorgho, maïs — base alimentaire de la région</p>
+          </div>
+          <div>
+            <div class="flex justify-between mb-2 text-sm font-semibold">
+              <span>🥦 Maraîchage irrigué</span><span class="text-[#008751]">70%</span>
+            </div>
+            <div class="prog-bar"><div class="prog-fill" data-w="70"></div></div>
+            <p class="text-xs text-gray-400 mt-1">Grâce aux barrages Ziga et Loumbila — tomates, oignons, choux</p>
+          </div>
+          <div>
+            <div class="flex justify-between mb-2 text-sm font-semibold">
+              <span>🐄 Élevage</span><span class="text-[#008751]">65%</span>
+            </div>
+            <div class="prog-bar"><div class="prog-fill" data-w="65"></div></div>
+            <p class="text-xs text-gray-400 mt-1">Bovins, ovins, caprins, volailles</p>
+          </div>
+          <div>
+            <div class="flex justify-between mb-2 text-sm font-semibold">
+              <span>🏺 Artisanat</span><span class="text-[#008751]">60%</span>
+            </div>
+            <div class="prog-bar"><div class="prog-fill" data-w="60"></div></div>
+            <p class="text-xs text-gray-400 mt-1">Poterie, tissage, sculpture — tradition artisanale vivante</p>
+          </div>
+          <div>
+            <div class="flex justify-between mb-2 text-sm font-semibold">
+              <span>🌳 Environnement & Forêts classées</span><span class="text-[#008751]">55%</span>
+            </div>
+            <div class="prog-bar"><div class="prog-fill" data-w="55"></div></div>
+            <p class="text-xs text-gray-400 mt-1">Zones boisées et reboisement en cours</p>
+          </div>
+        </div>
+        <div class="space-y-6">
+          <div class="bg-[#008751] text-white rounded-2xl p-6">
+            <h3 class="font-bold text-xl mb-4">🏆 Atouts de la région</h3>
+            <ul class="space-y-3 text-sm">
+              <li class="flex gap-2"><span>✅</span> Barrage de Ziga — alimentation en eau de Ouagadougou</li>
+              <li class="flex gap-2"><span>✅</span> Barrage de Loumbila — irrigation et pêche</li>
+              <li class="flex gap-2"><span>✅</span> Proximité avec la capitale (40 km)</li>
+              <li class="flex gap-2"><span>✅</span> Terres cultivables relativement fertiles</li>
+              <li class="flex gap-2"><span>✅</span> Traditions royales Mossi — potentiel touristique culturel</li>
+              <li class="flex gap-2"><span>✅</span> Marchés hebdomadaires très dynamiques</li>
+            </ul>
+          </div>
+          <div class="bg-[#F5F0E8] border-l-4 border-[#E8B923] rounded-r-2xl p-6">
+            <p class="italic text-lg text-gray-700">"Le Plateau Central est la terre des ancêtres Mossi — une région qui a forgé l'identité de tout un peuple."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SITES & ATTRACTIONS -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <p class="text-[#008751] uppercase tracking-widest text-xs font-semibold mb-3">À visiter</p>
+      <h2 class="text-4xl font-bold mb-10">Sites &amp; Attractions</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-3 block">💧</span>
+          <h3 class="font-bold text-xl mb-2">Barrage de Loumbila</h3>
+          <p class="text-gray-600 text-sm">Plan d'eau artificiel prisé pour la pêche, la baignade et la détente. Espace de loisirs pour les habitants de Ouagadougou le week-end.</p>
+        </div>
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-3 block">🏛️</span>
+          <h3 class="font-bold text-xl mb-2">Palais Royal de Ziniaré</h3>
+          <p class="text-gray-600 text-sm">Résidence du chef traditionnel de Ziniaré. Architecture en banco typique du Plateau Central. Symbole de l'autorité Mossi dans la région.</p>
+        </div>
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-3 block">🌳</span>
+          <h3 class="font-bold text-xl mb-2">Forêts classées</h3>
+          <p class="text-gray-600 text-sm">Plusieurs forêts classées dans la région, importantes pour la biodiversité locale et les projets de reboisement communautaire.</p>
+        </div>
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-3 block">🛒</span>
+          <h3 class="font-bold text-xl mb-2">Marchés hebdomadaires</h3>
+          <p class="text-gray-600 text-sm">Marchés animés à Ziniaré, Loumbila, Nagréongo. Céréales, légumes, bétail, artisanat — vivants reflets de l'économie locale.</p>
+        </div>
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-3 block">🎊</span>
+          <h3 class="font-bold text-xl mb-2">Fêtes traditionnelles Mossi</h3>
+          <p class="text-gray-600 text-sm">Célébrations liées aux cycles agricoles, aux funérailles et aux intronisations de chefs. Danses, musiques et masques au cœur de ces événements.</p>
+        </div>
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-3 block">🏺</span>
+          <h3 class="font-bold text-xl mb-2">Villages de potiers</h3>
+          <p class="text-gray-600 text-sm">Plusieurs villages spécialisés dans la poterie traditionnelle — canaris, jarres, plats en terre cuite façonnés selon les techniques ancestrales.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CITATION -->
+  <section class="py-16" style="background:linear-gradient(135deg,#008751,#005a35);">
+    <div class="max-w-4xl mx-auto px-6 text-center text-white">
+      <p class="text-3xl font-bold leading-relaxed mb-4" style="font-family:'Playfair Display',serif">
+        « Le Plateau Central est la mémoire vivante du peuple Mossi — gardien de ses traditions depuis des siècles. »
+      </p>
+      <p class="text-[#E8B923] font-semibold">— Burkina Terres d'Avenir</p>
+    </div>
+  </section>
+
+  <!-- NAVIGATION -->
+  <section class="py-12 bg-[#F5F0E8]">
+    <div class="max-w-7xl mx-auto px-6">
+      <h3 class="text-2xl font-bold text-center mb-8">Découvrir les autres régions</h3>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="kadiogo.html"   class="bg-white px-5 py-3 rounded-xl shadow text-sm font-semibold hover:bg-[#008751] hover:text-white transition">← Kadiogo</a>
+        <a href="guiriko.html"   class="bg-white px-5 py-3 rounded-xl shadow text-sm font-semibold hover:bg-[#A0522D] hover:text-white transition">Guiriko →</a>
+        <a href="bankui.html"    class="bg-white px-5 py-3 rounded-xl shadow text-sm font-semibold hover:bg-[#A0522D] hover:text-white transition">Bankui →</a>
+        <a href="nando.html"     class="bg-white px-5 py-3 rounded-xl shadow text-sm font-semibold hover:bg-[#A0522D] hover:text-white transition">Nando →</a>
+        <a href="../regions.html" class="bg-[#008751] text-white px-5 py-3 rounded-xl shadow text-sm font-semibold hover:bg-[#006840] transition">← Toutes les régions</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#111827] text-white py-10 text-center">
+    <p class="font-bold mb-1" style="font-family:'Playfair Display',serif">Burkina Terres d'Avenir</p>
+    <p class="text-gray-400 text-sm">Projet L3 Informatique 2025-2026 — 🇧🇫 La Terre des Hommes Intègres</p>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    window.addEventListener('load', () => {
+      document.querySelectorAll('.prog-fill').forEach(bar => {
+        const w = bar.getAttribute('data-w');
+        if (w) setTimeout(() => { bar.style.width = w + '%'; }, 400);
+      });
+    });
+  </script>
+</body>
+</html>

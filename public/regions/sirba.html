@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sirba - Burkina Terres d'Avenir</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="../css/style.css" rel="stylesheet">
+  <style>
+    body { font-family: 'Source Sans 3', sans-serif; }
+    h1,h2,h3 { font-family: 'Playfair Display', serif; }
+    .flag-stripe { height:6px; background: linear-gradient(90deg,#EF2B2D 50%,#009A00 50%); }
+    .hero-sirba {
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.75)),
+        url('https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1400&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+    .img-card { position:relative; overflow:hidden; border-radius:16px; }
+    .img-card img { width:100%; height:240px; object-fit:cover; transition:transform 0.6s ease; display:block; }
+    .img-card:hover img { transform:scale(1.07); }
+    .overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,transparent 55%); }
+    .caption { position:absolute; bottom:0; left:0; right:0; padding:16px; color:white; }
+    .info-card { transition:all 0.35s ease; border-left:5px solid #E8B923; }
+    .info-card:hover { transform:translateY(-5px); box-shadow:0 20px 40px rgba(232,185,35,0.15); }
+    .prog-bar { height:10px; border-radius:999px; background:#e5e7eb; overflow:hidden; }
+    .prog-fill { height:100%; border-radius:999px; background:linear-gradient(90deg,#E8B923,#008751); width:0; transition:width 1.6s ease; }
+  </style>
+</head>
+<body class="bg-[#F5F0E8]">
+
+  <div class="flag-stripe fixed top-0 w-full z-[60]"></div>
+
+  <!-- NAVBAR -->
+  <nav class="bg-white shadow-md fixed w-full z-50 top-[6px]">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+      <a href="../index.html" class="flex items-center gap-3">
+        <span class="text-2xl w-10 h-7 rounded flex items-center justify-center shadow-sm bg-white">🇧🇫</span>
+        <div>
+          <p class="text-lg font-bold text-[#008751] leading-tight" style="font-family:'Playfair Display',serif">Burkina Terres d'Avenir</p>
+          <p class="text-xs text-gray-400 leading-tight">Valoriser nos 17 Régions</p>
+        </div>
+      </a>
+      <div class="hidden md:flex gap-6 text-sm font-semibold">
+        <a href="../index.html"      class="text-gray-600 hover:text-[#008751] transition">Accueil</a>
+        <a href="../regions.html"    class="text-[#008751] border-b-2 border-[#008751]">Les 17 Régions</a>
+        <a href="../potentiels.html" class="text-gray-600 hover:text-[#008751] transition">Potentiels</a>
+        <a href="../culture.html"    class="text-gray-600 hover:text-[#008751] transition">Culture</a>
+      </div>
+      <a href="../regions.html" class="flex items-center gap-2 text-[#008751] font-bold text-sm hover:underline">
+        ← Toutes les régions
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero-sirba min-h-[80vh] flex items-end text-white pt-24 pb-16 px-6">
+    <div class="max-w-5xl mx-auto w-full">
+      <span class="inline-block text-gray-800 text-xs font-bold px-4 py-1 rounded-full mb-4 uppercase tracking-widest" style="background:#E8B923">Zone Est — Gnagna</span>
+      <h1 class="text-6xl md:text-8xl font-black mb-3">Sirba</h1>
+      <p class="text-2xl text-[#E8B923] font-bold mb-4">Chef-lieu : Bogandé</p>
+      <p class="text-lg text-gray-200 max-w-2xl">Leader national en production de sésame. Terre de courage et de dynamisme communautaire. Élevage extensif et agriculture céréalière dans la savane de l'Est.</p>
+      <div class="flex flex-wrap gap-4 mt-8">
+        <span class="bg-white/20 backdrop-blur px-4 py-2 rounded-full text-sm font-semibold">🌱 Sésame — Leader national</span>
+        <span class="bg-white/20 backdrop-blur px-4 py-2 rounded-full text-sm font-semibold">🐄 Élevage extensif</span>
+        <span class="bg-white/20 backdrop-blur px-4 py-2 rounded-full text-sm font-semibold">🤝 Dynamisme communautaire</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- CHIFFRES CLÉS -->
+  <section class="py-12 bg-white">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <div>
+        <p class="text-4xl font-black text-[#E8B923]" style="font-family:'Playfair Display',serif">4</p>
+        <p class="text-gray-500 text-sm mt-1">Provinces</p>
+      </div>
+      <div>
+        <p class="text-4xl font-black text-[#008751]" style="font-family:'Playfair Display',serif">Sirba</p>
+        <p class="text-gray-500 text-sm mt-1">Rivière principale</p>
+      </div>
+      <div>
+        <p class="text-4xl font-black text-[#A0522D]" style="font-family:'Playfair Display',serif">1er</p>
+        <p class="text-gray-500 text-sm mt-1">Sésame au Burkina</p>
+      </div>
+      <div>
+        <p class="text-4xl font-black text-[#EF2B2D]" style="font-family:'Playfair Display',serif">~700</p>
+        <p class="text-gray-500 text-sm mt-1">mm de pluie/an</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRÉSENTATION -->
+  <section class="py-20">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <p class="text-[#E8B923] uppercase tracking-widest text-xs font-semibold mb-3">Présentation générale</p>
+          <h2 class="text-4xl font-bold mb-6">Bogandé — Capitale du Sésame</h2>
+          <p class="text-gray-600 leading-relaxed mb-5">
+            La région de la <strong>Sirba</strong> (Gnagna) est une région de l'Est du Burkina Faso, habitée principalement par le peuple <strong>Gourmantché</strong>. Malgré les défis climatiques et sécuritaires, ses populations font preuve d'un dynamisme et d'une résilience remarquables.
+          </p>
+          <p class="text-gray-600 leading-relaxed mb-5">
+            La région est le <strong>premier producteur de sésame</strong> du Burkina Faso. Cette graine oléagineuse, très demandée sur les marchés mondiaux (Asie, Europe), constitue la principale source de revenus agricoles de la région. Sa culture est bien adaptée au climat semi-aride local.
+          </p>
+          <p class="text-gray-600 leading-relaxed">
+            La rivière <strong>Sirba</strong>, affluent du Niger, traverse la région et offre un potentiel agricole et halieutique encore peu exploité. Des barrages locaux permettent l'irrigation de périmètres maraîchers durant la saison sèche.
+          </p>
+        </div>
+        <div class="space-y-4">
+          <div class="img-card shadow-xl">
+            <img src="data:image/jpeg;base64,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"
+                 alt="Savane Est Burkina — Sirba"
+                 onerror="this.src='https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=640&h=400&fit=crop'">
+            <div class="overlay"></div>
+            <div class="caption">
+              <p class="font-bold">Savane de la Sirba — Est du Burkina</p>
+              <p class="text-sm opacity-75">Terres de sésame et d'élevage extensif</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-3 text-sm">
+            <div class="bg-white rounded-xl p-4 shadow info-card">
+              <p class="text-gray-400 text-xs mb-1">Superficie</p>
+              <p class="font-bold text-lg">~18 013 km²</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 shadow info-card">
+              <p class="text-gray-400 text-xs mb-1">Pluviométrie</p>
+              <p class="font-bold text-lg">~650 mm/an</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 shadow info-card">
+              <p class="text-gray-400 text-xs mb-1">Rivière</p>
+              <p class="font-bold text-lg">Sirba (→ Niger)</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 shadow info-card">
+              <p class="text-gray-400 text-xs mb-1">Langue locale</p>
+              <p class="font-bold text-lg">Gourmanchéma</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PEUPLES -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <p class="text-[#E8B923] uppercase tracking-widest text-xs font-semibold mb-3">Identité culturelle</p>
+      <h2 class="text-4xl font-bold mb-10">Peuples &amp; Traditions de Sirba</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-4 block">🌊</span>
+          <h3 class="font-bold text-xl mb-2">Gourmantché</h3>
+          <p class="text-gray-600 text-sm">Peuple majoritaire de la Gnagna. Agriculteurs courageux, éleveurs et commerçants. Organisation sociale traditionnelle autour du chef (Ong-naaba). Tradition orale très riche.</p>
+          <p class="text-xs font-semibold text-[#E8B923] mt-3">📍 Bogandé, Piéla, Manni, Bilanga</p>
+        </div>
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-4 block">🐄</span>
+          <h3 class="font-bold text-xl mb-2">Peul (Fulani)</h3>
+          <p class="text-gray-600 text-sm">Éleveurs nomades et semi-nomades très présents. Grands troupeaux de bovins et d'ovins. Culture pastorale vivante. Danses et fêtes traditionnelles animées.</p>
+          <p class="text-xs font-semibold text-[#E8B923] mt-3">📍 Zones pastorales de la région</p>
+        </div>
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-4 block">🌾</span>
+          <h3 class="font-bold text-xl mb-2">Bissa</h3>
+          <p class="text-gray-600 text-sm">Peuple agriculteur présent dans les zones sud de la région. Cultivateurs de céréales et de sésame. Artisans potiers et forgerons reconnus dans toute la région.</p>
+          <p class="text-xs font-semibold text-[#E8B923] mt-3">📍 Zones sud de la Gnagna</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LE SÉSAME -->
+  <section class="py-20" style="background:linear-gradient(135deg,#E8B923,#c99a00);">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-12 items-center text-gray-800">
+        <div>
+          <p class="text-[#008751] uppercase tracking-widest text-xs font-semibold mb-3">Or blanc de la Sirba</p>
+          <h2 class="text-4xl font-bold mb-6">Le Sésame — Trésor de la Région</h2>
+          <p class="leading-relaxed mb-5 opacity-90">
+            La région de la Sirba est le <strong>premier producteur de sésame</strong> du Burkina Faso. Cette petite graine oléagineuse, cultivée depuis des siècles dans la région, est aujourd'hui très demandée sur les marchés mondiaux — notamment en Asie (Chine, Japon, Corée) et en Europe.
+          </p>
+          <p class="leading-relaxed mb-5 opacity-90">
+            Le sésame burkinabè, et notamment celui de la Sirba, est reconnu pour sa <strong>qualité exceptionnelle</strong> — graines blanches, taux d'huile élevé, absence de résidus chimiques. Il est exporté brut vers les pays transformateurs, mais la filière de transformation locale reste à développer.
+          </p>
+          <p class="leading-relaxed opacity-90">
+            Pour des milliers de familles de la région, la vente du sésame après la récolte (novembre-janvier) représente la principale source de revenus monétaires de l'année — permettant de scolariser les enfants, soigner la famille et investir dans le bétail.
+          </p>
+        </div>
+        <div class="space-y-4">
+          <div class="bg-white/80 backdrop-blur rounded-2xl p-6">
+            <h3 class="font-bold text-xl mb-4 text-gray-800">🌱 Filière sésame en chiffres</h3>
+            <div class="space-y-3 text-sm">
+              <div class="border-l-4 border-[#008751] pl-4">
+                <p class="font-bold">Production nationale</p>
+                <p class="text-gray-600">Burkina Faso — parmi les 10 premiers exportateurs mondiaux</p>
+              </div>
+              <div class="border-l-4 border-[#008751] pl-4">
+                <p class="font-bold">Marchés d'exportation</p>
+                <p class="text-gray-600">Chine, Japon, Corée, Turquie, Europe — forte demande</p>
+              </div>
+              <div class="border-l-4 border-[#008751] pl-4">
+                <p class="font-bold">Qualité reconnue</p>
+                <p class="text-gray-600">Graines blanches, taux d'huile élevé, agriculture naturelle</p>
+              </div>
+              <div class="border-l-4 border-[#008751] pl-4">
+                <p class="font-bold">Défi à relever</p>
+                <p class="text-gray-600">Transformation locale — huile de sésame, tahini, cosmétiques</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-[#008751] text-white rounded-2xl p-5 text-center">
+            <p class="font-bold text-lg">🌱 Sirba — 1er producteur de sésame</p>
+            <p class="text-sm mt-2">Des milliers de tonnes exportées chaque année. Un or vert qui nourrit des milliers de familles.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POTENTIELS -->
+  <section class="py-20 bg-[#F5F0E8]">
+    <div class="max-w-7xl mx-auto px-6">
+      <p class="text-[#E8B923] uppercase tracking-widest text-xs font-semibold mb-3">Économie & Ressources</p>
+      <h2 class="text-4xl font-bold mb-10">Potentiels de la Région</h2>
+      <div class="grid md:grid-cols-2 gap-10">
+        <div class="space-y-5">
+          <div>
+            <div class="flex justify-between mb-2 text-sm font-semibold">
+              <span>🌱 Sésame — 1er producteur national</span>
+              <span class="text-[#E8B923]">95%</span>
+            </div>
+            <div class="prog-bar"><div class="prog-fill" data-w="95"></div></div>
+            <p class="text-xs text-gray-400 mt-1">Export mondial — Asie, Europe, Turquie</p>
+          </div>
+          <div>
+            <div class="flex justify-between mb-2 text-sm font-semibold">
+              <span>🐄 Élevage extensif</span>
+              <span class="text-[#E8B923]">85%</span>
+            </div>
+            <div class="prog-bar"><div class="prog-fill" data-w="85"></div></div>
+            <p class="text-xs text-gray-400 mt-1">Bovins, ovins, caprins — cheptel important</p>
+          </div>
+          <div>
+            <div class="flex justify-between mb-2 text-sm font-semibold">
+              <span>🌾 Céréales — Mil & Sorgho</span>
+              <span class="text-[#E8B923]">75%</span>
+            </div>
+            <div class="prog-bar"><div class="prog-fill" data-w="75"></div></div>
+            <p class="text-xs text-gray-400 mt-1">Base alimentaire — production locale suffisante</p>
+          </div>
+          <div>
+            <div class="flex justify-between mb-2 text-sm font-semibold">
+              <span>🥜 Niébé & Arachide</span>
+              <span class="text-[#E8B923]">65%</span>
+            </div>
+            <div class="prog-bar"><div class="prog-fill" data-w="65"></div></div>
+            <p class="text-xs text-gray-400 mt-1">Légumineuses — alimentation et revenus complémentaires</p>
+          </div>
+          <div>
+            <div class="flex justify-between mb-2 text-sm font-semibold">
+              <span>🌳 Karité & Produits forestiers</span>
+              <span class="text-[#E8B923]">60%</span>
+            </div>
+            <div class="prog-bar"><div class="prog-fill" data-w="60"></div></div>
+            <p class="text-xs text-gray-400 mt-1">Beurre de karité, néré — filières à développer</p>
+          </div>
+          <div>
+            <div class="flex justify-between mb-2 text-sm font-semibold">
+              <span>💧 Maraîchage irrigué</span>
+              <span class="text-[#E8B923]">50%</span>
+            </div>
+            <div class="prog-bar"><div class="prog-fill" data-w="50"></div></div>
+            <p class="text-xs text-gray-400 mt-1">Petits barrages locaux — légumes en contre-saison</p>
+          </div>
+        </div>
+        <div class="space-y-6">
+          <div class="rounded-2xl p-6 text-gray-800" style="background:#E8B923">
+            <h3 class="font-bold text-xl mb-4">🏆 Atouts de Sirba</h3>
+            <ul class="space-y-3 text-sm">
+              <li class="flex gap-2"><span>✅</span> 1er producteur de sésame du Burkina Faso</li>
+              <li class="flex gap-2"><span>✅</span> Cheptel bovin important — viande et lait</li>
+              <li class="flex gap-2"><span>✅</span> Rivière Sirba — potentiel hydraulique</li>
+              <li class="flex gap-2"><span>✅</span> Dynamisme communautaire exemplaire</li>
+              <li class="flex gap-2"><span>✅</span> Filière karité — cosmétiques et alimentation</li>
+              <li class="flex gap-2"><span>✅</span> Proximité avec le Niger — commerce transfrontalier</li>
+            </ul>
+          </div>
+          <div class="bg-white rounded-2xl p-6 shadow info-card">
+            <h3 class="font-bold text-lg mb-3">💪 Résilience des populations</h3>
+            <p class="text-gray-600 text-sm">Malgré les défis climatiques et sécuritaires, les populations de la Sirba font preuve d'une résilience et d'un dynamisme remarquables. Les organisations communautaires, les groupements de femmes et les coopératives agricoles jouent un rôle clé dans le développement local.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SITES & ATTRACTIONS -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <p class="text-[#E8B923] uppercase tracking-widest text-xs font-semibold mb-3">À découvrir</p>
+      <h2 class="text-4xl font-bold mb-10">Sites &amp; Attraits de Sirba</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-3 block">🌱</span>
+          <h3 class="font-bold text-xl mb-2">Champs de sésame</h3>
+          <p class="text-gray-600 text-sm">En saison des pluies (août-octobre), les champs de sésame offrent un spectacle magnifique de fleurs roses et blanches. Rencontre avec les producteurs et découverte des techniques de culture traditionnelle.</p>
+        </div>
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-3 block">💧</span>
+          <h3 class="font-bold text-xl mb-2">Rivière Sirba</h3>
+          <p class="text-gray-600 text-sm">La rivière Sirba offre de beaux paysages en saison des pluies. Pêche artisanale, baignade dans les zones sûres, observation de la faune aquatique et des oiseaux riverains.</p>
+        </div>
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-3 block">🛒</span>
+          <h3 class="font-bold text-xl mb-2">Marché de Bogandé</h3>
+          <p class="text-gray-600 text-sm">Marché hebdomadaire animé. Sésame, céréales, bétail, artisanat local. Rencontre authentique avec les commerçants et producteurs de toute la région de la Gnagna.</p>
+        </div>
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-3 block">🏛️</span>
+          <h3 class="font-bold text-xl mb-2">Chefferies traditionnelles</h3>
+          <p class="text-gray-600 text-sm">Visites des palais traditionnels des chefs Gourmantché dans les villages de la région. Découverte des cérémonies et rites traditionnels encore très vivants dans la communauté.</p>
+        </div>
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-3 block">🌳</span>
+          <h3 class="font-bold text-xl mb-2">Baobabs de la savane</h3>
+          <p class="text-gray-600 text-sm">La région abrite de magnifiques baobabs centenaires dans sa savane. Ces arbres sacrés sont au cœur de nombreuses légendes locales. Photographie et découverte de la flore sahélienne.</p>
+        </div>
+        <div class="bg-[#F5F0E8] rounded-2xl p-6 info-card">
+          <span class="text-4xl mb-3 block">🤝</span>
+          <h3 class="font-bold text-xl mb-2">Groupements de femmes</h3>
+          <p class="text-gray-600 text-sm">Les groupements de femmes de la région transforment le karité, le sésame et les céréales. Visite de ces unités de transformation artisanale — beurre de karité, huile de sésame, farine locale.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CITATION -->
+  <section class="py-16" style="background:linear-gradient(135deg,#E8B923,#c99a00);">
+    <div class="max-w-4xl mx-auto px-6 text-center text-gray-800">
+      <p class="text-3xl font-bold leading-relaxed mb-4" style="font-family:'Playfair Display',serif">
+        « La terre de la Sirba est avare en pluie mais généreuse en courage. Ses fils ne plient jamais. »
+      </p>
+      <p class="text-[#008751] font-semibold">— Hommage aux populations de la Gnagna</p>
+    </div>
+  </section>
+
+  <!-- NAVIGATION -->
+  <section class="py-12 bg-[#F5F0E8]">
+    <div class="max-w-7xl mx-auto px-6">
+      <h3 class="text-2xl font-bold text-center mb-8">Découvrir les autres régions</h3>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="goulmou.html"   class="bg-white px-5 py-3 rounded-xl shadow text-sm font-semibold transition" onmouseover="this.style.background='#E8B923';this.style.color='white'" onmouseout="this.style.background='white';this.style.color=''">← Goulmou</a>
+        <a href="nakambe.html"   class="bg-white px-5 py-3 rounded-xl shadow text-sm font-semibold transition" onmouseover="this.style.background='#E8B923';this.style.color='white'" onmouseout="this.style.background='white';this.style.color=''">Nakambé →</a>
+        <a href="tapoa.html"     class="bg-white px-5 py-3 rounded-xl shadow text-sm font-semibold transition" onmouseover="this.style.background='#E8B923';this.style.color='white'" onmouseout="this.style.background='white';this.style.color=''">Tapoa →</a>
+        <a href="liptako.html"   class="bg-white px-5 py-3 rounded-xl shadow text-sm font-semibold transition" onmouseover="this.style.background='#EF2B2D';this.style.color='white'" onmouseout="this.style.background='white';this.style.color=''">Liptako →</a>
+        <a href="../regions.html" class="bg-[#008751] text-white px-5 py-3 rounded-xl shadow text-sm font-semibold hover:bg-[#006840] transition">← Toutes les régions</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#111827] text-white py-10 text-center">
+    <p class="font-bold mb-1" style="font-family:'Playfair Display',serif">Burkina Terres d'Avenir</p>
+    <p class="text-gray-400 text-sm">Projet L3 Informatique 2025-2026 — 🇧🇫 La Terre des Hommes Intègres</p>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    window.addEventListener('load', () => {
+      document.querySelectorAll('.prog-fill').forEach(bar => {
+        const w = bar.getAttribute('data-w');
+        if (w) setTimeout(() => { bar.style.width = w + '%'; }, 400);
+      });
+    });
+  </script>
+</body>
+</html>

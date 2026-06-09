@@ -1,0 +1,701 @@
+/* ============================================================
+   STYLE.CSS — Burkina Terres d'Avenir
+   Projet L3 Informatique 2025-2026
+   Couleurs officielles du drapeau du Burkina Faso :
+   Rouge #EF2B2D | Vert #008751 | Or/Étoile #E8B923
+   ============================================================ */
+
+/* ===================== VARIABLES ===================== */
+:root {
+  --vert:    #008751;
+  --vert-dk: #006840;
+  --or:      #E8B923;
+  --or-dk:   #c99a00;
+  --rouge:   #EF2B2D;
+  --terre:   #A0522D;
+  --bleu:    #00A1D6;
+  --beige:   #F5F0E8;
+  --dark:    #1F2937;
+  --darker:  #111827;
+  --gray:    #6B7280;
+  --light:   #F9FAFB;
+
+  --radius-sm:  8px;
+  --radius-md:  16px;
+  --radius-lg:  24px;
+  --radius-xl:  32px;
+
+  --shadow-sm:  0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md:  0 8px 24px rgba(0,0,0,0.10);
+  --shadow-lg:  0 20px 50px rgba(0,0,0,0.14);
+  --shadow-grn: 0 10px 30px rgba(0,135,81,0.20);
+
+  --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===================== RESET ===================== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+  background-color: var(--beige);
+  color: var(--dark);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===================== TYPOGRAPHIE ===================== */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--dark);
+}
+
+h1 { font-size: clamp(2.2rem, 5vw, 4rem); }
+h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
+h3 { font-size: clamp(1.3rem, 2.5vw, 1.8rem); }
+
+p { line-height: 1.75; }
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+/* ===================== BANDE DRAPEAU ===================== */
+.flag-stripe {
+  height: 6px;
+  background: linear-gradient(90deg, var(--rouge) 50%, #009A00 50%);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 60;
+}
+
+/* ===================== NAVBAR ===================== */
+nav {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(255,255,255,0.97);
+  transition: box-shadow 0.3s ease;
+}
+
+nav.nav-scrolled {
+  box-shadow: 0 4px 30px rgba(0,0,0,0.10);
+}
+
+nav a {
+  position: relative;
+  padding-bottom: 2px;
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0;
+  width: 0; height: 2px;
+  background: var(--vert);
+  transition: width 0.3s ease;
+}
+
+nav a:hover::after { width: 100%; }
+
+/* Menu mobile */
+#mobile-menu {
+  position: absolute;
+  top: 100%; left: 0;
+  width: 100%;
+  background: white;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+  border-top: 3px solid var(--vert);
+  z-index: 40;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from { opacity:0; transform: translateY(-10px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+/* ===================== BOUTON RETOUR EN HAUT ===================== */
+#back-to-top {
+  position: fixed;
+  bottom: 2rem; right: 2rem;
+  width: 50px; height: 50px;
+  background: var(--vert);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  box-shadow: var(--shadow-grn);
+  transition: var(--transition);
+  z-index: 50;
+}
+
+#back-to-top:hover {
+  background: var(--or);
+  transform: translateY(-4px);
+  box-shadow: 0 15px 30px rgba(232,185,35,0.4);
+}
+
+#back-to-top.visible {
+  display: flex;
+}
+
+/* ===================== CARTES RÉGIONS ===================== */
+.region-card {
+  transition: var(--transition);
+  border-bottom: 4px solid transparent;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.region-card:hover {
+  transform: translateY(-12px);
+  border-bottom-color: var(--vert);
+  box-shadow: var(--shadow-grn);
+}
+
+.region-card img {
+  transition: transform 0.6s ease;
+  display: block;
+}
+
+.region-card:hover img {
+  transform: scale(1.08);
+}
+
+/* ===================== HERO SECTIONS ===================== */
+.hero-bg,
+.hero-region,
+.hero-regions,
+.hero-potentiels,
+.hero-culture,
+.hero-apropos {
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+/* Parallax sur desktop */
+@media (min-width: 768px) {
+  .hero-bg,
+  .hero-potentiels,
+  .hero-culture {
+    background-attachment: fixed;
+  }
+}
+
+/* ===================== SECTIONS TITRES ===================== */
+.section-title {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  width: 60px; height: 4px;
+  background: var(--or);
+  bottom: -10px; left: 0;
+  border-radius: 999px;
+}
+
+.section-title.center::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ===================== BADGES ZONES ===================== */
+.badge-centre { background: var(--vert); color: white; }
+.badge-ouest  { background: var(--terre); color: white; }
+.badge-est    { background: var(--or); color: #333; }
+.badge-nord   { background: var(--rouge); color: white; }
+.badge-sud    { background: var(--bleu); color: white; }
+
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+/* ===================== BOUTONS ===================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--vert);
+  color: white;
+  box-shadow: var(--shadow-grn);
+}
+
+.btn-primary:hover {
+  background: var(--vert-dk);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(0,135,81,0.35);
+}
+
+.btn-secondary {
+  background: var(--or);
+  color: var(--dark);
+  box-shadow: 0 8px 20px rgba(232,185,35,0.3);
+}
+
+.btn-secondary:hover {
+  background: var(--or-dk);
+  transform: translateY(-3px);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid white;
+  color: white;
+}
+
+.btn-outline:hover {
+  background: white;
+  color: var(--vert);
+}
+
+/* ===================== BARRES PROGRESSION ===================== */
+.prog-bar,
+.skill-bar {
+  height: 10px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  overflow: hidden;
+}
+
+.prog-fill,
+.skill-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--vert), var(--or));
+  width: 0;
+  transition: width 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===================== TABS ===================== */
+.tab-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  color: var(--gray);
+}
+
+.tab-btn:hover { color: var(--vert); }
+
+.tab-btn.active {
+  color: var(--vert);
+  border-bottom-color: var(--vert);
+  font-weight: 700;
+}
+
+.tab-content {
+  display: none;
+  animation: fadeInTab 0.4s ease;
+}
+
+.tab-content.active { display: block; }
+
+@keyframes fadeInTab {
+  from { opacity:0; transform: translateY(12px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+/* ===================== FORMULAIRES ===================== */
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-family: inherit;
+  background: white;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  color: var(--dark);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--vert);
+  box-shadow: 0 0 0 4px rgba(0,135,81,0.08);
+}
+
+/* ===================== CARTES INFO ===================== */
+.info-card,
+.cult-card,
+.pot-card,
+.region-preview {
+  transition: var(--transition);
+}
+
+.info-card:hover,
+.cult-card:hover,
+.pot-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+.region-preview:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-grn);
+}
+
+/* ===================== IMAGE CARDS ===================== */
+.img-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+.img-card img {
+  transition: transform 0.6s ease;
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  display: block;
+}
+
+.img-card:hover img { transform: scale(1.07); }
+
+.img-card .overlay,
+.img-card .img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%);
+}
+
+.img-card .caption,
+.img-card .img-caption {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 16px;
+  color: white;
+}
+
+/* ===================== TIMELINE ===================== */
+.tl-item, .timeline-step {
+  position: relative;
+  padding-left: 44px;
+  padding-bottom: 32px;
+}
+
+.tl-item::before,
+.timeline-step::before {
+  content: '';
+  position: absolute;
+  left: 15px; top: 28px; bottom: 0;
+  width: 2px;
+  background: #e5e7eb;
+}
+
+.tl-item:last-child::before,
+.timeline-step:last-child::before { display: none; }
+
+.tl-dot, .timeline-dot {
+  position: absolute;
+  left: 0; top: 14px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+  z-index: 1;
+}
+
+/* ===================== FAQ ACCORDÉON ===================== */
+.faq-item summary {
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.faq-item summary::-webkit-details-marker { display: none; }
+
+.faq-item[open] summary { color: var(--vert); }
+
+.faq-icon { transition: transform 0.3s ease; display: inline-block; }
+.faq-item[open] .faq-icon { transform: rotate(45deg); }
+
+/* ===================== ANIMATIONS ===================== */
+/* Fade Up (scroll) */
+.animate,
+.fade-up,
+.slide-in {
+  opacity: 0;
+}
+
+.animate.visible,
+.fade-up.visible {
+  animation: fadeUp 0.7s ease forwards;
+}
+
+.slide-in.visible {
+  animation: slideInLeft 0.6s ease forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity:0; transform: translateY(30px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity:0; transform: translateX(-20px); }
+  to   { opacity:1; transform: translateX(0); }
+}
+
+/* Délais d'animation */
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+
+/* Compteur stats */
+@keyframes countUp {
+  from { opacity:0; transform: scale(0.6); }
+  to   { opacity:1; transform: scale(1); }
+}
+
+.stat-animated {
+  animation: countUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Scroll indicator */
+.scroll-line {
+  width: 2px; height: 60px;
+  background: linear-gradient(to bottom, white, transparent);
+  margin: 0 auto;
+  animation: scrollPulse 2s infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity:1; transform: scaleY(1); }
+  50%       { opacity:0.3; transform: scaleY(0.7); }
+}
+
+/* ===================== ETHNIE CARDS ===================== */
+.ethnie-card {
+  border-left: 5px solid;
+  transition: var(--transition);
+}
+
+.ethnie-card:hover {
+  transform: translateX(6px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ===================== FESTIVAL BADGE ===================== */
+.fest-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ===================== UNESCO CARD ===================== */
+.unesco-card {
+  border: 2px solid var(--or);
+  position: relative;
+  overflow: hidden;
+}
+
+.unesco-card::before {
+  content: '🏅 UNESCO';
+  position: absolute;
+  top: 12px; right: 12px;
+  background: var(--or);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  z-index: 5;
+}
+
+/* ===================== CODE BLOCK ===================== */
+.code-block {
+  background: var(--darker);
+  color: #86efac;
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  line-height: 1.8;
+}
+
+/* ===================== UTILITAIRES ===================== */
+.glass {
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.shadow-soft { box-shadow: var(--shadow-sm); }
+.shadow-md   { box-shadow: var(--shadow-md); }
+.shadow-green { box-shadow: var(--shadow-grn); }
+
+.text-vert  { color: var(--vert); }
+.text-or    { color: var(--or); }
+.text-rouge { color: var(--rouge); }
+.text-terre { color: var(--terre); }
+
+.bg-beige { background: var(--beige); }
+.bg-vert  { background: var(--vert); }
+.bg-or    { background: var(--or); }
+
+.border-vert  { border-color: var(--vert); }
+.border-or    { border-color: var(--or); }
+.border-rouge { border-color: var(--rouge); }
+
+/* ===================== STICKY TABS ===================== */
+.tabs-sticky {
+  position: sticky;
+  top: 70px;
+  z-index: 30;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.tabs-sticky::-webkit-scrollbar { display: none; }
+
+/* ===================== FOOTER ===================== */
+footer a {
+  transition: color 0.3s ease;
+}
+
+footer a:hover { color: white; }
+
+/* ===================== SEARCH BOX ===================== */
+.search-box {
+  border: 2px solid #e5e7eb;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  border-radius: 999px;
+}
+
+.search-box:focus {
+  outline: none;
+  border-color: var(--vert);
+  box-shadow: 0 0 0 4px rgba(0,135,81,0.08);
+}
+
+/* ===================== FILTER BUTTONS ===================== */
+.filter-btn {
+  transition: var(--transition);
+  border: 2px solid #e5e7eb;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.filter-btn.active {
+  background: var(--vert) !important;
+  color: white !important;
+  border-color: var(--vert) !important;
+}
+
+.filter-btn:hover:not(.active) {
+  border-color: var(--vert);
+  color: var(--vert);
+}
+
+/* ===================== SCROLLBAR CUSTOM ===================== */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--beige); }
+::-webkit-scrollbar-thumb {
+  background: var(--vert);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--vert-dk); }
+
+/* ===================== SÉLECTION TEXTE ===================== */
+::selection {
+  background: var(--vert);
+  color: white;
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 768px) {
+  h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.8rem; }
+
+  .hero-bg,
+  .hero-region,
+  .hero-potentiels,
+  .hero-culture {
+    background-attachment: scroll;
+  }
+
+  .tabs-sticky {
+    top: 62px;
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    font-size: 0.8rem;
+    padding: 10px 12px;
+  }
+
+  .region-card:hover {
+    transform: translateY(-6px);
+  }
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 1.9rem; }
+
+  .btn {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+  }
+
+  .img-card img { height: 180px; }
+}
+
+/* ===================== PRINT ===================== */
+@media print {
+  nav, .flag-stripe, #back-to-top { display: none; }
+  body { background: white; }
+  .region-card { break-inside: avoid; }
+}
