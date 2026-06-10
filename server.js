@@ -46,15 +46,6 @@ app.get('/', (req, res) => {
   res.redirect('/acceuil.html');
 });
 
-    version: '1.0',
-    routes: [
-      'GET /api/regions',
-      'GET /api/regions?zone=est',
-      'GET /api/regions/:slug',
-      'GET /api/zones'
-    ]
-  });
-});
 
 // ==================== DÉMARRAGE ====================
 // Stocker les messages en mémoire
