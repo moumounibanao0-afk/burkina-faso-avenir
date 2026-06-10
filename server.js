@@ -43,8 +43,9 @@ app.get('/api/zones', (req, res) => {
 
 // Route de test
 app.get('/', (req, res) => {
-  res.json({ 
-    message: '🇧🇫 Burkina Terres d\'Avenir — API',
+  res.redirect('/acceuil.html');
+	});
+
     version: '1.0',
     routes: [
       'GET /api/regions',
