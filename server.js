@@ -88,3 +88,14 @@ app.listen(PORT, () => {
   console.log(`📡 API disponible sur http://localhost:${PORT}/api/regions`);
 });
 
+
+// ==================== KEEP-ALIVE ====================
+// Empêche Render (plan gratuit) de mettre le service en veille
+const https = require('https');
+setInterval(() => {
+  https.get('https://burkina-faso-avenir.onrender.com/api/zones', (res) => {
+    console.log(`🔄 Keep-alive ping — statut : ${res.statusCode}`);
+  }).on('error', (err) => {
+    console.log(`⚠️ Keep-alive erreur : ${err.message}`);
+  });
+}, 14 * 60 * 1000); // toutes les 14 minutes
