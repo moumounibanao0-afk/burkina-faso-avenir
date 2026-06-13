@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const regions = require('./data/regions');
+const db = require('./database');
 
 const app = express();
 const PORT = 4000;
@@ -99,3 +100,37 @@ setInterval(() => {
     console.log(`⚠️ Keep-alive erreur : ${err.message}`);
   });
 }, 14 * 60 * 1000); // toutes les 14 minutes
+
+// ==================== ROUTES DB ====================
+// POST contact — sauvegarde en base de données
+app.post('/api/contact/db', (req, res) => {
+  const { nom, email, sujet, message } = req.body;
+  if (!nom || !email || !message) {
+    return res.status(400).json({ erreur: 'Champs obligatoires manquants' });
+  }
+  const date = new Date().toLocaleString('fr-FR');
+  const stmt = db.prepare('INSERT INTO messages (nom, email, sujet, message, date) VALUES (?, ?, ?, ?, ?)');
+  const result = stmt.run(nom, email, sujet || '', message, date);
+  console.log('📩 Message sauvegardé en DB, id:', result.lastInsertRowid);
+  res.json({ succes: true, id: result.lastInsertRowid, messageRecu: 'Message bien reçu !' });
+});
+
+// GET messages — lecture depuis la base de données
+app.get('/api/messages/db', (req, res) => {
+  const msgs = db.prepare('SELECT * FROM messages ORDER BY id DESC').all();
+  res.json(msgs);
+});
+
+// POST vue région — enregistrer une visite
+app.post('/api/regions/:slug/vue', (req, res) => {
+  const { slug } = req.params;
+  const date = new Date().toLocaleString('fr-FR');
+  db.prepare('INSERT INTO regions_vues (slug, date) VALUES (?, ?)').run(slug, date);
+  res.json({ succes: true });
+});
+
+// GET stats vues par région
+app.get('/api/stats', (req, res) => {
+  const stats = db.prepare('SELECT slug, COUNT(*) as vues FROM regions_vues GROUP BY slug ORDER BY vues DESC').all();
+  res.json(stats);
+});

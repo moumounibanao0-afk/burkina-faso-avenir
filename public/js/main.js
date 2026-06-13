@@ -361,7 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Veuillez entrer une adresse email valide.');
       return;
     }
-    fetch('/api/contact', {
+    fetch('/api/contact/db', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ nom, email, sujet, message })
