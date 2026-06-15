@@ -1,7 +1,7 @@
 // api.js — Connexion au backend
 // fetch() = fonction JS pour appeler une API via internet/réseau
 
-fetch('http://localhost:4000/api/regions')
+fetch('/api/regions')
   .then(function(response) {
     // .then() = "quand la réponse arrive, fais ceci"
     return response.json(); // convertit la réponse texte en objet JavaScript
