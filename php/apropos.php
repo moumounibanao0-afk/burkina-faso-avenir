@@ -42,6 +42,7 @@
   <nav>
     <a href="accueil.php">Accueil</a>
     <a href="regions.php">Les 17 Régions</a>
+    <a href="carte.php">🗺️ Carte</a>
     <a href="potentiels.php">Potentiels</a>
     <a href="culture.php">Culture</a>
     <a href="apropos.php" class="actif">À Propos</a>
