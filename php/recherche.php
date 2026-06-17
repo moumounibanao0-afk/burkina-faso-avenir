@@ -207,5 +207,6 @@ if (initQ.length >= 2) {
 
 input.focus();
 </script>
+<script src="commun.js"></script>
 </body>
 </html>

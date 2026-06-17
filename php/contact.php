@@ -97,5 +97,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <footer>🇧🇫 Burkina Terres d'Avenir — Projet L3 Web Dynamique PHP + MySQL</footer>
 <?php mysqli_close($conn); ?>
+<script src="commun.js"></script>
 </body>
 </html>

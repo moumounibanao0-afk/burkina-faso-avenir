@@ -207,5 +207,6 @@ loadNews();
 // Auto-refresh toutes les 5 minutes
 setInterval(loadNews, 5 * 60 * 1000);
 </script>
+<script src="commun.js"></script>
 </body>
 </html>

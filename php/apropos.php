@@ -147,5 +147,6 @@ $nb_messages  = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM messa
 
 <footer>🇧🇫 Burkina Terres d'Avenir — Projet L3 Informatique — Université Norbert Zongo 2025-2026</footer>
 <?php mysqli_close($conn); ?>
+<script src="commun.js"></script>
 </body>
 </html>

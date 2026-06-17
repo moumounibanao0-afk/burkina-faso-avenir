@@ -121,5 +121,6 @@ $nb_cats  = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(DISTINCT categori
 
 <footer>🇧🇫 Burkina Terres d'Avenir — Projet L3 Web Dynamique PHP + MySQL</footer>
 <?php mysqli_close($conn); ?>
+<script src="commun.js"></script>
 </body>
 </html>

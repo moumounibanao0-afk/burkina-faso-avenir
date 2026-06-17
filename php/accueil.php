@@ -287,5 +287,6 @@ input.addEventListener('keypress', function(e) {
   if (e.key === 'Enter') doSearch();
 });
 </script>
+<script src="commun.js"></script>
 </body>
 </html>

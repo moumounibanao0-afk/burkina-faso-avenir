@@ -18,6 +18,11 @@ $next = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id, nom FROM regions WHER
 $nom_safe = mysqli_real_escape_string($conn, $region['nom']);
 $provinces = mysqli_query($conn, "SELECT * FROM provinces WHERE region_nom = '$nom_safe' ORDER BY nom");
 $nb_provinces = mysqli_num_rows($provinces);
+
+// Compteur de vues
+$slug = strtolower(str_replace(" ", "-", $region["nom"]));
+mysqli_query($conn, "INSERT INTO regions_vues (slug) VALUES ('$slug')");
+$nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vues WHERE slug='$slug'"))[0];
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -98,6 +103,10 @@ $nb_provinces = mysqli_num_rows($provinces);
       <div class="label">Zone</div>
       <div class="value" style="font-size:13px"><?php echo htmlspecialchars($region['zone']); ?></div>
     </div>
+    <div class="info-card">
+      <div class="label">Vues 👁️</div>
+      <div class="value"><?php echo $nb_vues; ?></div>
+    </div>
   </div>
 
   <div class="section">
@@ -151,5 +160,6 @@ $nb_provinces = mysqli_num_rows($provinces);
 
 <footer>🇧🇫 Burkina Terres d'Avenir — Projet L3 Web Dynamique PHP + MySQL</footer>
 <?php mysqli_close($conn); ?>
+<script src="commun.js"></script>
 </body>
 </html>

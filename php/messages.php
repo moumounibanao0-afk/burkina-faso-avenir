@@ -68,5 +68,6 @@ mysqli_close($conn);
 </div>
 
 <footer>🇧🇫 Burkina Terres d'Avenir — Projet L3 Web Dynamique PHP + MySQL</footer>
+<script src="commun.js"></script>
 </body>
 </html>
