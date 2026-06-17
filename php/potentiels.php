@@ -20,15 +20,17 @@
     .filtres a { display: inline-block; margin: 5px; padding: 8px 20px; background: white; border: 2px solid #008751; color: #008751; border-radius: 20px; text-decoration: none; font-weight: bold; }
     .filtres a.actif, .filtres a:hover { background: #008751; color: white; }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-    .card { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-left: 5px solid #008751; transition: transform 0.2s; }
+    .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s; }
     .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,135,81,0.15); }
-    .card.or { border-left-color: #E8B923; }
-    .card.terre { border-left-color: #A0522D; }
-    .card.bleu { border-left-color: #00A1D6; }
-    .card.rouge { border-left-color: #EF2B2D; }
-    .card .icone { font-size: 36px; margin-bottom: 10px; }
+    .card img { width: 100%; height: 160px; object-fit: cover; }
+    .card-body { padding: 20px; border-left: 5px solid #008751; }
+    .card-body.or { border-left-color: #E8B923; }
+    .card-body.terre { border-left-color: #A0522D; }
+    .card-body.bleu { border-left-color: #00A1D6; }
+    .card-body.rouge { border-left-color: #EF2B2D; }
+    .card .icone { font-size: 30px; margin-bottom: 8px; }
     .card h3 { color: #333; margin: 0 0 10px; font-size: 18px; }
-    .card p { color: #666; font-size: 14px; line-height: 1.6; }
+    .card p { color: #666; font-size: 13px; line-height: 1.6; margin: 0; }
     .badge { display: inline-block; background: #f0f0f0; color: #555; padding: 3px 10px; border-radius: 10px; font-size: 11px; margin-bottom: 10px; text-transform: uppercase; }
     .stats { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 30px 0; }
     .stat { background: white; padding: 20px 30px; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
@@ -47,6 +49,7 @@
     <a href="culture.php">Culture</a>
     <a href="apropos.php">À Propos</a>
     <a href="contact.php">Contact</a>
+    <a href="messages.php">Messages</a>
   </nav>
 </nav>
 
@@ -57,8 +60,6 @@
 
 <?php
 $cat_filtre = isset($_GET['categorie']) ? $_GET['categorie'] : 'toutes';
-
-// Statistiques
 $nb_total = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM potentiels"))[0];
 $nb_cats  = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(DISTINCT categorie) FROM potentiels"))[0];
 ?>
@@ -102,11 +103,16 @@ $nb_cats  = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(DISTINCT categori
 
   <div class="grid">
     <?php while ($p = mysqli_fetch_assoc($result)): ?>
-    <div class="card <?php echo htmlspecialchars($p['couleur']); ?>">
-      <div class="icone"><?php echo $p['icone']; ?></div>
-      <span class="badge"><?php echo htmlspecialchars($p['categorie']); ?></span>
-      <h3><?php echo htmlspecialchars($p['titre']); ?></h3>
-      <p><?php echo htmlspecialchars($p['description']); ?></p>
+    <div class="card">
+      <img src="<?php echo htmlspecialchars($p['image_url'] ?? 'https://via.placeholder.com/600x160/008751/white?text=' . urlencode($p['titre'])); ?>"
+           alt="<?php echo htmlspecialchars($p['titre']); ?>"
+           onerror="this.src='https://via.placeholder.com/600x160/008751/white?text=<?php echo urlencode($p['titre']); ?>'">
+      <div class="card-body <?php echo htmlspecialchars($p['couleur']); ?>">
+        <div class="icone"><?php echo $p['icone']; ?></div>
+        <span class="badge"><?php echo htmlspecialchars($p['categorie']); ?></span>
+        <h3><?php echo htmlspecialchars($p['titre']); ?></h3>
+        <p><?php echo htmlspecialchars($p['description']); ?></p>
+      </div>
     </div>
     <?php endwhile; ?>
   </div>

@@ -20,10 +20,12 @@
     .filtres a { display: inline-block; margin: 5px; padding: 8px 20px; background: white; border: 2px solid #008751; color: #008751; border-radius: 20px; text-decoration: none; font-weight: bold; }
     .filtres a.actif, .filtres a:hover { background: #008751; color: white; }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-    .card { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s; border-top: 4px solid #A0522D; }
-    .card:hover { transform: translateY(-5px); }
+    .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s; }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,135,81,0.15); }
+    .card img { width: 100%; height: 160px; object-fit: cover; }
+    .card-body { padding: 20px; border-top: 4px solid #A0522D; }
     .card h3 { color: #333; margin: 0 0 10px; font-size: 18px; }
-    .card p { color: #666; font-size: 14px; line-height: 1.6; }
+    .card p { color: #666; font-size: 13px; line-height: 1.6; margin: 0 0 8px; }
     .badge { display: inline-block; background: #A0522D; color: white; padding: 3px 10px; border-radius: 10px; font-size: 11px; margin-bottom: 10px; text-transform: uppercase; }
     .badge.festival { background: #EF2B2D; }
     .badge.patrimoine { background: #E8B923; color: #333; }
@@ -46,6 +48,7 @@
     <a href="culture.php" class="actif">Culture</a>
     <a href="apropos.php">À Propos</a>
     <a href="contact.php">Contact</a>
+    <a href="messages.php">Messages</a>
   </nav>
 </nav>
 
@@ -57,7 +60,6 @@
 <?php
 $type_filtre = isset($_GET['type']) ? $_GET['type'] : 'toutes';
 $nb_total = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM cultures"))[0];
-$nb_types = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(DISTINCT type) FROM cultures"))[0];
 ?>
 
 <div class="container">
@@ -65,7 +67,7 @@ $nb_types = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(DISTINCT type) FR
     <div class="stat"><strong><?php echo $nb_total; ?></strong><span>Éléments culturels</span></div>
     <div class="stat"><strong>60+</strong><span>Groupes ethniques</span></div>
     <div class="stat"><strong>70+</strong><span>Langues parlées</span></div>
-    <div class="stat"><strong>1</strong><span>Site UNESCO</span></div>
+    <div class="stat"><strong>2</strong><span>Sites UNESCO</span></div>
   </div>
 
   <div class="filtres">
@@ -100,12 +102,17 @@ $nb_types = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(DISTINCT type) FR
   <div class="grid">
     <?php while ($c = mysqli_fetch_assoc($result)): ?>
     <div class="card">
-      <span class="badge <?php echo htmlspecialchars($c['type']); ?>">
-        <?php echo htmlspecialchars($c['type']); ?>
-      </span>
-      <h3><?php echo htmlspecialchars($c['nom']); ?></h3>
-      <p><?php echo htmlspecialchars($c['description']); ?></p>
-      <p class="region-tag">📍 <?php echo htmlspecialchars($c['region']); ?></p>
+      <img src="<?php echo htmlspecialchars($c['image_url'] ?? 'https://via.placeholder.com/600x160/A0522D/white?text=' . urlencode($c['nom'])); ?>"
+           alt="<?php echo htmlspecialchars($c['nom']); ?>"
+           onerror="this.src='https://via.placeholder.com/600x160/A0522D/white?text=<?php echo urlencode($c['nom']); ?>'">
+      <div class="card-body">
+        <span class="badge <?php echo htmlspecialchars($c['type']); ?>">
+          <?php echo htmlspecialchars($c['type']); ?>
+        </span>
+        <h3><?php echo htmlspecialchars($c['nom']); ?></h3>
+        <p><?php echo htmlspecialchars($c['description']); ?></p>
+        <p class="region-tag">📍 <?php echo htmlspecialchars($c['region']); ?></p>
+      </div>
     </div>
     <?php endwhile; ?>
   </div>
