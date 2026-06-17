@@ -1,26 +1,23 @@
 <?php
 require 'conn.php';
 
-// Récupérer l'id via $_GET
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-if ($id <= 0) {
-  header('Location: regions.php');
-  exit;
-}
+if ($id <= 0) { header('Location: regions.php'); exit; }
 
 $sql = "SELECT * FROM regions WHERE id = $id";
 $result = mysqli_query($conn, $sql);
 $region = mysqli_fetch_assoc($result);
 
-if (!$region) {
-  header('Location: regions.php');
-  exit;
-}
+if (!$region) { header('Location: regions.php'); exit; }
 
-// Région précédente et suivante
 $prev = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id, nom FROM regions WHERE id < $id ORDER BY id DESC LIMIT 1"));
 $next = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id, nom FROM regions WHERE id > $id ORDER BY id ASC LIMIT 1"));
+
+// Provinces de cette région
+$nom_safe = mysqli_real_escape_string($conn, $region['nom']);
+$provinces = mysqli_query($conn, "SELECT * FROM provinces WHERE region_nom = '$nom_safe' ORDER BY nom");
+$nb_provinces = mysqli_num_rows($provinces);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -40,7 +37,7 @@ $next = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id, nom FROM regions WHER
     .hero-overlay h1 { color: white; font-size: 48px; margin: 0; }
     .hero-overlay .zone { background: #EF2B2D; color: white; padding: 5px 15px; border-radius: 20px; font-size: 13px; font-weight: bold; margin-left: 15px; }
     .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
-    .info-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
+    .info-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; margin-bottom: 30px; }
     .info-card { background: white; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
     .info-card .label { color: #888; font-size: 12px; text-transform: uppercase; margin-bottom: 5px; }
     .info-card .value { color: #008751; font-size: 22px; font-weight: bold; }
@@ -51,8 +48,13 @@ $next = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id, nom FROM regions WHER
     .tag { background: #f0f0f0; color: #333; padding: 6px 14px; border-radius: 20px; font-size: 13px; }
     .tag.vert { background: #e8f5e9; color: #008751; }
     .tag.rouge { background: #ffebee; color: #EF2B2D; }
-    .nav-regions { display: flex; justify-content: space-between; margin: 30px 0; }
-    .nav-btn { background: #008751; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; }
+    .tag.or { background: #fff8e1; color: #E8B923; }
+    .provinces-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 15px; }
+    .province-card { background: #f9f9f9; border-radius: 10px; padding: 15px; border-left: 4px solid #008751; }
+    .province-card h4 { color: #008751; margin: 0 0 5px; font-size: 15px; }
+    .province-card p { color: #888; font-size: 12px; margin: 0; }
+    .nav-regions { display: flex; justify-content: space-between; margin: 30px 0; gap: 10px; }
+    .nav-btn { background: #008751; color: white; padding: 12px 20px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 13px; }
     .nav-btn.retour { background: white; color: #008751; border: 2px solid #008751; }
     .nav-btn:hover { opacity: 0.85; }
     footer { background: #111827; color: #aaa; text-align: center; padding: 20px; margin-top: 50px; }
@@ -86,21 +88,33 @@ $next = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id, nom FROM regions WHER
   <div class="info-grid">
     <div class="info-card">
       <div class="label">Chef-lieu</div>
-      <div class="value" style="font-size:16px"><?php echo htmlspecialchars($region['chef_lieu']); ?></div>
+      <div class="value" style="font-size:15px"><?php echo htmlspecialchars($region['chef_lieu']); ?></div>
     </div>
     <div class="info-card">
       <div class="label">Provinces</div>
-      <div class="value"><?php echo $region['provinces']; ?></div>
+      <div class="value"><?php echo $nb_provinces; ?></div>
     </div>
     <div class="info-card">
       <div class="label">Zone</div>
-      <div class="value" style="font-size:14px"><?php echo htmlspecialchars($region['zone']); ?></div>
+      <div class="value" style="font-size:13px"><?php echo htmlspecialchars($region['zone']); ?></div>
     </div>
   </div>
 
   <div class="section">
     <h2>📋 Description</h2>
     <p><?php echo htmlspecialchars($region['description']); ?></p>
+  </div>
+
+  <div class="section">
+    <h2>🏛️ Provinces (<?php echo $nb_provinces; ?>)</h2>
+    <div class="provinces-grid">
+      <?php while ($p = mysqli_fetch_assoc($provinces)): ?>
+      <div class="province-card">
+        <h4><?php echo htmlspecialchars($p['nom']); ?></h4>
+        <p>🏙️ <?php echo htmlspecialchars($p['chef_lieu']); ?></p>
+      </div>
+      <?php endwhile; ?>
+    </div>
   </div>
 
   <div class="section">
@@ -124,17 +138,13 @@ $next = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id, nom FROM regions WHER
   <div class="nav-regions">
     <?php if ($prev): ?>
     <a href="region.php?id=<?php echo $prev['id']; ?>" class="nav-btn">← <?php echo htmlspecialchars($prev['nom']); ?></a>
-    <?php else: ?>
-    <span></span>
-    <?php endif; ?>
+    <?php else: ?><span></span><?php endif; ?>
 
     <a href="regions.php" class="nav-btn retour">🗺️ Toutes les régions</a>
 
     <?php if ($next): ?>
     <a href="region.php?id=<?php echo $next['id']; ?>" class="nav-btn"><?php echo htmlspecialchars($next['nom']); ?> →</a>
-    <?php else: ?>
-    <span></span>
-    <?php endif; ?>
+    <?php else: ?><span></span><?php endif; ?>
   </div>
 
 </div>
