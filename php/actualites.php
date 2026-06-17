@@ -161,6 +161,7 @@ function renderNews() {
   // Filtre par catégorie
   if (currentFilter) {
     items = items.filter(a =>
+      a.categorie === currentFilter ||
       a.titre.toLowerCase().includes(currentFilter) ||
       a.desc.toLowerCase().includes(currentFilter)
     );
