@@ -1,0 +1,310 @@
+<?php require 'conn.php'; ?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin — Burkina Terres d'Avenir</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; background: #F5F0E8; }
+    .flag-stripe { height: 6px; background: linear-gradient(90deg, #EF2B2D 50%, #009A00 50%); }
+    .navbar { background: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .navbar .logo { color: #008751; font-size: 18px; font-weight: bold; text-decoration: none; }
+    .navbar nav a { margin-left: 15px; color: #333; text-decoration: none; font-size: 13px; font-weight: bold; }
+    .navbar nav a:hover { color: #008751; }
+    .hero { background: linear-gradient(135deg, #1B4F72, #008751); color: white; padding: 40px 30px; text-align: center; }
+    .hero h1 { font-size: 32px; margin-bottom: 8px; }
+    .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-top: 4px solid #008751; }
+    .stat-card strong { display: block; font-size: 36px; color: #008751; }
+    .stat-card span { color: #666; font-size: 13px; }
+    .section { background: white; border-radius: 12px; padding: 25px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .section h2 { color: #008751; border-left: 4px solid #E8B923; padding-left: 12px; margin-bottom: 20px; font-size: 20px; }
+    .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px; }
+    .chart-box { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .chart-box h3 { color: #008751; margin-bottom: 15px; font-size: 16px; }
+    table { width: 100%; border-collapse: collapse; }
+    th { background: #008751; color: white; padding: 10px 12px; text-align: left; font-size: 13px; }
+    td { padding: 10px 12px; border-bottom: 1px solid #eee; font-size: 13px; }
+    tr:nth-child(even) { background: #f9f9f9; }
+    .badge { background: #e8f5e9; color: #008751; padding: 2px 8px; border-radius: 8px; font-size: 11px; font-weight: bold; }
+    .badge.rouge { background: #ffebee; color: #EF2B2D; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .form-group { display: flex; flex-direction: column; gap: 5px; }
+    .form-group label { font-size: 13px; font-weight: bold; color: #555; }
+    .form-group input, .form-group select, .form-group textarea { padding: 10px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 13px; outline: none; }
+    .form-group input:focus, .form-group textarea:focus { border-color: #008751; }
+    .form-group.full { grid-column: 1 / -1; }
+    .btn { padding: 10px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 14px; }
+    .btn-green { background: #008751; color: white; }
+    .btn-green:hover { background: #006a3e; }
+    .btn-red { background: #EF2B2D; color: white; font-size: 12px; padding: 5px 10px; }
+    .success { background: #e8f5e9; color: #008751; padding: 12px; border-radius: 8px; margin-bottom: 15px; }
+    .vues-bar { background: #e8f5e9; border-radius: 4px; height: 8px; margin-top: 4px; }
+    .vues-fill { background: #008751; height: 8px; border-radius: 4px; }
+    footer { background: #111827; color: #aaa; text-align: center; padding: 20px; margin-top: 50px; }
+  </style>
+</head>
+<body>
+<div class="flag-stripe"></div>
+<nav class="navbar">
+  <a class="logo" href="accueil.php">🇧🇫 Burkina Terres d'Avenir</a>
+  <nav>
+    <a href="accueil.php">Accueil</a>
+    <a href="regions.php">Régions</a>
+    <a href="messages.php">Messages</a>
+    <a href="admin.php" style="color:#008751">⚙️ Admin</a>
+  </nav>
+</nav>
+
+<div class="hero">
+  <h1>⚙️ Tableau de bord Admin</h1>
+  <p>Gestion du site Burkina Terres d'Avenir</p>
+</div>
+
+<?php
+// Traitement formulaire ajout région
+$msg = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
+  if ($_POST['action'] === 'ajouter') {
+    $nom       = mysqli_real_escape_string($conn, trim($_POST['nom']));
+    $chef_lieu = mysqli_real_escape_string($conn, trim($_POST['chef_lieu']));
+    $zone      = mysqli_real_escape_string($conn, trim($_POST['zone']));
+    $desc      = mysqli_real_escape_string($conn, trim($_POST['description']));
+    $peuples   = mysqli_real_escape_string($conn, trim($_POST['peuples']));
+    $potentiels= mysqli_real_escape_string($conn, trim($_POST['potentiels']));
+    $image_url = mysqli_real_escape_string($conn, trim($_POST['image_url']));
+    $provinces = intval($_POST['provinces']);
+
+    $sql = "INSERT INTO regions (nom, chef_lieu, zone, description, peuples, potentiels, image_url, provinces)
+            VALUES ('$nom','$chef_lieu','$zone','$desc','$peuples','$potentiels','$image_url',$provinces)";
+    if (mysqli_query($conn, $sql)) {
+      $msg = "✅ Région '$nom' ajoutée avec succès !";
+    } else {
+      $msg = "❌ Erreur : " . mysqli_error($conn);
+    }
+  }
+  if ($_POST['action'] === 'supprimer') {
+    $id = intval($_POST['region_id']);
+    if ($id > 0) {
+      $r = mysqli_fetch_assoc(mysqli_query($conn, "SELECT nom FROM regions WHERE id=$id"));
+      mysqli_query($conn, "DELETE FROM regions WHERE id=$id");
+      $msg = "✅ Région '{$r['nom']}' supprimée.";
+    }
+  }
+}
+
+// Stats
+$nb_regions   = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions"))[0];
+$nb_provinces = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM provinces"))[0];
+$nb_cultures  = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM cultures"))[0];
+$nb_potentiels= mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM potentiels"))[0];
+$nb_messages  = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM messages"))[0];
+$nb_vues_total= mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vues"))[0];
+?>
+
+<div class="container">
+
+  <!-- Stats globales -->
+  <div class="stats-grid">
+    <div class="stat-card"><strong><?php echo $nb_regions; ?></strong><span>Régions</span></div>
+    <div class="stat-card"><strong><?php echo $nb_provinces; ?></strong><span>Provinces</span></div>
+    <div class="stat-card"><strong><?php echo $nb_cultures; ?></strong><span>Éléments culturels</span></div>
+    <div class="stat-card"><strong><?php echo $nb_potentiels; ?></strong><span>Potentiels</span></div>
+    <div class="stat-card"><strong><?php echo $nb_messages; ?></strong><span>Messages reçus</span></div>
+    <div class="stat-card"><strong><?php echo $nb_vues_total; ?></strong><span>Vues totales</span></div>
+  </div>
+
+  <!-- Graphiques -->
+  <div class="charts-grid">
+    <div class="chart-box">
+      <h3>📊 Régions par zone géographique</h3>
+      <canvas id="chartZones" height="200"></canvas>
+    </div>
+    <div class="chart-box">
+      <h3>👁️ Régions les plus visitées</h3>
+      <canvas id="chartVues" height="200"></canvas>
+    </div>
+  </div>
+
+  <!-- Régions les plus visitées (table) -->
+  <div class="section">
+    <h2>👁️ Statistiques de visites par région</h2>
+    <table>
+      <tr><th>Région</th><th>Vues</th><th>Popularité</th></tr>
+      <?php
+      $max_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vues GROUP BY slug ORDER BY COUNT(*) DESC LIMIT 1"))[0] ?? 1;
+      $vues_res = mysqli_query($conn, "SELECT slug, COUNT(*) as nb FROM regions_vues GROUP BY slug ORDER BY nb DESC LIMIT 10");
+      if (mysqli_num_rows($vues_res) > 0):
+        while ($v = mysqli_fetch_assoc($vues_res)):
+          $pct = round(($v['nb'] / $max_vues) * 100);
+      ?>
+      <tr>
+        <td><?php echo htmlspecialchars(ucfirst($v['slug'])); ?></td>
+        <td><span class="badge"><?php echo $v['nb']; ?> vues</span></td>
+        <td style="width:200px">
+          <div class="vues-bar"><div class="vues-fill" style="width:<?php echo $pct; ?>%"></div></div>
+        </td>
+      </tr>
+      <?php endwhile; else: ?>
+      <tr><td colspan="3" style="text-align:center;color:#888">Aucune visite enregistrée encore</td></tr>
+      <?php endif; ?>
+    </table>
+  </div>
+
+  <!-- Messages reçus -->
+  <div class="section">
+    <h2>📋 Derniers messages reçus</h2>
+    <table>
+      <tr><th>ID</th><th>Nom</th><th>Email</th><th>Sujet</th><th>Date</th></tr>
+      <?php
+      $msgs = mysqli_query($conn, "SELECT * FROM messages ORDER BY date_envoi DESC LIMIT 10");
+      while ($m = mysqli_fetch_assoc($msgs)):
+      ?>
+      <tr>
+        <td><span class="badge"><?php echo $m['id']; ?></span></td>
+        <td><?php echo htmlspecialchars($m['nom']); ?></td>
+        <td><?php echo htmlspecialchars($m['email']); ?></td>
+        <td><?php echo htmlspecialchars($m['sujet']); ?></td>
+        <td><?php echo $m['date_envoi']; ?></td>
+      </tr>
+      <?php endwhile; ?>
+    </table>
+  </div>
+
+  <!-- Ajouter une région -->
+  <div class="section">
+    <h2>➕ Ajouter une nouvelle région</h2>
+    <?php if ($msg): ?><div class="success"><?php echo $msg; ?></div><?php endif; ?>
+    <form method="POST" action="admin.php">
+      <input type="hidden" name="action" value="ajouter">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Nom de la région *</label>
+          <input type="text" name="nom" placeholder="Ex: Nouvelle Région" required>
+        </div>
+        <div class="form-group">
+          <label>Chef-lieu *</label>
+          <input type="text" name="chef_lieu" placeholder="Ex: Ouagadougou" required>
+        </div>
+        <div class="form-group">
+          <label>Zone géographique *</label>
+          <select name="zone" required>
+            <option value="">-- Choisir --</option>
+            <option value="nord">Nord</option>
+            <option value="sud">Sud</option>
+            <option value="est">Est</option>
+            <option value="ouest">Ouest</option>
+            <option value="centre">Centre</option>
+            <option value="sahel">Sahel</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Nombre de provinces</label>
+          <input type="number" name="provinces" value="3" min="1" max="10">
+        </div>
+        <div class="form-group">
+          <label>Peuples (séparés par virgule)</label>
+          <input type="text" name="peuples" placeholder="Ex: Mossi, Peul">
+        </div>
+        <div class="form-group">
+          <label>Potentiels (séparés par virgule)</label>
+          <input type="text" name="potentiels" placeholder="Ex: Agriculture, Mines">
+        </div>
+        <div class="form-group full">
+          <label>URL de l'image</label>
+          <input type="text" name="image_url" placeholder="https://images.unsplash.com/...">
+        </div>
+        <div class="form-group full">
+          <label>Description *</label>
+          <textarea name="description" rows="4" placeholder="Description de la région..." required></textarea>
+        </div>
+      </div>
+      <br>
+      <button type="submit" class="btn btn-green">➕ Ajouter la région</button>
+    </form>
+  </div>
+
+  <!-- Liste des régions avec suppression -->
+  <div class="section">
+    <h2>🗺️ Toutes les régions (<?php echo $nb_regions; ?>)</h2>
+    <table>
+      <tr><th>ID</th><th>Nom</th><th>Chef-lieu</th><th>Zone</th><th>Provinces</th><th>Action</th></tr>
+      <?php
+      $regs = mysqli_query($conn, "SELECT * FROM regions ORDER BY nom");
+      while ($r = mysqli_fetch_assoc($regs)):
+      ?>
+      <tr>
+        <td><?php echo $r['id']; ?></td>
+        <td><a href="region.php?id=<?php echo $r['id']; ?>" style="color:#008751;font-weight:bold"><?php echo htmlspecialchars($r['nom']); ?></a></td>
+        <td><?php echo htmlspecialchars($r['chef_lieu']); ?></td>
+        <td><span class="badge"><?php echo $r['zone']; ?></span></td>
+        <td><?php echo $r['provinces']; ?></td>
+        <td>
+          <form method="POST" action="admin.php" style="display:inline"
+                onsubmit="return confirm('Supprimer <?php echo htmlspecialchars($r['nom']); ?> ?')">
+            <input type="hidden" name="action" value="supprimer">
+            <input type="hidden" name="region_id" value="<?php echo $r['id']; ?>">
+            <button type="submit" class="btn btn-red">🗑️ Suppr.</button>
+          </form>
+        </td>
+      </tr>
+      <?php endwhile; ?>
+    </table>
+  </div>
+
+</div>
+
+<footer>🇧🇫 Burkina Terres d'Avenir — Admin Panel</footer>
+<?php
+// Données pour graphiques
+$zones_data = [];
+$zones_res = mysqli_query($conn, "SELECT zone, COUNT(*) as nb FROM regions GROUP BY zone ORDER BY nb DESC");
+while ($z = mysqli_fetch_assoc($zones_res)) $zones_data[] = $z;
+
+$vues_data = [];
+$vues_res2 = mysqli_query($conn, "SELECT slug, COUNT(*) as nb FROM regions_vues GROUP BY slug ORDER BY nb DESC LIMIT 8");
+while ($v = mysqli_fetch_assoc($vues_res2)) $vues_data[] = $v;
+mysqli_close($conn);
+?>
+<script src="commun.js"></script>
+<script>
+// Graphique zones
+const zonesLabels = <?php echo json_encode(array_column($zones_data, 'zone')); ?>;
+const zonesData   = <?php echo json_encode(array_column($zones_data, 'nb')); ?>;
+
+new Chart(document.getElementById('chartZones'), {
+  type: 'doughnut',
+  data: {
+    labels: zonesLabels,
+    datasets: [{ data: zonesData,
+      backgroundColor: ['#008751','#E8B923','#EF2B2D','#00A1D6','#A0522D','#4ade80'],
+      borderWidth: 2
+    }]
+  },
+  options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+});
+
+// Graphique vues
+const vuesLabels = <?php echo json_encode(array_column($vues_data, 'slug')); ?>;
+const vuesNb     = <?php echo json_encode(array_column($vues_data, 'nb')); ?>;
+
+new Chart(document.getElementById('chartVues'), {
+  type: 'bar',
+  data: {
+    labels: vuesLabels,
+    datasets: [{ label: 'Vues', data: vuesNb,
+      backgroundColor: '#008751', borderRadius: 6
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+  }
+});
+</script>
+</body>
+</html>
