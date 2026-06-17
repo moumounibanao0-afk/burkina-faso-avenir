@@ -1,75 +1,93 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
 
-$feeds = [
-  'lefaso'  => 'https://lefaso.net/spip.php?page=backend',
-  'sidwaya' => 'https://www.sidwaya.bf/feed/',
-];
+$cache_file = '/tmp/burkina_rss_cache.json';
+$cache_duration = 1800; // 30 minutes
 
-$source = isset($_GET['source']) ? $_GET['source'] : 'lefaso';
-$url = $feeds[$source] ?? $feeds['lefaso'];
-
-// Utiliser cURL au lieu de file_get_contents
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; BurkinaApp/1.0)');
-$xml = curl_exec($ch);
-$err = curl_error($ch);
-curl_close($ch);
-
-if (!$xml || $err) {
-  echo json_encode(['error' => 'Flux indisponible: ' . $err, 'items' => []]);
+// Retourner le cache s'il est encore valide
+if (file_exists($cache_file) && (time() - filemtime($cache_file)) < $cache_duration) {
+  echo file_get_contents($cache_file);
   exit;
 }
 
-$rss = @simplexml_load_string($xml);
-if (!$rss) {
-  echo json_encode(['error' => 'Erreur parsing RSS', 'items' => []]);
+$url = 'https://lefaso.net/spip.php?page=backend';
+$tmpfile = '/tmp/rss_raw.xml';
+
+// Télécharger dans fichier temporaire et arrêter à 130KB
+$fp = fopen($tmpfile, 'w');
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_FILE, $fp);
+curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
+curl_setopt($ch, CURLOPT_PROGRESSFUNCTION, function($ch, $dltotal, $dlnow, $ultotal, $ulnow) {
+  return ($dlnow > 130000) ? 1 : 0;
+});
+curl_setopt($ch, CURLOPT_NOPROGRESS, false);
+curl_exec($ch);
+fclose($fp);
+curl_close($ch);
+
+$data = file_get_contents($tmpfile);
+
+if (empty($data)) {
+  if (file_exists($cache_file)) echo file_get_contents($cache_file);
+  else echo json_encode(['items' => [], 'error' => 'Flux indisponible']);
+  exit;
+}
+
+// Couper après le dernier </item> complet
+$last = strrpos($data, '</item>');
+if ($last !== false) {
+  $data = substr($data, 0, $last + 7) . '</channel></rss>';
+}
+$data = preg_replace('/xmlns:[^=]+="[^"]*"/', '', $data);
+$rss = @simplexml_load_string($data, 'SimpleXMLElement', LIBXML_NOERROR);
+
+if (!$rss || !isset($rss->channel->item)) {
+  if (file_exists($cache_file)) echo file_get_contents($cache_file);
+  else echo json_encode(['items' => [], 'error' => 'Erreur RSS']);
   exit;
 }
 
 $items = [];
 foreach ($rss->channel->item as $item) {
-  $content = (string)$item->children('content', true)->encoded;
-  $desc    = (string)$item->description;
-  $img     = '';
-
-  if (preg_match("/<img[^>]+src=['\"]([^'\"]+)['\"][^>]*>/i", $content, $m)) {
+  $desc = (string)$item->description;
+  $img  = '';
+  if (preg_match("/<img[^>]+src=['\"]([^'\"]+)['\"][^>]*>/i", $desc, $m)) {
     $img = $m[1];
   }
-  if (!$img && preg_match("/<img[^>]+src=['\"]([^'\"]+)['\"][^>]*>/i", $desc, $m)) {
-    $img = $m[1];
-  }
-
   $desc_clean = strip_tags(html_entity_decode($desc, ENT_QUOTES, 'UTF-8'));
-  $desc_clean = preg_replace('/\s+/', ' ', trim($desc_clean));
-  $desc_clean = substr($desc_clean, 0, 200);
+  $desc_clean = substr(preg_replace('/\s+/', ' ', trim($desc_clean)), 0, 200);
 
-  $date_raw = (string)$item->children('dc', true)->date ?: (string)$item->pubDate;
+  $date_raw = (string)$item->pubDate;
   $date_fmt = '';
   if ($date_raw) {
-    try {
-      $d = new DateTime($date_raw);
-      $date_fmt = $d->format('d/m/Y H:i');
-    } catch(Exception $e) {
-      $date_fmt = $date_raw;
-    }
+    try { $date_fmt = (new DateTime($date_raw))->format('d/m/Y H:i'); }
+    catch(Exception $e) { $date_fmt = $date_raw; }
   }
 
+  $titre = html_entity_decode((string)$item->title, ENT_QUOTES, 'UTF-8');
+  if (empty($titre)) continue;
+
   $items[] = [
-    'titre'  => html_entity_decode((string)$item->title, ENT_QUOTES, 'UTF-8'),
+    'titre'  => $titre,
     'lien'   => (string)$item->link,
     'desc'   => $desc_clean . '...',
     'img'    => $img,
     'date'   => $date_fmt,
-    'auteur' => (string)$item->children('dc', true)->creator ?: 'LeFaso.net',
+    'auteur' => 'LeFaso.net',
   ];
   if (count($items) >= 12) break;
 }
 
-echo json_encode(['items' => $items], JSON_UNESCAPED_UNICODE);
+$result = json_encode([
+  'items'     => $items,
+  'total'     => count($items),
+  'cached_at' => date('H:i')
+], JSON_UNESCAPED_UNICODE);
+
+file_put_contents($cache_file, $result);
+echo $result;
 ?>
