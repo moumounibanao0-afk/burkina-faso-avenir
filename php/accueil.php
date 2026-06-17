@@ -56,6 +56,12 @@
   <p>Découvrez les 17 régions du Burkina Faso — leurs peuples, leurs potentiels, leur richesse.</p>
   <a href="regions.php">Découvrir les régions →</a>
 
+  <div style="max-width:500px;margin:25px auto 0;position:relative;">
+    <input type="text" id="homeSearch" placeholder="🔍 Rechercher une région, province..."
+           style="width:100%;padding:14px 50px 14px 20px;border:none;border-radius:30px;font-size:16px;box-shadow:0 4px 15px rgba(0,0,0,0.2);outline:none;box-sizing:border-box;">
+    <button onclick="goSearch()" style="position:absolute;right:5px;top:50%;transform:translateY(-50%);background:#008751;color:white;border:none;border-radius:25px;padding:8px 18px;cursor:pointer;font-weight:bold;">→</button>
+  </div>
+
   <!-- Barre de recherche accueil -->
   <div style="max-width:500px;margin:25px auto 0;position:relative;">
     <input type="text" id="homeSearch" placeholder="🔍 Rechercher une région, province..."
@@ -121,6 +127,21 @@ while ($region = mysqli_fetch_assoc($result)):
 </footer>
 
 <?php mysqli_close($conn); ?>
+<script>
+function goSearch() {
+  const q = document.getElementById("homeSearch").value.trim();
+  if (q.length >= 2) window.location.href = "recherche.php?q=" + encodeURIComponent(q);
+}
+document.getElementById("homeSearch").addEventListener("keypress", function(e) {
+  if (e.key === "Enter") goSearch();
+});
+document.getElementById("homeSearch").addEventListener("input", function() {
+  if (this.value.trim().length >= 2) {
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => { window.location.href = "recherche.php?q=" + encodeURIComponent(this.value.trim()); }, 800);
+  }
+});
+</script>
 <script>
 function goSearch() {
   const q = document.getElementById("homeSearch").value.trim();
