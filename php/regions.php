@@ -6,9 +6,11 @@
   <title>Les 17 Régions — Burkina Terres d'Avenir</title>
   <style>
     body { font-family: Arial, sans-serif; background: #f5f5f5; margin: 0; padding: 0; }
-    .navbar { background: #008751; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
-    .navbar a { color: white; text-decoration: none; font-weight: bold; font-size: 18px; }
-    .navbar nav a { margin-left: 20px; font-size: 14px; }
+    .flag-stripe { height: 6px; background: linear-gradient(90deg, #EF2B2D 50%, #009A00 50%); }
+    .navbar { background: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .navbar .logo { color: #008751; font-size: 20px; font-weight: bold; text-decoration: none; }
+    .navbar nav a { margin-left: 20px; color: #333; text-decoration: none; font-size: 14px; font-weight: bold; }
+    .navbar nav a:hover { color: #008751; }
     .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
     h1 { color: #008751; text-align: center; }
     .stats { display: flex; gap: 20px; justify-content: center; margin: 20px 0; flex-wrap: wrap; }
@@ -18,7 +20,8 @@
     .filtres a { display: inline-block; margin: 5px; padding: 8px 18px; background: white; border: 2px solid #008751; color: #008751; border-radius: 20px; text-decoration: none; font-weight: bold; }
     .filtres a.actif, .filtres a:hover { background: #008751; color: white; }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
-    .card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-decoration: none; color: inherit; display: block; transition: transform 0.2s; }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,135,81,0.2); }
     .card img { width: 100%; height: 160px; object-fit: cover; }
     .card-body { padding: 15px; }
     .card-body h3 { color: #008751; margin: 0 0 5px; }
@@ -26,27 +29,30 @@
     .zone-badge { display: inline-block; background: #EF2B2D; color: white; padding: 3px 10px; border-radius: 10px; font-size: 11px; font-weight: bold; }
     .peuples { color: #1B4F72; font-size: 12px; }
     .potentiels { color: #008751; font-size: 12px; }
+    .voir-plus { display: inline-block; margin-top: 10px; color: #008751; font-size: 12px; font-weight: bold; }
+    footer { background: #111827; color: #aaa; text-align: center; padding: 20px; margin-top: 50px; }
   </style>
 </head>
 <body>
-<div class="navbar">
-  <a href="/">🇧🇫 Burkina Terres d'Avenir</a>
+<div class="flag-stripe"></div>
+<nav class="navbar">
+  <a class="logo" href="accueil.php">🇧🇫 Burkina Terres d'Avenir</a>
   <nav>
-    <a href="/">Accueil</a>
+    <a href="accueil.php">Accueil</a>
     <a href="regions.php">Les 17 Régions</a>
+    <a href="potentiels.php">Potentiels</a>
+    <a href="culture.php">Culture</a>
+    <a href="apropos.php">À Propos</a>
     <a href="contact.php">Contact</a>
-    <a href="messages.php">Messages</a>
   </nav>
-</div>
+</nav>
 
 <div class="container">
   <h1>🗺️ Les 17 Régions du Burkina Faso</h1>
 
 <?php
-// Filtre par zone via $_GET (cours : variables superglobales)
 $zone_filtre = isset($_GET['zone']) ? $_GET['zone'] : 'toutes';
 
-// Requête SELECT selon le cours PHP + MySQL
 if ($zone_filtre === 'toutes') {
     $sql = "SELECT * FROM regions ORDER BY nom";
     $result = mysqli_query($conn, $sql);
@@ -58,7 +64,6 @@ if ($zone_filtre === 'toutes') {
 
 $nb_regions = mysqli_num_rows($result);
 
-// Récupérer toutes les zones distinctes
 $sql_zones = "SELECT DISTINCT zone FROM regions ORDER BY zone";
 $result_zones = mysqli_query($conn, $sql_zones);
 ?>
@@ -81,27 +86,26 @@ $result_zones = mysqli_query($conn, $sql_zones);
   </div>
 
   <div class="grid">
-<?php
-// Affichage avec foreach selon le cours
-while ($region = mysqli_fetch_assoc($result)):
-?>
-    <div class="card">
+<?php while ($region = mysqli_fetch_assoc($result)): ?>
+    <a class="card" href="region.php?id=<?php echo $region['id']; ?>">
       <img src="<?php echo htmlspecialchars($region['image_url']); ?>"
            alt="<?php echo htmlspecialchars($region['nom']); ?>"
            onerror="this.src='https://via.placeholder.com/600x160/008751/white?text=<?php echo urlencode($region['nom']); ?>'">
       <div class="card-body">
         <span class="zone-badge"><?php echo strtoupper($region['zone']); ?></span>
         <h3><?php echo htmlspecialchars($region['nom']); ?></h3>
-        <p>🏛️ <strong>Chef-lieu :</strong> <?php echo htmlspecialchars($region['chef_lieu']); ?></p>
-        <p><?php echo htmlspecialchars($region['description']); ?></p>
+        <p>🏛️ <strong><?php echo htmlspecialchars($region['chef_lieu']); ?></strong></p>
+        <p><?php echo htmlspecialchars(substr($region['description'], 0, 80)); ?>...</p>
         <p class="peuples">👥 <?php echo htmlspecialchars($region['peuples']); ?></p>
         <p class="potentiels">⚡ <?php echo htmlspecialchars($region['potentiels']); ?></p>
+        <span class="voir-plus">Voir le détail →</span>
       </div>
-    </div>
+    </a>
 <?php endwhile; ?>
   </div>
 </div>
 
+<footer>🇧🇫 Burkina Terres d'Avenir — Projet L3 Web Dynamique PHP + MySQL</footer>
 <?php mysqli_close($conn); ?>
 </body>
 </html>
