@@ -244,7 +244,7 @@ $nb_vues_total= mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regio
         <td><?php echo $r['provinces']; ?></td>
         <td>
           <form method="POST" action="admin.php" style="display:inline"
-                onsubmit="return confirm('Supprimer <?php echo htmlspecialchars($r['nom']); ?> ?')">
+                onsubmit="return confirmSuppr('Supprimer <?php echo htmlspecialchars($r['nom']); ?> ?')">
             <input type="hidden" name="action" value="supprimer">
             <input type="hidden" name="region_id" value="<?php echo $r['id']; ?>">
             <button type="submit" class="btn btn-red">🗑️ Suppr.</button>
@@ -308,3 +308,28 @@ new Chart(document.getElementById('chartVues'), {
 </script>
 </body>
 </html>
+
+<div id="modal-confirm" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:white;border-radius:16px;padding:35px;max-width:400px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3)">
+    <div style="font-size:48px;margin-bottom:15px">🗑️</div>
+    <h3 style="color:#EF2B2D;margin-bottom:10px">Confirmer la suppression</h3>
+    <p id="modal-msg" style="color:#666;margin-bottom:25px;font-size:14px"></p>
+    <div style="display:flex;gap:10px;justify-content:center">
+      <button onclick="document.getElementById('modal-confirm').style.display='none'"
+        style="background:#ccc;color:#333;border:none;padding:10px 25px;border-radius:20px;cursor:pointer;font-weight:bold">Annuler</button>
+      <button id="modal-ok"
+        style="background:#EF2B2D;color:white;border:none;padding:10px 25px;border-radius:20px;cursor:pointer;font-weight:bold">Supprimer</button>
+    </div>
+  </div>
+</div>
+<script>
+function confirmSuppr(e) {
+  e.preventDefault();
+  const form = e.target || e.srcElement;
+  const modal = document.getElementById('modal-confirm');
+  document.getElementById('modal-msg').textContent = 'Voulez-vous vraiment supprimer cette région ? Cette action est irréversible.';
+  modal.style.display = 'flex';
+  document.getElementById('modal-ok').onclick = () => { modal.style.display='none'; form.submit(); };
+  return false;
+}
+</script>

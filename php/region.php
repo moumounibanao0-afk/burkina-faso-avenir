@@ -90,6 +90,14 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
 </div>
 
 <div class="container">
+  <!-- FIL D'ARIANE -->
+  <nav style="background:white;border-radius:8px;padding:12px 20px;margin-bottom:20px;box-shadow:0 2px 6px rgba(0,0,0,0.06);font-size:13px">
+    <a href="accueil.php" style="color:#008751;text-decoration:none">🏠 Accueil</a>
+    <span style="color:#ccc;margin:0 8px">›</span>
+    <a href="regions.php" style="color:#008751;text-decoration:none">🗺️ Régions</a>
+    <span style="color:#ccc;margin:0 8px">›</span>
+    <span style="color:#333;font-weight:bold"><?php echo htmlspecialchars($region["nom"]); ?></span>
+  </nav>
 
   <div class="info-grid">
     <div class="info-card">

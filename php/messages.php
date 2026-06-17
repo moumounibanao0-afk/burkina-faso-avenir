@@ -1,4 +1,17 @@
 <?php require 'conn.php'; ?>
+if (isset($_GET["export"]) && $_GET["export"] === "csv") {
+  header("Content-Type: text/csv; charset=utf-8");
+  header("Content-Disposition: attachment; filename=messages_burkina.csv");
+  $out = fopen("php://output", "w");
+  fprintf($out, chr(0xEF).chr(0xBB).chr(0xBF));
+  fputcsv($out, ["ID","Nom","Email","Sujet","Message","Date"]);
+  $r = mysqli_query($conn, "SELECT * FROM messages ORDER BY date_envoi DESC");
+  while ($row = mysqli_fetch_assoc($r)) {
+    fputcsv($out, [$row["id"],$row["nom"],$row["email"],$row["sujet"],$row["message"],$row["date_envoi"]]);
+  }
+  fclose($out);
+  exit;
+}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -41,6 +54,9 @@
 
 <div class="container">
   <h1>📋 Messages reçus via MySQL</h1>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px">
+    <a href="messages.php?export=csv" style="background:#008751;color:white;padding:10px 20px;border-radius:20px;text-decoration:none;font-weight:bold;font-size:13px">📥 Exporter en CSV</a>
+  </div>
 <?php
 $result = mysqli_query($conn, 'SELECT * FROM messages ORDER BY date_envoi DESC');
 $nb = mysqli_num_rows($result);

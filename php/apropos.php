@@ -138,7 +138,11 @@ $nb_messages  = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM messa
     </table>
   </div>
 
-  <div style="text-align:center;margin:30px 0">
+  <div style="background:white;border-radius:12px;padding:25px;margin-bottom:25px;box-shadow:0 2px 8px rgba(0,0,0,0.08)">
+  <h2 style="color:#008751;border-left:4px solid #E8B923;padding-left:12px;margin-bottom:20px">📊 Répartition des potentiels économiques</h2>
+  <canvas id="chartPotentiels" height="120"></canvas>
+</div>
+<div style="text-align:center;margin:30px 0">
     <a href="contact.php" style="background:#008751;color:white;padding:14px 35px;border-radius:25px;text-decoration:none;font-weight:bold;font-size:16px">
       📩 Nous contacter
     </a>
@@ -148,6 +152,21 @@ $nb_messages  = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM messa
 
 <footer>🇧🇫 Burkina Terres d'Avenir — Projet L3 Informatique — Université Norbert Zongo 2025-2026</footer>
 <?php mysqli_close($conn); ?>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="commun.js"></script>
+<script>
+new Chart(document.getElementById("chartPotentiels"), {
+  type: "doughnut",
+  data: {
+    labels: ["Agriculture", "Mines & Or", "Énergie", "Tourisme"],
+    datasets: [{
+      data: [35, 30, 20, 15],
+      backgroundColor: ["#008751","#E8B923","#EF2B2D","#00A1D6"],
+      borderWidth: 2
+    }]
+  },
+  options: { responsive: true, plugins: { legend: { position: "bottom" } } }
+});
+</script>
 </body>
 </html>

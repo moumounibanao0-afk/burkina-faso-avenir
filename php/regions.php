@@ -52,20 +52,24 @@
   <h1>🗺️ Les 17 Régions du Burkina Faso</h1>
 
 <?php
-$zone_filtre = isset($_GET['zone']) ? $_GET['zone'] : 'toutes';
+$zone_filtre = isset($_GET["zone"]) ? $_GET["zone"] : "toutes";
+$page = isset($_GET["page"]) ? max(1, intval($_GET["page"])) : 1;
+$par_page = 6;
+$offset = ($page - 1) * $par_page;
 
-if ($zone_filtre === 'toutes') {
-    $sql = "SELECT * FROM regions ORDER BY nom";
-    $result = mysqli_query($conn, $sql);
+if ($zone_filtre === "toutes") {
+  $total = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions"))[0];
+  $sql = "SELECT * FROM regions ORDER BY nom LIMIT $par_page OFFSET $offset";
 } else {
-    $zone_safe = mysqli_real_escape_string($conn, $zone_filtre);
-    $sql = "SELECT * FROM regions WHERE zone = '$zone_safe' ORDER BY nom";
-    $result = mysqli_query($conn, $sql);
+  $zone_safe = mysqli_real_escape_string($conn, $zone_filtre);
+  $total = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions WHERE zone='$zone_safe'"))[0];
+  $sql = "SELECT * FROM regions WHERE zone='$zone_safe' ORDER BY nom LIMIT $par_page OFFSET $offset";
 }
-
+$result = mysqli_query($conn, $sql);
 $nb_regions = mysqli_num_rows($result);
-
+$nb_pages = ceil($total / $par_page);
 $sql_zones = "SELECT DISTINCT zone FROM regions ORDER BY zone";
+$result_zones = mysqli_query($conn, $sql_zones);
 $result_zones = mysqli_query($conn, $sql_zones);
 ?>
 
