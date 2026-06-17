@@ -1,0 +1,117 @@
+<?php require 'conn.php'; ?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Culture — Burkina Terres d'Avenir</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #F5F0E8; margin: 0; }
+    .flag-stripe { height: 6px; background: linear-gradient(90deg, #EF2B2D 50%, #009A00 50%); }
+    .navbar { background: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .navbar .logo { color: #008751; font-size: 20px; font-weight: bold; text-decoration: none; }
+    .navbar nav a { margin-left: 20px; color: #333; text-decoration: none; font-size: 14px; font-weight: bold; }
+    .navbar nav a:hover, .navbar nav a.actif { color: #008751; border-bottom: 2px solid #008751; }
+    .hero { background: linear-gradient(135deg, #4a1a00, #A0522D); color: white; padding: 60px 30px; text-align: center; }
+    .hero h1 { font-size: 42px; margin-bottom: 10px; }
+    .hero p { font-size: 16px; opacity: 0.9; }
+    .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+    .section-title { color: #008751; font-size: 26px; border-left: 5px solid #E8B923; padding-left: 15px; margin: 40px 0 20px; }
+    .filtres { text-align: center; margin: 20px 0; }
+    .filtres a { display: inline-block; margin: 5px; padding: 8px 20px; background: white; border: 2px solid #008751; color: #008751; border-radius: 20px; text-decoration: none; font-weight: bold; }
+    .filtres a.actif, .filtres a:hover { background: #008751; color: white; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+    .card { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s; border-top: 4px solid #A0522D; }
+    .card:hover { transform: translateY(-5px); }
+    .card h3 { color: #333; margin: 0 0 10px; font-size: 18px; }
+    .card p { color: #666; font-size: 14px; line-height: 1.6; }
+    .badge { display: inline-block; background: #A0522D; color: white; padding: 3px 10px; border-radius: 10px; font-size: 11px; margin-bottom: 10px; text-transform: uppercase; }
+    .badge.festival { background: #EF2B2D; }
+    .badge.patrimoine { background: #E8B923; color: #333; }
+    .badge.gastronomie { background: #008751; }
+    .region-tag { color: #888; font-size: 12px; margin-top: 8px; }
+    .stats { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 30px 0; }
+    .stat { background: white; padding: 20px 30px; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .stat strong { display: block; font-size: 28px; color: #A0522D; }
+    footer { background: #111827; color: #aaa; text-align: center; padding: 20px; margin-top: 50px; }
+  </style>
+</head>
+<body>
+<div class="flag-stripe"></div>
+<nav class="navbar">
+  <a class="logo" href="accueil.php">🇧🇫 Burkina Terres d'Avenir</a>
+  <nav>
+    <a href="accueil.php">Accueil</a>
+    <a href="regions.php">Les 17 Régions</a>
+    <a href="potentiels.php">Potentiels</a>
+    <a href="culture.php" class="actif">Culture</a>
+    <a href="apropos.php">À Propos</a>
+    <a href="contact.php">Contact</a>
+  </nav>
+</nav>
+
+<div class="hero">
+  <h1>🎭 Culture & Patrimoine</h1>
+  <p>60+ groupes ethniques, 70+ langues, des masques sacrés et des festivals mondialement reconnus</p>
+</div>
+
+<?php
+$type_filtre = isset($_GET['type']) ? $_GET['type'] : 'toutes';
+$nb_total = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM cultures"))[0];
+$nb_types = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(DISTINCT type) FROM cultures"))[0];
+?>
+
+<div class="container">
+  <div class="stats">
+    <div class="stat"><strong><?php echo $nb_total; ?></strong><span>Éléments culturels</span></div>
+    <div class="stat"><strong>60+</strong><span>Groupes ethniques</span></div>
+    <div class="stat"><strong>70+</strong><span>Langues parlées</span></div>
+    <div class="stat"><strong>1</strong><span>Site UNESCO</span></div>
+  </div>
+
+  <div class="filtres">
+    <a href="culture.php" class="<?php echo $type_filtre==='toutes'?'actif':''; ?>">Tout</a>
+    <?php
+    $types = mysqli_query($conn, "SELECT DISTINCT type FROM cultures ORDER BY type");
+    while ($t = mysqli_fetch_assoc($types)):
+    ?>
+    <a href="culture.php?type=<?php echo $t['type']; ?>"
+       class="<?php echo $type_filtre===$t['type']?'actif':''; ?>">
+      <?php echo ucfirst($t['type']); ?>
+    </a>
+    <?php endwhile; ?>
+  </div>
+
+  <?php
+  if ($type_filtre === 'toutes') {
+    $sql = "SELECT * FROM cultures ORDER BY type, nom";
+  } else {
+    $type_safe = mysqli_real_escape_string($conn, $type_filtre);
+    $sql = "SELECT * FROM cultures WHERE type = '$type_safe' ORDER BY nom";
+  }
+  $result = mysqli_query($conn, $sql);
+  $nb = mysqli_num_rows($result);
+  ?>
+
+  <h2 class="section-title">
+    <?php echo $type_filtre==='toutes' ? 'Toute la culture' : ucfirst($type_filtre); ?>
+    <small style="font-size:14px;color:#888;font-weight:normal"> — <?php echo $nb; ?> résultat(s)</small>
+  </h2>
+
+  <div class="grid">
+    <?php while ($c = mysqli_fetch_assoc($result)): ?>
+    <div class="card">
+      <span class="badge <?php echo htmlspecialchars($c['type']); ?>">
+        <?php echo htmlspecialchars($c['type']); ?>
+      </span>
+      <h3><?php echo htmlspecialchars($c['nom']); ?></h3>
+      <p><?php echo htmlspecialchars($c['description']); ?></p>
+      <p class="region-tag">📍 <?php echo htmlspecialchars($c['region']); ?></p>
+    </div>
+    <?php endwhile; ?>
+  </div>
+</div>
+
+<footer>🇧🇫 Burkina Terres d'Avenir — Projet L3 Web Dynamique PHP + MySQL</footer>
+<?php mysqli_close($conn); ?>
+</body>
+</html>
