@@ -49,7 +49,7 @@
     <a href="apropos.php">À Propos</a>
     <a href="contact.php">Contact</a>
     <a href="messages.php">Messages</a>
-    <a href="recherche.php">🔍 Recherche</a>
+    <a href="actualites.php">📰 Actualités</a>
   </nav>
 </nav>
 
