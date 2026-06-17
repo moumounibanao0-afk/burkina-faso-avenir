@@ -72,3 +72,136 @@ window.addEventListener('load', () => {
   const loader = document.getElementById('page-loader');
   if (loader) loader.style.display = 'none';
 });
+
+// ========== LOADER ANIMÉ ==========
+const loaderDiv = document.createElement('div');
+loaderDiv.id = 'page-loader';
+loaderDiv.style.cssText = `
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999;
+  background: white; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; transition: opacity 0.5s;
+`;
+loaderDiv.innerHTML = `
+  <div style="font-size:48px;margin-bottom:15px">🇧🇫</div>
+  <div style="font-size:18px;color:#008751;font-weight:bold;margin-bottom:15px">Burkina Terres d'Avenir</div>
+  <div style="width:200px;height:4px;background:#eee;border-radius:2px;overflow:hidden">
+    <div id="loader-bar" style="height:100%;background:linear-gradient(90deg,#EF2B2D,#008751);width:0%;transition:width 0.5s;border-radius:2px"></div>
+  </div>
+`;
+document.body.insertBefore(loaderDiv, document.body.firstChild);
+
+let progress = 0;
+const barInterval = setInterval(() => {
+  progress = Math.min(progress + Math.random() * 15, 90);
+  const bar = document.getElementById('loader-bar');
+  if (bar) bar.style.width = progress + '%';
+}, 100);
+
+window.addEventListener('load', () => {
+  clearInterval(barInterval);
+  const bar = document.getElementById('loader-bar');
+  if (bar) bar.style.width = '100%';
+  setTimeout(() => {
+    loaderDiv.style.opacity = '0';
+    setTimeout(() => loaderDiv.style.display = 'none', 500);
+  }, 300);
+});
+
+// ========== IMPRESSION PDF ==========
+const printBtn = document.createElement('button');
+printBtn.innerHTML = '🖨️';
+printBtn.title = 'Imprimer / Sauvegarder en PDF';
+printBtn.style.cssText = `
+  position: fixed; bottom: 140px; right: 30px; z-index: 998;
+  background: #1B4F72; color: white; border: none;
+  width: 45px; height: 45px; border-radius: 50%;
+  font-size: 18px; cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: all 0.3s;
+`;
+printBtn.onclick = () => window.print();
+document.body.appendChild(printBtn);
+
+// Style impression
+const printStyle = document.createElement('style');
+printStyle.textContent = `
+  @media print {
+    .navbar, .flag-stripe, #page-loader,
+    button[title], .nav-regions, footer,
+    .voir-plus, .search-hero, .contact-section { display: none !important; }
+    body { background: white !important; }
+    .hero { background: #008751 !important; -webkit-print-color-adjust: exact; }
+    .card, .section, .info-card { box-shadow: none !important; border: 1px solid #eee !important; }
+    @page { margin: 1cm; }
+  }
+`;
+document.head.appendChild(printStyle);
+
+// ========== LIGHTBOX GALERIE ==========
+const lightbox = document.createElement('div');
+lightbox.id = 'lightbox';
+lightbox.style.cssText = `
+  display: none; position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%; z-index: 10000;
+  background: rgba(0,0,0,0.92); align-items: center;
+  justify-content: center; flex-direction: column;
+`;
+lightbox.innerHTML = `
+  <button onclick="document.getElementById('lightbox').style.display='none'"
+    style="position:absolute;top:20px;right:25px;background:none;border:none;
+    color:white;font-size:36px;cursor:pointer;z-index:10001">✕</button>
+  <img id="lightbox-img" src="" style="max-width:90%;max-height:80vh;border-radius:8px;box-shadow:0 0 30px rgba(0,0,0,0.5)">
+  <p id="lightbox-caption" style="color:white;margin-top:15px;font-size:14px;text-align:center"></p>
+  <div style="display:flex;gap:15px;margin-top:15px">
+    <button id="lb-prev" style="background:#008751;color:white;border:none;padding:8px 18px;border-radius:20px;cursor:pointer;font-size:16px">← Précédent</button>
+    <button id="lb-next" style="background:#008751;color:white;border:none;padding:8px 18px;border-radius:20px;cursor:pointer;font-size:16px">Suivant →</button>
+  </div>
+`;
+document.body.appendChild(lightbox);
+
+let lbImages = [];
+let lbIndex = 0;
+
+function openLightbox(imgs, idx) {
+  lbImages = imgs;
+  lbIndex = idx;
+  showLightboxImg();
+  lightbox.style.display = 'flex';
+}
+
+function showLightboxImg() {
+  const img = lbImages[lbIndex];
+  document.getElementById('lightbox-img').src = img.src;
+  document.getElementById('lightbox-caption').textContent = img.alt || '';
+}
+
+document.getElementById('lb-prev').onclick = () => {
+  lbIndex = (lbIndex - 1 + lbImages.length) % lbImages.length;
+  showLightboxImg();
+};
+document.getElementById('lb-next').onclick = () => {
+  lbIndex = (lbIndex + 1) % lbImages.length;
+  showLightboxImg();
+};
+
+lightbox.addEventListener('click', (e) => {
+  if (e.target === lightbox) lightbox.style.display = 'none';
+});
+
+document.addEventListener('keydown', (e) => {
+  if (lightbox.style.display !== 'none') {
+    if (e.key === 'Escape') lightbox.style.display = 'none';
+    if (e.key === 'ArrowLeft') { lbIndex = (lbIndex-1+lbImages.length)%lbImages.length; showLightboxImg(); }
+    if (e.key === 'ArrowRight') { lbIndex = (lbIndex+1)%lbImages.length; showLightboxImg(); }
+  }
+});
+
+// Rendre toutes les images cliquables avec lightbox
+window.addEventListener('load', () => {
+  const allImgs = document.querySelectorAll('.card img, .hero img, .s-card img');
+  const imgArr = Array.from(allImgs).map(i => ({ src: i.src, alt: i.alt }));
+  allImgs.forEach((img, idx) => {
+    img.style.cursor = 'zoom-in';
+    img.addEventListener('click', () => openLightbox(imgArr, idx));
+  });
+});
