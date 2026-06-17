@@ -64,19 +64,17 @@
   <h1>🇧🇫 Burkina Terres d'Avenir</h1>
   <p>Découvrez les 17 régions du Burkina Faso — leurs peuples, leurs potentiels, leur richesse.</p>
   <a class="hero-btn" href="regions.php">Découvrir les régions →</a>
-
   <div class="search-hero">
-    <input type="text" id="homeSearch" placeholder="🔍 Rechercher une région, province, culture..."
-           autocomplete="off">
+    <input type="text" id="homeSearch" placeholder="🔍 Rechercher une région, province, culture..." autocomplete="off">
     <button onclick="goSearch()">→</button>
   </div>
 </div>
 
 <?php
-$total     = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions"))[0];
-$nb_zones  = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(DISTINCT zone) FROM regions"))[0];
-$nb_msgs   = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM messages"))[0];
-$nb_prov   = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM provinces"))[0];
+$total    = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions"))[0];
+$nb_zones = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(DISTINCT zone) FROM regions"))[0];
+$nb_msgs  = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM messages"))[0];
+$nb_prov  = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM provinces"))[0];
 ?>
 
 <div class="stats">
@@ -90,8 +88,7 @@ $nb_prov   = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM province
   <h2>🗺️ Aperçu des régions</h2>
   <div class="grid">
 <?php
-$sql = "SELECT * FROM regions ORDER BY RAND() LIMIT 6";
-$result = mysqli_query($conn, $sql);
+$result = mysqli_query($conn, "SELECT * FROM regions ORDER BY RAND() LIMIT 6");
 while ($region = mysqli_fetch_assoc($result)):
 ?>
     <a class="card" href="region.php?id=<?php echo $region['id']; ?>">
@@ -115,9 +112,7 @@ while ($region = mysqli_fetch_assoc($result)):
 <div class="contact-section">
   <h2 style="color:#008751;font-size:22px;margin-bottom:10px;">📩 Nous contacter</h2>
   <p style="color:#666;margin-bottom:20px;">Une question sur une région ? Un partenariat ? Écrivez-nous !</p>
-  <a href="contact.php" style="background:#E8B923;color:#333;padding:12px 30px;border-radius:25px;text-decoration:none;font-weight:bold;">
-    Envoyer un message
-  </a>
+  <a href="contact.php" style="background:#E8B923;color:#333;padding:12px 30px;border-radius:25px;text-decoration:none;font-weight:bold;">Envoyer un message</a>
 </div>
 
 <footer>
