@@ -70,6 +70,7 @@
   </div>
 </div>
 
+<div id="search-results" style="max-width:1100px;margin:20px auto;padding:0 20px;"></div>
 <?php
 $total    = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions"))[0];
 $nb_zones = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(DISTINCT zone) FROM regions"))[0];
@@ -133,7 +134,7 @@ document.getElementById("homeSearch").addEventListener("input", function() {
   if (this.value.trim().length >= 2) {
     clearTimeout(this.timer);
     this.timer = setTimeout(() => {
-      window.location.href = "recherche.php?q=" + encodeURIComponent(this.value.trim());
+      goSearch();
     }, 800);
   }
 });
