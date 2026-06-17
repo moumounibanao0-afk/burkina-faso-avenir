@@ -45,6 +45,7 @@
     <a href="carte.php" class="actif">🗺️ Carte</a>
     <a href="apropos.php">À Propos</a>
     <a href="contact.php">Contact</a>
+    <a href="meteo.php">🌤️ Météo</a>
     <a href="actualites.php">📰 Actualités</a>
   </nav>
 </nav>
