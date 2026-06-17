@@ -34,6 +34,7 @@
     <a href="apropos.php">À Propos</a>
     <a href="contact.php" class="actif">Contact</a>
     <a href="messages.php">Messages</a>
+    <a href="recherche.php">🔍 Recherche</a>
   </nav>
 </nav>
 
