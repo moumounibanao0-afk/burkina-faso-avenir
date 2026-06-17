@@ -15,7 +15,7 @@
     .navbar nav a { color: #333; text-decoration: none; font-size: 13px; font-weight: bold; padding: 5px 8px; border-radius: 5px; white-space: nowrap; }
     .navbar nav a:hover { color: #008751; }
     .navbar nav a.actif { color: #008751; border-bottom: 2px solid #008751; }
-    .hero { background: linear-gradient(135deg, #008751, #005c36); color: white; padding: 80px 30px; text-align: center; }
+    .hero { background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.65)), url("https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1400") center/cover no-repeat; color: white; padding: 80px 30px; text-align: center; }
     .hero h1 { font-size: 48px; margin-bottom: 15px; }
     .hero p { font-size: 18px; opacity: 0.9; margin-bottom: 30px; }
     .hero-btn { background: #E8B923; color: #333; padding: 14px 35px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 16px; }
