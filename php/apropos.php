@@ -165,7 +165,33 @@ new Chart(document.getElementById("chartPotentiels"), {
       borderWidth: 2
     }]
   },
-  options: { responsive: true, plugins: { legend: { position: "bottom" } } }
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: "bottom" },
+      tooltip: { callbacks: { label: function(c) { return c.label + " : " + c.parsed + "%" } } },
+      datalabels: false
+    }
+  },
+  plugins: [{
+    id: "centerLabels",
+    afterDatasetsDraw(chart) {
+      const ctx = chart.ctx;
+      chart.data.datasets.forEach((dataset, i) => {
+        const meta = chart.getDatasetMeta(i);
+        meta.data.forEach((element, index) => {
+          const { x, y } = element.tooltipPosition();
+          const value = dataset.data[index];
+          const label = chart.data.labels[index];
+          ctx.fillStyle = "white";
+          ctx.font = "bold 13px Arial";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(label + " " + value + "%", x, y);
+        });
+      });
+    }
+  }]
 });
 </script>
 </body>

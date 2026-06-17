@@ -1,4 +1,5 @@
-<?php require 'conn.php'; ?>
+<?php
+require 'conn.php';
 if (isset($_GET["export"]) && $_GET["export"] === "csv") {
   header("Content-Type: text/csv; charset=utf-8");
   header("Content-Disposition: attachment; filename=messages_burkina.csv");
@@ -12,6 +13,7 @@ if (isset($_GET["export"]) && $_GET["export"] === "csv") {
   fclose($out);
   exit;
 }
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -49,6 +51,8 @@ if (isset($_GET["export"]) && $_GET["export"] === "csv") {
     <a href="apropos.php">À Propos</a>
     <a href="contact.php">Contact</a>
     <a href="messages.php" class="actif">Messages</a>
+    <a href="meteo.php">🌤️ Météo</a>
+    <a href="actualites.php">📰 Actualités</a>
   </nav>
 </nav>
 
