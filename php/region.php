@@ -55,7 +55,9 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
     .tag.rouge { background: #ffebee; color: #EF2B2D; }
     .tag.or { background: #fff8e1; color: #E8B923; }
     .provinces-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 15px; }
-    .province-card { background: #f9f9f9; border-radius: 10px; padding: 15px; border-left: 4px solid #008751; }
+    .province-card { background: #f9f9f9; border-radius: 10px; overflow: hidden; border-left: 4px solid #008751; }
+    .province-card img { width: 100%; height: 100px; object-fit: cover; cursor: zoom-in; }
+    .province-card .pc-body { padding: 12px 15px; }
     .province-card h4 { color: #008751; margin: 0 0 5px; font-size: 15px; }
     .province-card p { color: #888; font-size: 12px; margin: 0; }
     .nav-regions { display: flex; justify-content: space-between; margin: 30px 0; gap: 10px; }
@@ -151,8 +153,13 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
     <div class="provinces-grid">
       <?php while ($p = mysqli_fetch_assoc($provinces)): ?>
       <div class="province-card">
+        <img src="<?php echo htmlspecialchars($p['image_url'] ?? 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=400'); ?>"
+             alt="<?php echo htmlspecialchars($p['nom']); ?>"
+             onerror="this.src='https://via.placeholder.com/400x100/008751/white?text=<?php echo urlencode($p['nom']); ?>'">
+        <div class="pc-body">
         <h4><?php echo htmlspecialchars($p['nom']); ?></h4>
         <p>🏙️ <?php echo htmlspecialchars($p['chef_lieu']); ?></p>
+        </div>
       </div>
       <?php endwhile; ?>
     </div>
