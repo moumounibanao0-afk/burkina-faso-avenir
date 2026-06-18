@@ -98,7 +98,8 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
     <a href="apropos.php" style="color:#333;text-decoration:none;font-size:15px;font-weight:bold;padding:8px 12px">ℹ️ À Propos</a>
     <a href="contact.php" style="color:#333;text-decoration:none;font-size:15px;font-weight:bold;padding:8px 12px">📩 Contact</a>
     <a href="messages.php" style="color:#333;text-decoration:none;font-size:15px;font-weight:bold;padding:8px 12px">💬 Messages</a>
-    <a href="recherche.php" title="Recherche" style="position:absolute;right:15px;top:50%;transform:translateY(-50%);color:#008751;text-decoration:none;font-size:22px;font-weight:bold">🔍</a>
+    <a href="recherche.php" title="Recherche" style="position:absolute;right:45px;top:50%;transform:translateY(-50%);color:#008751;text-decoration:none;font-size:22px;font-weight:bold">🔍</a>
+    <a href="login.php" title="Admin" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);color:#1B4F72;text-decoration:none;font-size:22px;font-weight:bold">⚙️</a>
   </nav>
 </nav>
 
