@@ -105,7 +105,7 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
         <a href="contact.php">📩 Contact</a>
       </div>
     </div>
-    <a href="index.php" style="background:#EF2B2D;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;font-size:13px;font-weight:bold">🏠 Accueil</a>
+    <a href="accueil.php" style="background:#EF2B2D;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;font-size:13px;font-weight:bold">🏠 Accueil</a>
   </nav>
 </nav>
 

@@ -77,7 +77,7 @@ require 'conn.php';
         <a href="logout.php">🚪 Déconnexion</a>
       </div>
     </div>
-    <a href="index.php" style="background:#008751;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;font-size:13px;font-weight:bold">← Retour au site</a>
+    <a href="accueil.php" style="background:#008751;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;font-size:13px;font-weight:bold">← Retour au site</a>
   </nav>
 </nav>
 
