@@ -30,7 +30,7 @@
     .sources { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
     .src-btn { padding: 6px 14px; border: 2px solid #1B4F72; color: #1B4F72; border-radius: 15px; cursor: pointer; font-size: 12px; font-weight: bold; background: white; transition: 0.2s; }
     .src-btn.actif, .src-btn:hover { background: #1B4F72; color: white; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
     .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s; display: flex; flex-direction: column; }
     .card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,135,81,0.15); }
     .card img { width: 100%; height: 180px; object-fit: cover; }

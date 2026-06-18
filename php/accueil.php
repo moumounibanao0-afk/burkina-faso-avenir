@@ -24,7 +24,7 @@
     .search-hero button { position: absolute; right: 5px; top: 50%; transform: translateY(-50%); background: #008751; color: white; border: none; border-radius: 25px; padding: 8px 18px; cursor: pointer; font-weight: bold; font-size: 16px; }
     .search-results { max-width: 1100px; margin: 20px auto; padding: 0 20px; }
     .search-results h2 { color: #008751; border-left: 4px solid #E8B923; padding-left: 12px; margin: 20px 0 15px; font-size: 20px; }
-    .search-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; margin-bottom: 20px; }
+    .search-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 20px; }
     .s-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-decoration: none; color: inherit; display: block; transition: transform 0.2s; }
     .s-card:hover { transform: translateY(-3px); }
     .s-card img { width: 100%; height: 120px; object-fit: cover; }
@@ -41,7 +41,7 @@
     .stat span { color: #666; font-size: 14px; }
     .section { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
     .section h2 { color: #008751; font-size: 28px; margin-bottom: 25px; border-left: 5px solid #E8B923; padding-left: 15px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
     .card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: transform 0.2s; text-decoration: none; color: inherit; display: block; }
     .card:hover { transform: translateY(-4px); }
     .card img { width: 100%; height: 150px; object-fit: cover; }
