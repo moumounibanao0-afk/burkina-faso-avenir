@@ -102,6 +102,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
       $msg = "✅ Région '{$r['nom']}' supprimée.";
     }
   }
+  if ($_POST['action'] === 'modifier') {
+    $id        = intval($_POST['region_id']);
+    $nom       = mysqli_real_escape_string($conn, trim($_POST['nom']));
+    $chef_lieu = mysqli_real_escape_string($conn, trim($_POST['chef_lieu']));
+    $zone      = mysqli_real_escape_string($conn, trim($_POST['zone']));
+    $desc      = mysqli_real_escape_string($conn, trim($_POST['description']));
+    $peuples   = mysqli_real_escape_string($conn, trim($_POST['peuples']));
+    $pot       = mysqli_real_escape_string($conn, trim($_POST['potentiels']));
+    $img       = mysqli_real_escape_string($conn, trim($_POST['image_url']));
+    if ($id > 0) {
+      mysqli_query($conn, "UPDATE regions SET nom='$nom',chef_lieu='$chef_lieu',zone='$zone',description='$desc',peuples='$peuples',potentiels='$pot',image_url='$img' WHERE id=$id");
+      $msg = "✅ Région '$nom' modifiée !";
+    }
+  }
 }
 
 // Stats
@@ -257,6 +271,7 @@ $nb_vues_total= mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regio
             <input type="hidden" name="region_id" value="<?php echo $r['id']; ?>">
             <button type="submit" class="btn btn-red">🗑️ Suppr.</button>
           </form>
+          <button onclick="ouvrirModif(<?php echo $r['id']; ?>,'<?php echo addslashes($r['nom']); ?>','<?php echo addslashes($r['chef_lieu']); ?>','<?php echo addslashes($r['zone']); ?>','<?php echo addslashes($r['description']); ?>','<?php echo addslashes($r['peuples']); ?>','<?php echo addslashes($r['potentiels']); ?>','<?php echo addslashes($r['image_url']); ?>')" style="background:#1B4F72;color:white;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:bold">✏️ Modifier</button>
         </td>
       </tr>
       <?php endwhile; ?>
@@ -313,6 +328,42 @@ new Chart(document.getElementById('chartVues'), {
     scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
   }
 });
+</script>
+
+<div id="modal-modif" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:9998;align-items:center;justify-content:center">
+  <div style="background:white;border-radius:16px;padding:30px;max-width:600px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.3)">
+    <h3 style="color:#008751;margin-bottom:20px">✏️ Modifier la région</h3>
+    <form method="POST" action="admin.php">
+      <input type="hidden" name="action" value="modifier">
+      <input type="hidden" name="region_id" id="modif_id">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div><label style="font-size:12px;font-weight:bold">Nom</label><input type="text" name="nom" id="modif_nom" style="width:100%;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:13px;box-sizing:border-box"></div>
+        <div><label style="font-size:12px;font-weight:bold">Chef-lieu</label><input type="text" name="chef_lieu" id="modif_chef" style="width:100%;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:13px;box-sizing:border-box"></div>
+        <div><label style="font-size:12px;font-weight:bold">Zone</label><select name="zone" id="modif_zone" style="width:100%;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:13px;box-sizing:border-box"><option value="nord">Nord</option><option value="sud">Sud</option><option value="est">Est</option><option value="ouest">Ouest</option><option value="centre">Centre</option><option value="sahel">Sahel</option></select></div>
+        <div><label style="font-size:12px;font-weight:bold">Peuples</label><input type="text" name="peuples" id="modif_peuples" style="width:100%;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:13px;box-sizing:border-box"></div>
+        <div style="grid-column:1/-1"><label style="font-size:12px;font-weight:bold">🖼️ URL Image</label><input type="text" name="image_url" id="modif_image" style="width:100%;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:13px;box-sizing:border-box"></div>
+        <div style="grid-column:1/-1"><label style="font-size:12px;font-weight:bold">Potentiels</label><input type="text" name="potentiels" id="modif_potentiels" style="width:100%;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:13px;box-sizing:border-box"></div>
+        <div style="grid-column:1/-1"><label style="font-size:12px;font-weight:bold">Description</label><textarea name="description" id="modif_desc" rows="3" style="width:100%;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:13px;box-sizing:border-box"></textarea></div>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px">
+        <button type="button" onclick="document.getElementById('modal-modif').style.display='none'" style="background:#ccc;color:#333;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:bold">Annuler</button>
+        <button type="submit" style="background:#008751;color:white;border:none;padding:10px 25px;border-radius:8px;cursor:pointer;font-weight:bold">💾 Enregistrer</button>
+      </div>
+    </form>
+  </div>
+</div>
+<script>
+function ouvrirModif(id,nom,chef,zone,desc,peuples,pot,img) {
+  document.getElementById("modif_id").value=id;
+  document.getElementById("modif_nom").value=nom;
+  document.getElementById("modif_chef").value=chef;
+  document.getElementById("modif_zone").value=zone;
+  document.getElementById("modif_desc").value=desc;
+  document.getElementById("modif_peuples").value=peuples;
+  document.getElementById("modif_potentiels").value=pot;
+  document.getElementById("modif_image").value=img;
+  document.getElementById("modal-modif").style.display="flex";
+}
 </script>
 </body>
 </html>
