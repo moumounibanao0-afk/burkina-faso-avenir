@@ -56,6 +56,7 @@
     <a href="regions.php">Régions</a>
     <a href="messages.php">Messages</a>
     <a href="admin.php" style="color:#008751">⚙️ Admin</a>
+    <a href="logout.php" style="color:#EF2B2D">🚪 Déconnexion</a>
   </nav>
 </nav>
 
