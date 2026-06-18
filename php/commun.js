@@ -205,3 +205,20 @@ window.addEventListener('load', () => {
     img.addEventListener('click', () => openLightbox(imgArr, idx));
   });
 });
+
+// ========== BOUTON ADMIN FLOTTANT ==========
+const adminBtn = document.createElement('a');
+adminBtn.href = 'admin.php';
+adminBtn.title = 'Espace Administrateur';
+adminBtn.innerHTML = '🔐 Admin';
+adminBtn.style.cssText = `
+  position: fixed; bottom: 200px; right: 30px; z-index: 998;
+  background: #1B4F72; color: white; border: none;
+  padding: 8px 16px; border-radius: 20px;
+  font-size: 13px; font-weight: bold; cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  text-decoration: none; transition: all 0.3s;
+`;
+adminBtn.onmouseover = () => adminBtn.style.background = '#154360';
+adminBtn.onmouseout = () => adminBtn.style.background = '#1B4F72';
+document.body.appendChild(adminBtn);
