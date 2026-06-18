@@ -79,18 +79,18 @@
 <body>
 <div class="flag-stripe"></div>
 <nav style="display:flex;justify-content:center;align-items:center;gap:5px;flex-wrap:wrap;position:relative">
-    <a href="accueil.php" style="color:#333;text-decoration:none;font-size:15px;font-weight:bold;padding:8px 12px">🏠 Accueil</a>
-    <a href="regions.php" style="color:#333;text-decoration:none;font-size:15px;font-weight:bold;padding:8px 12px">🗺️ Régions</a>
-    <a href="carte.php" style="color:#333;text-decoration:none;font-size:15px;font-weight:bold;padding:8px 12px">📍 Carte</a>
-    <a href="potentiels.php" style="color:#333;text-decoration:none;font-size:15px;font-weight:bold;padding:8px 12px">⚡ Potentiels</a>
-    <a href="culture.php" style="color:#333;text-decoration:none;font-size:15px;font-weight:bold;padding:8px 12px">🎭 Culture</a>
-    <a href="meteo.php" style="color:#333;text-decoration:none;font-size:15px;font-weight:bold;padding:8px 12px">🌤️ Météo</a>
-    <a href="actualites.php" style="color:#333;text-decoration:none;font-size:15px;font-weight:bold;padding:8px 12px">📰 Actualités</a>
-    <a href="apropos.php" style="color:#333;text-decoration:none;font-size:15px;font-weight:bold;padding:8px 12px">ℹ️ À Propos</a>
-    <a href="contact.php" style="color:#333;text-decoration:none;font-size:15px;font-weight:bold;padding:8px 12px">📩 Contact</a>
-    <a href="messages.php" style="color:#333;text-decoration:none;font-size:15px;font-weight:bold;padding:8px 12px">💬 Messages</a>
-    <a href="recherche.php" title="Recherche" style="position:absolute;right:45px;top:50%;transform:translateY(-50%);color:#008751;text-decoration:none;font-size:22px;font-weight:bold">🔍</a>
-    <a href="login.php" title="Admin" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);color:#1B4F72;text-decoration:none;font-size:22px;font-weight:bold">⚙️</a>
+    <a href="accueil.php" style="color:#333;text-decoration:none;font-size:17px;font-weight:bold;padding:8px 14px">🏠 Accueil</a>
+    <a href="regions.php" style="color:#333;text-decoration:none;font-size:17px;font-weight:bold;padding:8px 14px">🗺️ Régions</a>
+    <a href="carte.php" style="color:#333;text-decoration:none;font-size:17px;font-weight:bold;padding:8px 14px">📍 Carte</a>
+    <a href="potentiels.php" style="color:#333;text-decoration:none;font-size:17px;font-weight:bold;padding:8px 14px">⚡ Potentiels</a>
+    <a href="culture.php" style="color:#333;text-decoration:none;font-size:17px;font-weight:bold;padding:8px 14px">🎭 Culture</a>
+    <a href="meteo.php" style="color:#333;text-decoration:none;font-size:17px;font-weight:bold;padding:8px 14px">🌤️ Météo</a>
+    <a href="actualites.php" style="color:#333;text-decoration:none;font-size:17px;font-weight:bold;padding:8px 14px">📰 Actualités</a>
+    <a href="apropos.php" style="color:#333;text-decoration:none;font-size:17px;font-weight:bold;padding:8px 14px">ℹ️ À Propos</a>
+    <a href="contact.php" style="color:#333;text-decoration:none;font-size:17px;font-weight:bold;padding:8px 14px">📩 Contact</a>
+    <a href="messages.php" style="color:#333;text-decoration:none;font-size:17px;font-weight:bold;padding:8px 14px">💬 Messages</a>
+    <a href="recherche.php" title="Recherche" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);color:#1B4F72;text-decoration:none;font-size:24px;font-weight:bold">⚙️</a>
+    <a href="recherche.php" title="Recherche" style="position:absolute;right:45px;top:50%;transform:translateY(-50%);color:#008751;text-decoration:none;font-size:24px;font-weight:bold">🔍</a>
   </nav>
 </nav>
 
@@ -98,12 +98,7 @@
   <h1>🇧🇫 Burkina Terres d'Avenir</h1>
   <p>Découvrez les 17 régions du Burkina Faso — leurs peuples, leurs potentiels, leur richesse.</p>
   <a class="hero-btn" href="regions.php">Découvrir les régions →</a>
-  <div class="search-hero">
-    <input type="text" id="homeSearch"
-           placeholder="🔍 Rechercher une région, province..."
-           autocomplete="off">
-    <button onclick="doSearch()">→</button>
-  </div>
+
 </div>
 
 <!-- Résultats de recherche en place -->
@@ -115,6 +110,15 @@ $nb_zones = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(DISTINCT zone) FR
 $nb_msgs  = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM messages"))[0];
 $nb_prov  = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM provinces"))[0];
 ?>
+
+<!-- Barre de recherche -->
+<div style="max-width:600px;margin:30px auto 0;padding:0 20px;position:relative">
+  <input type="text" id="homeSearch"
+         placeholder="🔍 Rechercher une région, province, culture..."
+         autocomplete="off"
+         style="width:100%;padding:14px 55px 14px 20px;border:2px solid #e5e7eb;border-radius:30px;font-size:16px;outline:none;box-shadow:0 2px 8px rgba(0,0,0,0.08);box-sizing:border-box">
+  <button onclick="doSearch()" style="position:absolute;right:25px;top:50%;transform:translateY(-50%);background:#008751;color:white;border:none;border-radius:25px;padding:8px 18px;cursor:pointer;font-weight:bold;font-size:16px">→</button>
+</div>
 
 <div class="stats" id="mainStats">
   <div class="stat"><strong><?php echo $total; ?></strong><span>Régions</span></div>

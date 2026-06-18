@@ -61,18 +61,18 @@ if (isset($_GET["export"]) && $_GET["export"] === "csv") {
 <body>
 <div class="flag-stripe"></div>
 <nav style="display:flex;justify-content:center;align-items:center;gap:5px;flex-wrap:wrap;position:relative">
-    <a href="accueil.php" style="color:#333;text-decoration:none;font-size:15px;font-weight:bold;padding:8px 12px">🏠 Accueil</a>
-    <a href="regions.php" style="color:#333;text-decoration:none;font-size:15px;font-weight:bold;padding:8px 12px">🗺️ Régions</a>
-    <a href="carte.php" style="color:#333;text-decoration:none;font-size:15px;font-weight:bold;padding:8px 12px">📍 Carte</a>
-    <a href="potentiels.php" style="color:#333;text-decoration:none;font-size:15px;font-weight:bold;padding:8px 12px">⚡ Potentiels</a>
-    <a href="culture.php" style="color:#333;text-decoration:none;font-size:15px;font-weight:bold;padding:8px 12px">🎭 Culture</a>
-    <a href="meteo.php" style="color:#333;text-decoration:none;font-size:15px;font-weight:bold;padding:8px 12px">🌤️ Météo</a>
-    <a href="actualites.php" style="color:#333;text-decoration:none;font-size:15px;font-weight:bold;padding:8px 12px">📰 Actualités</a>
-    <a href="apropos.php" style="color:#333;text-decoration:none;font-size:15px;font-weight:bold;padding:8px 12px">ℹ️ À Propos</a>
-    <a href="contact.php" style="color:#333;text-decoration:none;font-size:15px;font-weight:bold;padding:8px 12px">📩 Contact</a>
-    <a href="messages.php" style="color:#333;text-decoration:none;font-size:15px;font-weight:bold;padding:8px 12px">💬 Messages</a>
-    <a href="recherche.php" title="Recherche" style="position:absolute;right:45px;top:50%;transform:translateY(-50%);color:#008751;text-decoration:none;font-size:22px;font-weight:bold">🔍</a>
-    <a href="login.php" title="Admin" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);color:#1B4F72;text-decoration:none;font-size:22px;font-weight:bold">⚙️</a>
+    <a href="accueil.php" style="color:#333;text-decoration:none;font-size:17px;font-weight:bold;padding:8px 14px">🏠 Accueil</a>
+    <a href="regions.php" style="color:#333;text-decoration:none;font-size:17px;font-weight:bold;padding:8px 14px">🗺️ Régions</a>
+    <a href="carte.php" style="color:#333;text-decoration:none;font-size:17px;font-weight:bold;padding:8px 14px">📍 Carte</a>
+    <a href="potentiels.php" style="color:#333;text-decoration:none;font-size:17px;font-weight:bold;padding:8px 14px">⚡ Potentiels</a>
+    <a href="culture.php" style="color:#333;text-decoration:none;font-size:17px;font-weight:bold;padding:8px 14px">🎭 Culture</a>
+    <a href="meteo.php" style="color:#333;text-decoration:none;font-size:17px;font-weight:bold;padding:8px 14px">🌤️ Météo</a>
+    <a href="actualites.php" style="color:#333;text-decoration:none;font-size:17px;font-weight:bold;padding:8px 14px">📰 Actualités</a>
+    <a href="apropos.php" style="color:#333;text-decoration:none;font-size:17px;font-weight:bold;padding:8px 14px">ℹ️ À Propos</a>
+    <a href="contact.php" style="color:#333;text-decoration:none;font-size:17px;font-weight:bold;padding:8px 14px">📩 Contact</a>
+    <a href="messages.php" style="color:#333;text-decoration:none;font-size:17px;font-weight:bold;padding:8px 14px">💬 Messages</a>
+    <a href="recherche.php" title="Recherche" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);color:#1B4F72;text-decoration:none;font-size:24px;font-weight:bold">⚙️</a>
+    <a href="recherche.php" title="Recherche" style="position:absolute;right:45px;top:50%;transform:translateY(-50%);color:#008751;text-decoration:none;font-size:24px;font-weight:bold">🔍</a>
   </nav>
 </nav>
 
