@@ -68,31 +68,16 @@ require 'conn.php';
 <div class="flag-stripe"></div>
 <nav class="navbar">
   <a class="logo" href="accueil.php">🇧🇫 Burkina Terres d'Avenir</a>
-  <nav>
-    <div class="dropdown">
-      <button class="dropbtn site">🌐 Site ▾</button>
-      <div class="dropdown-content">
-        <a href="accueil.php">🏠 Accueil</a>
-        <a href="regions.php">🗺️ Les 17 Régions</a>
-        <a href="carte.php">📍 Carte Interactive</a>
-        <a href="potentiels.php">⚡ Potentiels</a>
-        <a href="culture.php">🎭 Culture</a>
-        <a href="meteo.php">🌤️ Météo</a>
-        <a href="actualites.php">📰 Actualités</a>
-        <a href="recherche.php">🔍 Recherche</a>
-        <a href="apropos.php">ℹ️ À Propos</a>
-        <a href="contact.php">📩 Contact</a>
-      </div>
-    </div>
+  <nav style="display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap">
     <div class="dropdown">
       <button class="dropbtn admin">⚙️ Admin ▾</button>
       <div class="dropdown-content">
-        <a href="login.php">🔐 Connexion</a>
         <a href="admin.php">⚙️ Tableau de bord</a>
         <a href="messages.php">💬 Messages</a>
         <a href="logout.php">🚪 Déconnexion</a>
       </div>
     </div>
+    <a href="index.php" style="background:#008751;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;font-size:13px;font-weight:bold">← Retour au site</a>
   </nav>
 </nav>
 

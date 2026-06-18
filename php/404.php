@@ -51,7 +51,7 @@
 <div class="flag-stripe"></div>
 <nav class="navbar">
   <a class="logo" href="accueil.php">🇧🇫 Burkina Terres d'Avenir</a>
-  <nav>
+  <nav style="display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap">
     <div class="dropdown">
       <button class="dropbtn site">🌐 Site ▾</button>
       <div class="dropdown-content">
@@ -67,15 +67,7 @@
         <a href="contact.php">📩 Contact</a>
       </div>
     </div>
-    <div class="dropdown">
-      <button class="dropbtn admin">⚙️ Admin ▾</button>
-      <div class="dropdown-content">
-        <a href="login.php">🔐 Connexion</a>
-        <a href="admin.php">⚙️ Tableau de bord</a>
-        <a href="messages.php">💬 Messages</a>
-        <a href="logout.php">🚪 Déconnexion</a>
-      </div>
-    </div>
+    <a href="index.php" style="background:#EF2B2D;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;font-size:13px;font-weight:bold">🏠 Accueil</a>
   </nav>
 </nav>
 
