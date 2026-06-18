@@ -31,6 +31,14 @@
     .legende-item { display: flex; align-items: center; gap: 8px; font-size: 13px; }
     .legende-dot { width: 16px; height: 16px; border-radius: 50%; }
     footer { background: #111827; color: #aaa; text-align: center; padding: 20px; margin-top: 30px; }
+  
+    .dropdown { position: relative; display: inline-block; }
+    .dropbtn { background: #008751; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-size: 13px; font-weight: bold; }
+    .dropbtn:hover { background: #006a3e; }
+    .dropdown-content { display: none; position: absolute; right: 0; background: white; min-width: 160px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); border-radius: 8px; z-index: 999; overflow: hidden; }
+    .dropdown-content a { display: block; padding: 10px 15px; color: #333; text-decoration: none; font-size: 13px; border-bottom: 1px solid #f0f0f0; }
+    .dropdown-content a:hover { background: #e8f5e9; color: #008751; }
+    .dropdown:hover .dropdown-content { display: block; }
   </style>
 </head>
 <body>
@@ -38,15 +46,23 @@
 <nav class="navbar">
   <a class="logo" href="accueil.php">🇧🇫 Burkina Terres d'Avenir</a>
   <nav>
-    <a href="accueil.php">Accueil</a>
-    <a href="regions.php">Les 17 Régions</a>
-    <a href="potentiels.php">Potentiels</a>
-    <a href="culture.php">Culture</a>
-    <a href="carte.php" class="actif">🗺️ Carte</a>
-    <a href="apropos.php">À Propos</a>
-    <a href="contact.php">Contact</a>
+    <a href="carte.php" class="actif">📍 Carte</a>
+    <a href="regions.php">🗺️ Régions</a>
+    <a href="carte.php">📍 Carte</a>
+    <a href="potentiels.php">⚡ Potentiels</a>
+    <a href="culture.php">🎭 Culture</a>
     <a href="meteo.php">🌤️ Météo</a>
     <a href="actualites.php">📰 Actualités</a>
+    <div class="dropdown">
+      <button class="dropbtn">Plus ▾</button>
+      <div class="dropdown-content">
+        <a href="apropos.php">ℹ️ À Propos</a>
+        <a href="contact.php">📩 Contact</a>
+        <a href="messages.php">💬 Messages</a>
+        <a href="recherche.php">🔍 Recherche</a>
+        <a href="admin.php">⚙️ Admin</a>
+      </div>
+    </div>
   </nav>
 </nav>
 
