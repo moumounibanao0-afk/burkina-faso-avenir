@@ -157,11 +157,17 @@ function loadNews() {
   const box = document.getElementById('newsGrid');
   box.innerHTML = '<div class="loading">🔄 Chargement depuis LeFaso.net...</div>';
 
-  fetch('ajax_rss.php?source=' + currentSource)
+  // Timeout 5 secondes
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+  fetch('ajax_rss.php?source=' + currentSource, { signal: controller.signal })
     .then(r => r.json())
     .then(data => {
+      clearTimeout(timeoutId);
       if (data.error || !data.items || data.items.length === 0) {
-        box.innerHTML = '<div class="empty">😕 Impossible de charger les actualités.<br><a href="https://lefaso.net" target="_blank" style="color:#008751">Voir LeFaso.net directement →</a></div>';
+        box.innerHTML = '<div class="empty">😕 Actualités indisponibles.<br>' +
+          '<a href="https://lefaso.net" target="_blank" style="color:#008751;font-weight:bold">📰 Voir LeFaso.net directement →</a></div>';
         return;
       }
       allItems = data.items;
@@ -169,8 +175,16 @@ function loadNews() {
       document.getElementById('lastUpdate').textContent = 'Mis à jour à ' + now.toLocaleTimeString('fr-FR');
       renderNews();
     })
-    .catch(() => {
-      box.innerHTML = '<div class="empty">❌ Erreur de connexion.<br><a href="https://lefaso.net" target="_blank" style="color:#008751">Voir LeFaso.net directement →</a></div>';
+    .catch((err) => {
+      clearTimeout(timeoutId);
+      if (err.name === 'AbortError') {
+        box.innerHTML = '<div class="empty">⏱️ Chargement trop lent.<br>' +
+          '<a href="https://lefaso.net" target="_blank" style="color:#008751;font-weight:bold">📰 Voir LeFaso.net directement →</a><br><br>' +
+          '<button onclick="loadNews()" style="background:#008751;color:white;border:none;padding:10px 20px;border-radius:20px;cursor:pointer;font-weight:bold">🔄 Réessayer</button></div>';
+      } else {
+        box.innerHTML = '<div class="empty">❌ Erreur connexion.<br>' +
+          '<a href="https://lefaso.net" target="_blank" style="color:#008751;font-weight:bold">📰 Voir LeFaso.net →</a></div>';
+      }
     });
 }
 
