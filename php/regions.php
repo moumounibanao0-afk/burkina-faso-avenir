@@ -55,25 +55,17 @@
 </head>
 <body>
 <div class="flag-stripe"></div>
-<nav class="navbar">
-  <a class="logo" href="accueil.php">🇧🇫 Burkina Terres d'Avenir</a>
-  <nav style="display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap">
-    <div class="dropdown">
-      <button class="dropbtn site">🌐 Site ▾</button>
-      <div class="dropdown-content">
-        <a href="accueil.php">🏠 Accueil</a>
-        <a href="regions.php">🗺️ Les 17 Régions</a>
-        <a href="carte.php">📍 Carte Interactive</a>
-        <a href="potentiels.php">⚡ Potentiels</a>
-        <a href="culture.php">🎭 Culture</a>
-        <a href="meteo.php">🌤️ Météo</a>
-        <a href="actualites.php">📰 Actualités</a>
-        <a href="recherche.php">🔍 Recherche</a>
-        <a href="apropos.php">ℹ️ À Propos</a>
-        <a href="contact.php">📩 Contact</a>
-      </div>
-    </div>
-    <a href="accueil.php" style="background:#EF2B2D;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;font-size:13px;font-weight:bold">🏠 Accueil</a>
+<nav style="display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap">
+    <a href="accueil.php" style="color:#333;text-decoration:none;font-size:13px;font-weight:bold;padding:5px 8px">🏠 Accueil</a>
+    <a href="regions.php" style="color:#333;text-decoration:none;font-size:13px;font-weight:bold;padding:5px 8px">🗺️ Régions</a>
+    <a href="carte.php" style="color:#333;text-decoration:none;font-size:13px;font-weight:bold;padding:5px 8px">📍 Carte</a>
+    <a href="potentiels.php" style="color:#333;text-decoration:none;font-size:13px;font-weight:bold;padding:5px 8px">⚡ Potentiels</a>
+    <a href="culture.php" style="color:#333;text-decoration:none;font-size:13px;font-weight:bold;padding:5px 8px">🎭 Culture</a>
+    <a href="meteo.php" style="color:#333;text-decoration:none;font-size:13px;font-weight:bold;padding:5px 8px">🌤️ Météo</a>
+    <a href="actualites.php" style="color:#333;text-decoration:none;font-size:13px;font-weight:bold;padding:5px 8px">📰 Actualités</a>
+    <a href="recherche.php" style="color:#333;text-decoration:none;font-size:13px;font-weight:bold;padding:5px 8px">🔍 Recherche</a>
+    <a href="apropos.php" style="color:#333;text-decoration:none;font-size:13px;font-weight:bold;padding:5px 8px">ℹ️ À Propos</a>
+    <a href="contact.php" style="color:#333;text-decoration:none;font-size:13px;font-weight:bold;padding:5px 8px">📩 Contact</a>
   </nav>
 </nav>
 
