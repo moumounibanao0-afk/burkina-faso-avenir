@@ -75,7 +75,7 @@
 <?php
 $zone_filtre = isset($_GET["zone"]) ? $_GET["zone"] : "toutes";
 $page = isset($_GET["page"]) ? max(1, intval($_GET["page"])) : 1;
-$par_page = 6;
+$par_page = 17;
 $offset = ($page - 1) * $par_page;
 
 if ($zone_filtre === "toutes") {
