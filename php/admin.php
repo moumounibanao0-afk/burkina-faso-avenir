@@ -52,6 +52,16 @@ require 'conn.php';
     .vues-bar { background: #e8f5e9; border-radius: 4px; height: 8px; margin-top: 4px; }
     .vues-fill { background: #008751; height: 8px; border-radius: 4px; }
     footer { background: #111827; color: #aaa; text-align: center; padding: 20px; margin-top: 50px; }
+  
+    .dropdown { position: relative; display: inline-block; margin-left: 10px; }
+    .dropbtn { color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 13px; font-weight: bold; }
+    .dropbtn.site { background: #008751; }
+    .dropbtn.admin { background: #1B4F72; }
+    .dropbtn:hover { opacity: 0.85; }
+    .dropdown-content { display: none; position: absolute; right: 0; background: white; min-width: 180px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); border-radius: 8px; z-index: 9999; overflow: hidden; margin-top: 5px; }
+    .dropdown-content a { display: block; padding: 10px 15px; color: #333; text-decoration: none; font-size: 13px; border-bottom: 1px solid #f0f0f0; }
+    .dropdown-content a:hover { background: #e8f5e9; color: #008751; }
+    .dropdown:hover .dropdown-content { display: block; }
   </style>
 </head>
 <body>
@@ -59,11 +69,30 @@ require 'conn.php';
 <nav class="navbar">
   <a class="logo" href="accueil.php">🇧🇫 Burkina Terres d'Avenir</a>
   <nav>
-    <a href="accueil.php">Accueil</a>
-    <a href="regions.php">Régions</a>
-    <a href="messages.php">Messages</a>
-    <a href="admin.php" style="color:#008751">⚙️ Admin</a>
-    <a href="logout.php" style="color:#EF2B2D">🚪 Déconnexion</a>
+    <div class="dropdown">
+      <button class="dropbtn site">🌐 Site ▾</button>
+      <div class="dropdown-content">
+        <a href="accueil.php">🏠 Accueil</a>
+        <a href="regions.php">🗺️ Les 17 Régions</a>
+        <a href="carte.php">📍 Carte Interactive</a>
+        <a href="potentiels.php">⚡ Potentiels</a>
+        <a href="culture.php">🎭 Culture</a>
+        <a href="meteo.php">🌤️ Météo</a>
+        <a href="actualites.php">📰 Actualités</a>
+        <a href="recherche.php">🔍 Recherche</a>
+        <a href="apropos.php">ℹ️ À Propos</a>
+        <a href="contact.php">📩 Contact</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn admin">⚙️ Admin ▾</button>
+      <div class="dropdown-content">
+        <a href="login.php">🔐 Connexion</a>
+        <a href="admin.php">⚙️ Tableau de bord</a>
+        <a href="messages.php">💬 Messages</a>
+        <a href="logout.php">🚪 Déconnexion</a>
+      </div>
+    </div>
   </nav>
 </nav>
 
