@@ -211,7 +211,7 @@ function renderNews() {
   }
 
   if (items.length === 0) {
-    box.innerHTML = '<div class="empty">😕 Aucune actualité trouvée.<br><small>Essayez un autre filtre ou terme de recherche.</small></div>';
+    box.innerHTML = '<div class="empty">😕 Aucun article dans cette catégorie aujourd\'hui.<br><small>Les filtres dépendent des articles publiés par LeFaso.net.</small><br><br><button onclick="setFilter(\'\', document.querySelector(\'.tab\')" style="background:#008751;color:white;border:none;padding:8px 20px;border-radius:20px;cursor:pointer;font-weight:bold">Voir tous les articles</button></div>';
     return;
   }
 
