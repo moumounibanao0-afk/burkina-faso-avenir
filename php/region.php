@@ -64,12 +64,12 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
     .tag.vert { background: #e8f5e9; color: #008751; }
     .tag.rouge { background: #ffebee; color: #EF2B2D; }
     .tag.or { background: #fff8e1; color: #E8B923; }
-    .tag-card { background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 3px 10px rgba(0,0,0,0.08); width: 160px; transition: transform 0.2s; }
+    .tag-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 3px 10px rgba(0,0,0,0.08); width: 320px; transition: transform 0.2s; }
     .tag-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
-    .tag-card.rouge { border-top: 4px solid #EF2B2D; }
-    .tag-card.vert { border-top: 4px solid #008751; }
-    .tag-photo { width: 100%; height: 100px; object-fit: cover; display: block; }
-    .tag-nom { font-size: 15px; font-weight: bold; color: #333; padding: 10px; text-align: center; }
+    .tag-card.rouge { border-top: 5px solid #EF2B2D; }
+    .tag-card.vert { border-top: 5px solid #008751; }
+    .tag-photo { width: 100%; height: 200px; object-fit: cover; display: block; }
+    .tag-nom { font-size: 20px; font-weight: bold; color: #333; padding: 16px; text-align: center; }
     .provinces-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 20px; }
     .provinces-grid > a { flex: 1 1 240px; max-width: 280px; }
     .province-card { background: #f9f9f9; border-radius: 10px; overflow: hidden; border-left: 4px solid #008751; }
