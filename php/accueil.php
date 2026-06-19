@@ -102,7 +102,6 @@
 </div>
 
 <!-- Résultats de recherche en place -->
-<div class="search-results" id="searchResults" style="display:none"></div>
 
 <?php
 $total    = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions"))[0];
