@@ -17,7 +17,7 @@
     .hero h1 { font-size: 36px; margin-bottom: 10px; }
     .hero p { font-size: 16px; opacity: 0.9; }
     .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
     .meteo-card { background: white; border-radius: 16px; padding: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); text-align: center; transition: transform 0.2s; border-top: 5px solid #008751; }
     .meteo-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,135,81,0.15); }
     .meteo-card h3 { color: #008751; font-size: 18px; margin-bottom: 5px; }
