@@ -19,7 +19,8 @@
     .filtres { text-align: center; margin: 20px 0; }
     .filtres a { display: inline-block; margin: 5px; padding: 8px 20px; background: white; border: 2px solid #008751; color: #008751; border-radius: 20px; text-decoration: none; font-weight: bold; }
     .filtres a.actif, .filtres a:hover { background: #008751; color: white; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    .grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+    .grid > * { flex: 1 1 300px; max-width: 380px; }
     .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s; }
     .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,135,81,0.15); }
     .card img { width: 100%; height: 160px; object-fit: cover; }
