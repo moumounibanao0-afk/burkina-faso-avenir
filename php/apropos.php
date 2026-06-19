@@ -19,11 +19,11 @@
     .card { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; }
     .card h3 { color: #008751; margin: 0 0 10px; }
     .card p { color: #555; line-height: 1.7; }
-    .team { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
-    .member { background: white; border-radius: 12px; padding: 25px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-top: 4px solid #008751; }
-    .member .avatar { width: 70px; height: 70px; border-radius: 50%; background: #008751; color: white; font-size: 28px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; }
-    .member h3 { color: #333; margin: 0 0 5px; }
-    .member p { color: #888; font-size: 13px; }
+    .team { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
+    .member { background: white; border-radius: 16px; padding: 40px 35px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 5px solid #008751; flex: 1 1 280px; max-width: 340px; }
+    .member .avatar { width: 100px; height: 100px; border-radius: 50%; background: #008751; color: white; font-size: 42px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+    .member h3 { color: #333; margin: 0 0 8px; font-size: 22px; }
+    .member p { color: #888; font-size: 15px; }
     .tech-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
     .tech { background: white; border-radius: 10px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
     .tech .icon { font-size: 32px; margin-bottom: 10px; }
