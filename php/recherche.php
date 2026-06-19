@@ -21,7 +21,8 @@
     .stats-bar span { color: #555; font-size: 14px; }
     .stats-bar strong { color: #008751; }
     .section-title { color: #008751; font-size: 20px; border-left: 4px solid #E8B923; padding-left: 12px; margin: 25px 0 15px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 30px; }
+    .grid { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin-bottom: 30px; }
+    .grid > * { flex: 1 1 280px; max-width: 380px; }
     .card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); text-decoration: none; color: inherit; display: block; transition: transform 0.2s; }
     .card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,135,81,0.15); }
     .card img { width: 100%; height: 130px; object-fit: cover; }

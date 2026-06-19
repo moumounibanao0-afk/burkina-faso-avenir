@@ -41,7 +41,8 @@
     .stat span { color: #666; font-size: 14px; }
     .section { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
     .section h2 { color: #008751; font-size: 28px; margin-bottom: 25px; border-left: 5px solid #E8B923; padding-left: 15px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    .grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+    .grid > * { flex: 1 1 250px; max-width: 380px; }
     .card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: transform 0.2s; text-decoration: none; color: inherit; display: block; }
     .card:hover { transform: translateY(-4px); }
     .card img { width: 100%; height: 150px; object-fit: cover; }
