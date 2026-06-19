@@ -306,6 +306,47 @@ $nb_vues_total= mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regio
 
 </div>
 
+
+<!-- GESTION PHOTOS PEUPLES ET POTENTIELS -->
+<div class="container">
+<div class="section">
+  <h2>👥 Photos des Peuples</h2>
+  <?php
+  $liste_peuples = mysqli_query($conn, "SELECT * FROM images_peuples ORDER BY nom");
+  while ($pe = mysqli_fetch_assoc($liste_peuples)):
+  ?>
+  <form method="POST" action="admin.php" style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px">
+    <input type="hidden" name="action" value="maj_photo_peuple">
+    <input type="hidden" name="nom_peuple" value="<?php echo htmlspecialchars($pe['nom']); ?>">
+    <img src="<?php echo htmlspecialchars($pe['image_url']); ?>" style="width:50px;height:50px;border-radius:8px;object-fit:cover"
+         onerror="this.src='https://via.placeholder.com/50/EF2B2D/white?text=?'">
+    <strong style="width:100px"><?php echo htmlspecialchars($pe['nom']); ?></strong>
+    <input type="text" name="url_peuple" value="<?php echo htmlspecialchars($pe['image_url']); ?>"
+           style="flex:1;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:12px">
+    <button type="submit" class="btn btn-green" style="padding:8px 18px">💾</button>
+  </form>
+  <?php endwhile; ?>
+</div>
+
+<div class="section">
+  <h2>⚡ Photos des Potentiels économiques</h2>
+  <?php
+  $liste_potentiels = mysqli_query($conn, "SELECT * FROM images_potentiels ORDER BY nom");
+  while ($po = mysqli_fetch_assoc($liste_potentiels)):
+  ?>
+  <form method="POST" action="admin.php" style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px">
+    <input type="hidden" name="action" value="maj_photo_potentiel">
+    <input type="hidden" name="nom_potentiel" value="<?php echo htmlspecialchars($po['nom']); ?>">
+    <img src="<?php echo htmlspecialchars($po['image_url']); ?>" style="width:50px;height:50px;border-radius:8px;object-fit:cover"
+         onerror="this.src='https://via.placeholder.com/50/008751/white?text=?'">
+    <strong style="width:140px"><?php echo htmlspecialchars($po['nom']); ?></strong>
+    <input type="text" name="url_potentiel" value="<?php echo htmlspecialchars($po['image_url']); ?>"
+           style="flex:1;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:12px">
+    <button type="submit" class="btn btn-green" style="padding:8px 18px">💾</button>
+  </form>
+  <?php endwhile; ?>
+</div>
+</div>
 <footer>🇧🇫 Burkina Terres d'Avenir — Admin Panel</footer>
 <?php
 // Données pour graphiques
