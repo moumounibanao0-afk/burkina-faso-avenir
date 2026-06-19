@@ -19,6 +19,15 @@ $nom_safe = mysqli_real_escape_string($conn, $region['nom']);
 $provinces = mysqli_query($conn, "SELECT * FROM provinces WHERE region_nom = '$nom_safe' ORDER BY nom");
 $nb_provinces = mysqli_num_rows($provinces);
 
+// Charger les images des peuples et potentiels
+$img_peuples = [];
+$res_ip = mysqli_query($conn, "SELECT nom, image_url FROM images_peuples");
+while ($row = mysqli_fetch_assoc($res_ip)) { $img_peuples[$row['nom']] = $row['image_url']; }
+
+$img_potentiels = [];
+$res_iv = mysqli_query($conn, "SELECT nom, image_url FROM images_potentiels");
+while ($row = mysqli_fetch_assoc($res_iv)) { $img_potentiels[$row['nom']] = $row['image_url']; }
+
 // Compteur de vues
 $slug = strtolower(str_replace(" ", "-", $region["nom"]));
 mysqli_query($conn, "INSERT INTO regions_vues (slug) VALUES ('$slug')");
@@ -55,12 +64,12 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
     .tag.vert { background: #e8f5e9; color: #008751; }
     .tag.rouge { background: #ffebee; color: #EF2B2D; }
     .tag.or { background: #fff8e1; color: #E8B923; }
-    .tag-card { background: white; border-radius: 14px; padding: 20px 25px; text-align: center; box-shadow: 0 3px 10px rgba(0,0,0,0.08); min-width: 130px; transition: transform 0.2s; }
-    .tag-card:hover { transform: translateY(-4px); }
+    .tag-card { background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 3px 10px rgba(0,0,0,0.08); width: 160px; transition: transform 0.2s; }
+    .tag-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
     .tag-card.rouge { border-top: 4px solid #EF2B2D; }
     .tag-card.vert { border-top: 4px solid #008751; }
-    .tag-icone { font-size: 36px; margin-bottom: 8px; }
-    .tag-nom { font-size: 15px; font-weight: bold; color: #333; }
+    .tag-photo { width: 100%; height: 100px; object-fit: cover; display: block; }
+    .tag-nom { font-size: 15px; font-weight: bold; color: #333; padding: 10px; text-align: center; }
     .provinces-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 20px; }
     .provinces-grid > a { flex: 1 1 240px; max-width: 280px; }
     .province-card { background: #f9f9f9; border-radius: 10px; overflow: hidden; border-left: 4px solid #008751; }
@@ -178,13 +187,13 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
     <h2>👥 Peuples</h2>
     <div class="tags">
       <?php
-      $icones_peuples = ['Mossi'=>'👨‍🌾','Gurunsi'=>'🧑‍🤝‍🧑','Peul'=>'🐄','Bissa'=>'🏹','Gourmantché'=>'🛖','Bobo'=>'🎭','Sénoufo'=>'🪘','Lobi'=>'🛡️','Dioula'=>'🧵','Touareg'=>'🐫','Samo'=>'🌾','Marka'=>'🏺','Dagara'=>'🥁'];
       foreach(explode(',', $region['peuples']) as $p):
         $nom_p = trim($p);
-        $icone = $icones_peuples[$nom_p] ?? '👥';
+        $img_p = $img_peuples[$nom_p] ?? 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=300';
       ?>
       <div class="tag-card rouge">
-        <div class="tag-icone"><?php echo $icone; ?></div>
+        <img src="<?php echo htmlspecialchars($img_p); ?>" alt="<?php echo htmlspecialchars($nom_p); ?>" class="tag-photo"
+             onerror="this.src='https://via.placeholder.com/300x180/EF2B2D/white?text=<?php echo urlencode($nom_p); ?>'">
         <div class="tag-nom"><?php echo htmlspecialchars($nom_p); ?></div>
       </div>
       <?php endforeach; ?>
@@ -195,13 +204,13 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
     <h2>⚡ Potentiels économiques</h2>
     <div class="tags">
       <?php
-      $icones_potentiels = ['Agriculture'=>'🌾','Élevage'=>'🐄','Mines'=>'⛏️','Mine d\'or'=>'🥇','Or'=>'🥇','Tourisme'=>'🏞️','Artisanat'=>'🧶','Énergie'=>'⚡','Hydroélectricité'=>'💧','Industrie textile'=>'🧵','Pêche'=>'🎣','Commerce'=>'🛒','Coton'=>'☁️','Sylviculture'=>'🌳'];
       foreach(explode(',', $region['potentiels']) as $p):
         $nom_p = trim($p);
-        $icone = $icones_potentiels[$nom_p] ?? '⚡';
+        $img_p = $img_potentiels[$nom_p] ?? 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=300';
       ?>
       <div class="tag-card vert">
-        <div class="tag-icone"><?php echo $icone; ?></div>
+        <img src="<?php echo htmlspecialchars($img_p); ?>" alt="<?php echo htmlspecialchars($nom_p); ?>" class="tag-photo"
+             onerror="this.src='https://via.placeholder.com/300x180/008751/white?text=<?php echo urlencode($nom_p); ?>'">
         <div class="tag-nom"><?php echo htmlspecialchars($nom_p); ?></div>
       </div>
       <?php endforeach; ?>
