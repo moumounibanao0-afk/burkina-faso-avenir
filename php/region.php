@@ -21,12 +21,20 @@ $nb_provinces = mysqli_num_rows($provinces);
 
 // Charger les images des peuples et potentiels
 $img_peuples = [];
-$res_ip = mysqli_query($conn, "SELECT nom, image_url FROM images_peuples");
-while ($row = mysqli_fetch_assoc($res_ip)) { $img_peuples[$row['nom']] = $row['image_url']; }
+$desc_peuples = [];
+$res_ip = mysqli_query($conn, "SELECT nom, image_url, description FROM images_peuples");
+while ($row = mysqli_fetch_assoc($res_ip)) {
+  $img_peuples[$row['nom']] = $row['image_url'];
+  $desc_peuples[$row['nom']] = $row['description'];
+}
 
 $img_potentiels = [];
-$res_iv = mysqli_query($conn, "SELECT nom, image_url FROM images_potentiels");
-while ($row = mysqli_fetch_assoc($res_iv)) { $img_potentiels[$row['nom']] = $row['image_url']; }
+$desc_potentiels = [];
+$res_iv = mysqli_query($conn, "SELECT nom, image_url, description FROM images_potentiels");
+while ($row = mysqli_fetch_assoc($res_iv)) {
+  $img_potentiels[$row['nom']] = $row['image_url'];
+  $desc_potentiels[$row['nom']] = $row['description'];
+}
 
 // Compteur de vues
 $slug = strtolower(str_replace(" ", "-", $region["nom"]));
@@ -191,7 +199,7 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
         $nom_p = trim($p);
         $img_p = $img_peuples[$nom_p] ?? 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=300';
       ?>
-      <div class="tag-card rouge">
+      <div class="tag-card rouge" onclick="ouvrirInfoTag('<?php echo addslashes($nom_p); ?>', '<?php echo addslashes($desc_peuples[$nom_p] ?? "Aucune description disponible pour le moment."); ?>', '<?php echo addslashes($img_p); ?>')" style="cursor:pointer">
         <img src="<?php echo htmlspecialchars($img_p); ?>" alt="<?php echo htmlspecialchars($nom_p); ?>" class="tag-photo"
              onerror="this.src='https://via.placeholder.com/300x180/EF2B2D/white?text=<?php echo urlencode($nom_p); ?>'">
         <div class="tag-nom"><?php echo htmlspecialchars($nom_p); ?></div>
@@ -208,7 +216,7 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
         $nom_p = trim($p);
         $img_p = $img_potentiels[$nom_p] ?? 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=300';
       ?>
-      <div class="tag-card vert">
+      <div class="tag-card vert" onclick="ouvrirInfoTag('<?php echo addslashes($nom_p); ?>', '<?php echo addslashes($desc_potentiels[$nom_p] ?? "Aucune description disponible pour le moment."); ?>', '<?php echo addslashes($img_p); ?>')" style="cursor:pointer">
         <img src="<?php echo htmlspecialchars($img_p); ?>" alt="<?php echo htmlspecialchars($nom_p); ?>" class="tag-photo"
              onerror="this.src='https://via.placeholder.com/300x180/008751/white?text=<?php echo urlencode($nom_p); ?>'">
         <div class="tag-nom"><?php echo htmlspecialchars($nom_p); ?></div>
@@ -234,5 +242,28 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
 <footer>🇧🇫 Burkina Terres d'Avenir — Projet L3 Web Dynamique PHP + MySQL</footer>
 <?php mysqli_close($conn); ?>
 <script src="commun.js"></script>
+
+<div id="modal-tag-info" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:9999;align-items:center;justify-content:center;padding:20px">
+  <div style="background:white;border-radius:18px;max-width:450px;width:100%;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.3)">
+    <img id="modal-tag-img" src="" style="width:100%;height:220px;object-fit:cover">
+    <div style="padding:25px">
+      <h3 id="modal-tag-nom" style="color:#008751;font-size:22px;margin-bottom:12px"></h3>
+      <p id="modal-tag-desc" style="color:#555;line-height:1.7;font-size:15px"></p>
+      <button onclick="document.getElementById('modal-tag-info').style.display='none'"
+        style="margin-top:20px;background:#008751;color:white;border:none;padding:10px 25px;border-radius:20px;cursor:pointer;font-weight:bold;width:100%">Fermer</button>
+    </div>
+  </div>
+</div>
+<script>
+function ouvrirInfoTag(nom, desc, img) {
+  document.getElementById('modal-tag-nom').textContent = nom;
+  document.getElementById('modal-tag-desc').textContent = desc;
+  document.getElementById('modal-tag-img').src = img;
+  document.getElementById('modal-tag-info').style.display = 'flex';
+}
+document.getElementById('modal-tag-info').addEventListener('click', function(e) {
+  if (e.target === this) this.style.display = 'none';
+});
+</script>
 </body>
 </html>
