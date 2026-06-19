@@ -92,6 +92,11 @@ $villes = [
   ['region'=>'Soum',       'ville'=>'Djibo',         'lat'=>14.1000, 'lon'=>-1.6333],
   ['region'=>'Liptako',    'ville'=>'Gorom-Gorom',   'lat'=>14.4333, 'lon'=>-0.2333],
   ['region'=>'Nando',      'ville'=>'Ziniaré',       'lat'=>12.5833, 'lon'=>-1.2833],
+  ['region'=>'Bankui',     'ville'=>'Manga',         'lat'=>11.6667, 'lon'=>-1.0667],
+  ['region'=>'Djôrô',      'ville'=>'Koudougou',     'lat'=>12.2500, 'lon'=>-2.3667],
+  ['region'=>'Nazinon',    'ville'=>'Pô',            'lat'=>11.1667, 'lon'=>-1.1500],
+  ['region'=>'Sourou',     'ville'=>'Tougan',        'lat'=>13.0667, 'lon'=>-3.0667],
+  ['region'=>'Tapoa',      'ville'=>'Diapaga',       'lat'=>12.0667, 'lon'=>1.7833],
 ];
 mysqli_close($conn);
 ?>
