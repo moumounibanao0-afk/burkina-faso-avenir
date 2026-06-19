@@ -116,6 +116,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
       $msg = "✅ Région '{$r['nom']}' supprimée.";
     }
   }
+    if ($_POST['action'] === 'maj_photo_peuple') {
+    $nom_p = mysqli_real_escape_string($conn, trim($_POST['nom_peuple']));
+    $url_p = mysqli_real_escape_string($conn, trim($_POST['url_peuple']));
+    mysqli_query($conn, "UPDATE images_peuples SET image_url='$url_p' WHERE nom='$nom_p'");
+    $msg = "✅ Photo du peuple '$nom_p' mise à jour !";
+  }
+  if ($_POST['action'] === 'maj_photo_potentiel') {
+    $nom_p = mysqli_real_escape_string($conn, trim($_POST['nom_potentiel']));
+    $url_p = mysqli_real_escape_string($conn, trim($_POST['url_potentiel']));
+    mysqli_query($conn, "UPDATE images_potentiels SET image_url='$url_p' WHERE nom='$nom_p'");
+    $msg = "✅ Photo du potentiel '$nom_p' mise à jour !";
+  }
   if ($_POST['action'] === 'modifier') {
     $id        = intval($_POST['region_id']);
     $nom       = mysqli_real_escape_string($conn, trim($_POST['nom']));
