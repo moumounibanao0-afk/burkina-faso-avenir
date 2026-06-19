@@ -52,7 +52,7 @@
     .zone-badge { background: #EF2B2D; color: white; padding: 3px 8px; border-radius: 8px; font-size: 11px; font-weight: bold; }
     .voir-plus { text-align: center; margin-top: 30px; }
     .voir-plus a { background: #008751; color: white; padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: bold; }
-    .contact-section { background: white; border-radius: 12px; padding: 30px; margin: 20px auto; max-width: 1100px; }
+    .contact-section { background: white; border-radius: 12px; padding: 40px; margin: 20px auto; max-width: 1100px; text-align: center; }
     footer { background: #111827; color: #aaa; text-align: center; padding: 25px; margin-top: 50px; }
     footer strong { color: white; }
   
