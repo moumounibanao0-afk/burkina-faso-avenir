@@ -119,6 +119,8 @@ $nb_prov  = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM provinces
          style="width:100%;padding:14px 55px 14px 20px;border:2px solid #e5e7eb;border-radius:30px;font-size:16px;outline:none;box-shadow:0 2px 8px rgba(0,0,0,0.08);box-sizing:border-box">
   <button onclick="doSearch()" style="position:absolute;right:25px;top:50%;transform:translateY(-50%);background:#008751;color:white;border:none;border-radius:25px;padding:8px 18px;cursor:pointer;font-weight:bold;font-size:16px">→</button>
 </div>
+<!-- Résultats de recherche en place -->
+<div class="search-results" id="searchResults" style="display:none"></div>
 
 <div class="stats" id="mainStats">
   <div class="stat"><strong><?php echo $total; ?></strong><span>Régions</span></div>
