@@ -42,24 +42,32 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
     .hero-overlay h1 { color: white; font-size: 48px; margin: 0; }
     .hero-overlay .zone { background: #EF2B2D; color: white; padding: 5px 15px; border-radius: 20px; font-size: 13px; font-weight: bold; margin-left: 15px; }
     .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
-    .info-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; margin-bottom: 30px; }
-    .info-card { background: white; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-    .info-card .label { color: #888; font-size: 12px; text-transform: uppercase; margin-bottom: 5px; }
-    .info-card .value { color: #008751; font-size: 22px; font-weight: bold; }
+    .info-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-bottom: 30px; }
+    .info-grid > * { flex: 1 1 200px; max-width: 240px; }
+    .info-card { background: white; border-radius: 16px; padding: 30px 20px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .info-card .label { color: #888; font-size: 13px; text-transform: uppercase; margin-bottom: 8px; font-weight: bold; }
+    .info-card .value { color: #008751; font-size: 28px; font-weight: bold; }
     .section { background: white; border-radius: 12px; padding: 25px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-    .section h2 { color: #008751; border-left: 4px solid #E8B923; padding-left: 12px; margin: 0 0 15px; }
+    .section h2 { color: #008751; border-bottom: 3px solid #E8B923; padding-bottom: 10px; margin: 0 0 20px; text-align: center; font-size: 22px; }
     .section p { color: #555; line-height: 1.7; margin: 0; }
-    .tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-    .tag { background: #f0f0f0; color: #333; padding: 6px 14px; border-radius: 20px; font-size: 13px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; justify-content: center; }
+    .tag { background: #f0f0f0; color: #333; padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: bold; }
     .tag.vert { background: #e8f5e9; color: #008751; }
     .tag.rouge { background: #ffebee; color: #EF2B2D; }
     .tag.or { background: #fff8e1; color: #E8B923; }
-    .provinces-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 15px; }
+    .tag-card { background: white; border-radius: 14px; padding: 20px 25px; text-align: center; box-shadow: 0 3px 10px rgba(0,0,0,0.08); min-width: 130px; transition: transform 0.2s; }
+    .tag-card:hover { transform: translateY(-4px); }
+    .tag-card.rouge { border-top: 4px solid #EF2B2D; }
+    .tag-card.vert { border-top: 4px solid #008751; }
+    .tag-icone { font-size: 36px; margin-bottom: 8px; }
+    .tag-nom { font-size: 15px; font-weight: bold; color: #333; }
+    .provinces-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 20px; }
+    .provinces-grid > a { flex: 1 1 240px; max-width: 280px; }
     .province-card { background: #f9f9f9; border-radius: 10px; overflow: hidden; border-left: 4px solid #008751; }
-    .province-card img { width: 100%; height: 100px; object-fit: cover; cursor: zoom-in; }
-    .province-card .pc-body { padding: 12px 15px; }
-    .province-card h4 { color: #008751; margin: 0 0 5px; font-size: 15px; }
-    .province-card p { color: #888; font-size: 12px; margin: 0; }
+    .province-card img { width: 100%; height: 130px; object-fit: cover; }
+    .province-card .pc-body { padding: 16px 18px; }
+    .province-card h4 { color: #008751; margin: 0 0 8px; font-size: 18px; }
+    .province-card p { color: #888; font-size: 14px; margin: 4px 0 0; }
     .nav-regions { display: flex; justify-content: space-between; margin: 30px 0; gap: 10px; }
     .nav-btn { background: #008751; color: white; padding: 12px 20px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 13px; }
     .nav-btn.retour { background: white; color: #008751; border: 2px solid #008751; }
@@ -169,8 +177,16 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
   <div class="section">
     <h2>👥 Peuples</h2>
     <div class="tags">
-      <?php foreach(explode(',', $region['peuples']) as $p): ?>
-      <span class="tag rouge"><?php echo htmlspecialchars(trim($p)); ?></span>
+      <?php
+      $icones_peuples = ['Mossi'=>'👨‍🌾','Gurunsi'=>'🧑‍🤝‍🧑','Peul'=>'🐄','Bissa'=>'🏹','Gourmantché'=>'🛖','Bobo'=>'🎭','Sénoufo'=>'🪘','Lobi'=>'🛡️','Dioula'=>'🧵','Touareg'=>'🐫','Samo'=>'🌾','Marka'=>'🏺','Dagara'=>'🥁'];
+      foreach(explode(',', $region['peuples']) as $p):
+        $nom_p = trim($p);
+        $icone = $icones_peuples[$nom_p] ?? '👥';
+      ?>
+      <div class="tag-card rouge">
+        <div class="tag-icone"><?php echo $icone; ?></div>
+        <div class="tag-nom"><?php echo htmlspecialchars($nom_p); ?></div>
+      </div>
       <?php endforeach; ?>
     </div>
   </div>
@@ -178,8 +194,16 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
   <div class="section">
     <h2>⚡ Potentiels économiques</h2>
     <div class="tags">
-      <?php foreach(explode(',', $region['potentiels']) as $p): ?>
-      <span class="tag vert"><?php echo htmlspecialchars(trim($p)); ?></span>
+      <?php
+      $icones_potentiels = ['Agriculture'=>'🌾','Élevage'=>'🐄','Mines'=>'⛏️','Mine d\'or'=>'🥇','Or'=>'🥇','Tourisme'=>'🏞️','Artisanat'=>'🧶','Énergie'=>'⚡','Hydroélectricité'=>'💧','Industrie textile'=>'🧵','Pêche'=>'🎣','Commerce'=>'🛒','Coton'=>'☁️','Sylviculture'=>'🌳'];
+      foreach(explode(',', $region['potentiels']) as $p):
+        $nom_p = trim($p);
+        $icone = $icones_potentiels[$nom_p] ?? '⚡';
+      ?>
+      <div class="tag-card vert">
+        <div class="tag-icone"><?php echo $icone; ?></div>
+        <div class="tag-nom"><?php echo htmlspecialchars($nom_p); ?></div>
+      </div>
       <?php endforeach; ?>
     </div>
   </div>
