@@ -112,13 +112,13 @@ $nb_messages  = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM messa
   <div class="team">
     <div class="member">
       <div class="avatar">👨‍💻</div>
-      <h3>BANAO Moumouni</h3>
+      <h3>Moumouni BANAO</h3>
       <p>Développeur principal</p>
       <p style="color:#008751;font-weight:bold">L3 Informatique — UNZ</p>
     </div>
     <div class="member">
       <div class="avatar">👨‍💻</div>
-      <h3>YAMWEMBA Oumar</h3>
+      <h3>Oumar YAMWEMBA</h3>
       <p>Développeur</p>
       <p style="color:#008751;font-weight:bold">L3 Informatique — UNZ</p>
     </div>
