@@ -152,15 +152,16 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
     <h2>🏛️ Provinces (<?php echo $nb_provinces; ?>)</h2>
     <div class="provinces-grid">
       <?php while ($p = mysqli_fetch_assoc($provinces)): ?>
-      <div class="province-card">
+      <a href="province.php?id=<?php echo $p['id']; ?>" class="province-card" style="text-decoration:none;display:block">
         <img src="<?php echo htmlspecialchars($p['image_url'] ?? 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=400'); ?>"
              alt="<?php echo htmlspecialchars($p['nom']); ?>"
              onerror="this.src='https://via.placeholder.com/400x100/008751/white?text=<?php echo urlencode($p['nom']); ?>'">
         <div class="pc-body">
         <h4><?php echo htmlspecialchars($p['nom']); ?></h4>
         <p>🏙️ <?php echo htmlspecialchars($p['chef_lieu']); ?></p>
+        <p style="color:#008751;font-weight:bold;margin-top:5px">Voir détails →</p>
         </div>
-      </div>
+      </a>
       <?php endwhile; ?>
     </div>
   </div>
