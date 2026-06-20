@@ -1,6 +1,7 @@
 <?php
+require_once 'Auth.class.php';
 session_start();
-session_destroy();
+Auth::deconnecter();
 header('Location: login.php');
 exit;
 ?>

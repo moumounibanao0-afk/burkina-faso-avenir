@@ -1,8 +1,9 @@
 <?php
+require_once 'Auth.class.php';
 session_start();
 
 // Si déjà connecté → rediriger vers admin
-if (isset($_SESSION['admin']) && $_SESSION['admin'] === true) {
+if (Auth::estConnecte()) {
   header('Location: admin.php');
   exit;
 }
@@ -13,12 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $login = trim($_POST['login'] ?? '');
   $mdp   = trim($_POST['mdp'] ?? '');
 
-  // Identifiants admin
-  if ($login === 'admin' && $mdp === '1234') {
-    session_regenerate_id(true);
-    $_SESSION['admin'] = true;
-    $_SESSION['login'] = $login;
-    $_SESSION['heure'] = date('H:i');
+  // Identifiants admin (vérifiés via la classe Auth, mot de passe haché)
+  if (Auth::verifierIdentifiants($login, $mdp)) {
+    Auth::connecter($login);
     header('Location: admin.php');
     exit;
   } else {

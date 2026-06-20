@@ -1,6 +1,7 @@
 <?php
+require_once 'Auth.class.php';
 session_start();
-if (!isset($_SESSION['admin']) || $_SESSION['admin'] !== true) {
+if (!Auth::estConnecte()) {
   header('Location: login.php');
   exit;
 }
