@@ -424,18 +424,36 @@ $nb_visites_site = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM vi
 
 <!-- GESTION PHOTOS PEUPLES ET POTENTIELS -->
 <div class="container">
+<?php
+// Pré-calcul : pour chaque peuple/potentiel, quelles régions le mentionnent
+// (comparaison exacte après découpage par virgule, pour éviter les faux
+// positifs comme "Bwa" qui serait contenu dans "Bwaba")
+$regions_par_peuple = [];
+$regions_par_potentiel = [];
+$res_regions_liens = mysqli_query($conn, "SELECT nom, peuples, potentiels FROM regions");
+while ($rg = mysqli_fetch_assoc($res_regions_liens)) {
+  foreach (array_map('trim', explode(',', $rg['peuples'])) as $p) {
+    if ($p !== '') $regions_par_peuple[$p][] = $rg['nom'];
+  }
+  foreach (array_map('trim', explode(',', $rg['potentiels'])) as $p) {
+    if ($p !== '') $regions_par_potentiel[$p][] = $rg['nom'];
+  }
+}
+?>
 <div class="section">
   <h2>👥 Photos des Peuples</h2>
   <?php
   $liste_peuples = mysqli_query($conn, "SELECT * FROM images_peuples ORDER BY nom");
   while ($pe = mysqli_fetch_assoc($liste_peuples)):
+    $regions_liees = $regions_par_peuple[$pe['nom']] ?? [];
+    $regions_txt = $regions_liees ? implode(', ', $regions_liees) : 'aucune région';
   ?>
   <form method="POST" action="admin.php" enctype="multipart/form-data" style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px;flex-wrap:wrap">
     <input type="hidden" name="action" value="maj_photo_peuple">
     <input type="hidden" name="nom_peuple" value="<?php echo htmlspecialchars($pe['nom']); ?>">
     <img src="<?php echo htmlspecialchars($pe['image_url']); ?>" style="width:50px;height:50px;border-radius:8px;object-fit:cover"
          onerror="this.src='https://via.placeholder.com/50/EF2B2D/white?text=?'">
-    <strong style="width:100px"><?php echo htmlspecialchars($pe['nom']); ?></strong>
+    <strong style="width:220px"><?php echo htmlspecialchars($pe['nom']); ?> <span style="color:#999;font-weight:normal;font-size:11px">(<?php echo htmlspecialchars($regions_txt); ?>)</span></strong>
     <input type="text" name="url_peuple" value="<?php echo htmlspecialchars($pe['image_url']); ?>"
            style="flex:1;min-width:150px;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:12px">
     <input type="file" name="photo_peuple" accept="image/png,image/jpeg,image/webp,image/gif" style="font-size:11px;max-width:160px">
@@ -449,13 +467,15 @@ $nb_visites_site = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM vi
   <?php
   $liste_potentiels = mysqli_query($conn, "SELECT * FROM images_potentiels ORDER BY nom");
   while ($po = mysqli_fetch_assoc($liste_potentiels)):
+    $regions_liees_p = $regions_par_potentiel[$po['nom']] ?? [];
+    $regions_txt_p = $regions_liees_p ? implode(', ', $regions_liees_p) : 'aucune région';
   ?>
   <form method="POST" action="admin.php" enctype="multipart/form-data" style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px;flex-wrap:wrap">
     <input type="hidden" name="action" value="maj_photo_potentiel">
     <input type="hidden" name="nom_potentiel" value="<?php echo htmlspecialchars($po['nom']); ?>">
     <img src="<?php echo htmlspecialchars($po['image_url']); ?>" style="width:50px;height:50px;border-radius:8px;object-fit:cover"
          onerror="this.src='https://via.placeholder.com/50/008751/white?text=?'">
-    <strong style="width:140px"><?php echo htmlspecialchars($po['nom']); ?></strong>
+    <strong style="width:250px"><?php echo htmlspecialchars($po['nom']); ?> <span style="color:#999;font-weight:normal;font-size:11px">(<?php echo htmlspecialchars($regions_txt_p); ?>)</span></strong>
     <input type="text" name="url_potentiel" value="<?php echo htmlspecialchars($po['image_url']); ?>"
            style="flex:1;min-width:150px;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:12px">
     <input type="file" name="photo_potentiel" accept="image/png,image/jpeg,image/webp,image/gif" style="font-size:11px;max-width:160px">
