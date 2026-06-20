@@ -184,6 +184,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
       $msg = "✅ Photo de la province mise à jour !";
     }
   }
+  if ($_POST['action'] === 'maj_photo_potentiel_page') {
+    $id_pot = intval($_POST['id_potentiel_page']);
+    $url_p = trim($_POST['url_potentiel_page']);
+    $fichier_uploade = gererUpload('photo_potentiel_page');
+    if ($fichier_uploade) { $url_p = $fichier_uploade; }
+    $url_p = mysqli_real_escape_string($conn, $url_p);
+    if ($id_pot > 0) {
+      mysqli_query($conn, "UPDATE potentiels SET image_url='$url_p' WHERE id=$id_pot");
+      $msg = "✅ Photo du potentiel (page Potentiels) mise à jour !";
+    }
+  }
+  if ($_POST['action'] === 'maj_photo_culture') {
+    $id_culture = intval($_POST['id_culture']);
+    $url_p = trim($_POST['url_culture']);
+    $fichier_uploade = gererUpload('photo_culture');
+    if ($fichier_uploade) { $url_p = $fichier_uploade; }
+    $url_p = mysqli_real_escape_string($conn, $url_p);
+    if ($id_culture > 0) {
+      mysqli_query($conn, "UPDATE cultures SET image_url='$url_p' WHERE id=$id_culture");
+      $msg = "✅ Photo de l'élément culturel mise à jour !";
+    }
+  }
   if ($_POST['action'] === 'modifier') {
     $id        = intval($_POST['region_id']);
     $nom       = mysqli_real_escape_string($conn, trim($_POST['nom']));
@@ -457,6 +479,46 @@ $nb_visites_site = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM vi
     <input type="text" name="url_province" value="<?php echo htmlspecialchars($pr['image_url']); ?>"
            style="flex:1;min-width:150px;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:12px">
     <input type="file" name="photo_province" accept="image/png,image/jpeg,image/webp,image/gif" style="font-size:11px;max-width:160px">
+    <button type="submit" class="btn btn-green" style="padding:8px 18px">💾</button>
+  </form>
+  <?php endwhile; ?>
+</div>
+
+<div class="section">
+  <h2>⚡ Photos des Potentiels (page Potentiels économiques)</h2>
+  <?php
+  $liste_potentiels_page = mysqli_query($conn, "SELECT id, titre, categorie, image_url FROM potentiels ORDER BY categorie, titre");
+  while ($pp = mysqli_fetch_assoc($liste_potentiels_page)):
+  ?>
+  <form method="POST" action="admin.php" enctype="multipart/form-data" style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px;flex-wrap:wrap">
+    <input type="hidden" name="action" value="maj_photo_potentiel_page">
+    <input type="hidden" name="id_potentiel_page" value="<?php echo $pp['id']; ?>">
+    <img src="<?php echo htmlspecialchars($pp['image_url']); ?>" style="width:50px;height:50px;border-radius:8px;object-fit:cover"
+         onerror="this.src='https://via.placeholder.com/50/1B4F72/white?text=?'">
+    <strong style="width:140px"><?php echo htmlspecialchars($pp['titre']); ?> <span style="color:#999;font-weight:normal">(<?php echo htmlspecialchars($pp['categorie']); ?>)</span></strong>
+    <input type="text" name="url_potentiel_page" value="<?php echo htmlspecialchars($pp['image_url']); ?>"
+           style="flex:1;min-width:150px;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:12px">
+    <input type="file" name="photo_potentiel_page" accept="image/png,image/jpeg,image/webp,image/gif" style="font-size:11px;max-width:160px">
+    <button type="submit" class="btn btn-green" style="padding:8px 18px">💾</button>
+  </form>
+  <?php endwhile; ?>
+</div>
+
+<div class="section">
+  <h2>🎭 Photos des éléments culturels (page Culture)</h2>
+  <?php
+  $liste_cultures = mysqli_query($conn, "SELECT id, nom, type, region, image_url FROM cultures ORDER BY type, nom");
+  while ($cu = mysqli_fetch_assoc($liste_cultures)):
+  ?>
+  <form method="POST" action="admin.php" enctype="multipart/form-data" style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px;flex-wrap:wrap">
+    <input type="hidden" name="action" value="maj_photo_culture">
+    <input type="hidden" name="id_culture" value="<?php echo $cu['id']; ?>">
+    <img src="<?php echo htmlspecialchars($cu['image_url']); ?>" style="width:50px;height:50px;border-radius:8px;object-fit:cover"
+         onerror="this.src='https://via.placeholder.com/50/A0522D/white?text=?'">
+    <strong style="width:220px"><?php echo htmlspecialchars($cu['nom']); ?> <span style="color:#999;font-weight:normal">(<?php echo htmlspecialchars($cu['type']); ?>)</span></strong>
+    <input type="text" name="url_culture" value="<?php echo htmlspecialchars($cu['image_url']); ?>"
+           style="flex:1;min-width:150px;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:12px">
+    <input type="file" name="photo_culture" accept="image/png,image/jpeg,image/webp,image/gif" style="font-size:11px;max-width:160px">
     <button type="submit" class="btn btn-green" style="padding:8px 18px">💾</button>
   </form>
   <?php endwhile; ?>
