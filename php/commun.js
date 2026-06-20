@@ -69,46 +69,6 @@ darkBtn.onclick = () => {
 };
 document.body.appendChild(darkBtn);
 
-// ========== LOADER ANIMÉ ==========
-window.addEventListener('load', () => {
-  const loader = document.getElementById('page-loader');
-  if (loader) loader.style.display = 'none';
-});
-
-// ========== LOADER ANIMÉ ==========
-const loaderDiv = document.createElement('div');
-loaderDiv.id = 'page-loader';
-loaderDiv.style.cssText = `
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999;
-  background: white; display: flex; flex-direction: column;
-  align-items: center; justify-content: center; transition: opacity 0.5s;
-`;
-loaderDiv.innerHTML = `
-  <div style="font-size:48px;margin-bottom:15px">🇧🇫</div>
-  <div style="font-size:18px;color:#008751;font-weight:bold;margin-bottom:15px">Burkina Terres d'Avenir</div>
-  <div style="width:200px;height:4px;background:#eee;border-radius:2px;overflow:hidden">
-    <div id="loader-bar" style="height:100%;background:linear-gradient(90deg,#EF2B2D,#008751);width:0%;transition:width 0.5s;border-radius:2px"></div>
-  </div>
-`;
-document.body.insertBefore(loaderDiv, document.body.firstChild);
-
-let progress = 0;
-const barInterval = setInterval(() => {
-  progress = Math.min(progress + Math.random() * 15, 90);
-  const bar = document.getElementById('loader-bar');
-  if (bar) bar.style.width = progress + '%';
-}, 100);
-
-window.addEventListener('load', () => {
-  clearInterval(barInterval);
-  const bar = document.getElementById('loader-bar');
-  if (bar) bar.style.width = '100%';
-  setTimeout(() => {
-    loaderDiv.style.opacity = '0';
-    setTimeout(() => loaderDiv.style.display = 'none', 500);
-  }, 300);
-});
-
 // ========== IMPRESSION PDF ==========
 const printBtn = document.createElement('button');
 printBtn.id = 'btn-print';
@@ -129,7 +89,7 @@ document.body.appendChild(printBtn);
 const printStyle = document.createElement('style');
 printStyle.textContent = `
   @media print {
-    .navbar, .flag-stripe, #page-loader,
+    .navbar, .flag-stripe,
     button[title], .nav-regions, footer,
     .voir-plus, .search-hero, .contact-section { display: none !important; }
     body { background: white !important; }

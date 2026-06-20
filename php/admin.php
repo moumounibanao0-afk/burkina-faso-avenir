@@ -113,8 +113,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $id = intval($_POST['region_id']);
     if ($id > 0) {
       $r = mysqli_fetch_assoc(mysqli_query($conn, "SELECT nom FROM regions WHERE id=$id"));
-      mysqli_query($conn, "DELETE FROM regions WHERE id=$id");
-      $msg = "✅ Région '{$r['nom']}' supprimée.";
+      if ($r) {
+        $nom_region_safe = mysqli_real_escape_string($conn, $r['nom']);
+        $nb_prov_liees = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM provinces WHERE region_nom = '$nom_region_safe'"))[0];
+        if ($nb_prov_liees > 0) {
+          $msg = "❌ Impossible de supprimer '{$r['nom']}' : cette région a encore $nb_prov_liees province(s) rattachée(s). Supprime-les d'abord (directement en base de données), puis réessaie.";
+        } else {
+          mysqli_query($conn, "DELETE FROM regions WHERE id=$id");
+          $msg = "✅ Région '{$r['nom']}' supprimée.";
+        }
+      }
     }
   }
     if ($_POST['action'] === 'maj_photo_peuple') {
