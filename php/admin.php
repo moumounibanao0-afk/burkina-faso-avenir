@@ -152,6 +152,7 @@ $nb_cultures  = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM cultu
 $nb_potentiels= mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM potentiels"))[0];
 $nb_messages  = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM messages"))[0];
 $nb_vues_total= mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vues"))[0];
+$nb_visites_site = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM visites_site"))[0];
 ?>
 
 <div class="container">
@@ -164,6 +165,7 @@ $nb_vues_total= mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regio
     <div class="stat-card"><strong><?php echo $nb_potentiels; ?></strong><span>Potentiels</span></div>
     <div class="stat-card"><strong><?php echo $nb_messages; ?></strong><span>Messages reçus</span></div>
     <div class="stat-card"><strong><?php echo $nb_vues_total; ?></strong><span>Vues totales</span></div>
+    <div class="stat-card"><strong><?php echo $nb_visites_site; ?></strong><span>Visites du site</span></div>
   </div>
 
   <!-- Graphiques -->
@@ -199,6 +201,27 @@ $nb_vues_total= mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regio
       </tr>
       <?php endwhile; else: ?>
       <tr><td colspan="3" style="text-align:center;color:#888">Aucune visite enregistrée encore</td></tr>
+      <?php endif; ?>
+    </table>
+  </div>
+
+  <!-- Visites récentes sur tout le site -->
+  <div class="section">
+    <h2>🌐 Dernières visites sur le site (<?php echo $nb_visites_site; ?> au total)</h2>
+    <table>
+      <tr><th>Page</th><th>Adresse IP</th><th>Date et heure</th></tr>
+      <?php
+      $visites_res = mysqli_query($conn, "SELECT page, ip, date_visite FROM visites_site ORDER BY date_visite DESC LIMIT 20");
+      if (mysqli_num_rows($visites_res) > 0):
+        while ($vi = mysqli_fetch_assoc($visites_res)):
+      ?>
+      <tr>
+        <td><?php echo htmlspecialchars($vi['page']); ?></td>
+        <td><?php echo htmlspecialchars($vi['ip']); ?></td>
+        <td><?php echo date('d/m/Y H:i:s', strtotime($vi['date_visite'])); ?></td>
+      </tr>
+      <?php endwhile; else: ?>
+      <tr><td colspan="3" style="text-align:center;color:#999">Aucune visite enregistrée pour le moment</td></tr>
       <?php endif; ?>
     </table>
   </div>

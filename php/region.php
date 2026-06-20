@@ -1,5 +1,6 @@
 <?php
 require 'conn.php';
+require 'tracker.php';
 
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 

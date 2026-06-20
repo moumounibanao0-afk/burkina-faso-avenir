@@ -1,4 +1,4 @@
-<?php require 'conn.php'; ?>
+<?php require 'conn.php'; require 'tracker.php'; ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
