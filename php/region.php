@@ -66,13 +66,13 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
     .info-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-bottom: 30px; }
     .info-grid > * { flex: 1 1 200px; max-width: 240px; }
     .info-card { background: white; border-radius: 16px; padding: 30px 20px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .info-card .label { color: #888; font-size: 13px; text-transform: uppercase; margin-bottom: 8px; font-weight: bold; }
-    .info-card .value { color: #008751; font-size: 28px; font-weight: bold; }
+    .info-card .label { color: #888; font-size: 16px; text-transform: uppercase; margin-bottom: 8px; font-weight: bold; }
+    .info-card .value { color: #008751; font-size: 32px; font-weight: bold; }
     .section { background: white; border-radius: 12px; padding: 25px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-    .section h2 { color: #008751; border-bottom: 3px solid #E8B923; padding-bottom: 10px; margin: 0 0 20px; text-align: center; font-size: 22px; }
-    .section p { color: #555; line-height: 1.7; margin: 0; }
+    .section h2 { color: #008751; border-bottom: 3px solid #E8B923; padding-bottom: 10px; margin: 0 0 20px; text-align: center; font-size: 26px; }
+    .section p { color: #555; line-height: 1.7; margin: 0; font-size: 19px; }
     .tags { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; justify-content: center; }
-    .tag { background: #f0f0f0; color: #333; padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: bold; }
+    .tag { background: #f0f0f0; color: #333; padding: 8px 16px; border-radius: 20px; font-size: 17px; font-weight: bold; }
     .tag.vert { background: #e8f5e9; color: #008751; }
     .tag.rouge { background: #ffebee; color: #EF2B2D; }
     .tag.or { background: #fff8e1; color: #E8B923; }
@@ -81,16 +81,17 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
     .tag-card.rouge { border-top: 5px solid #EF2B2D; }
     .tag-card.vert { border-top: 5px solid #008751; }
     .tag-photo { width: 100%; height: 200px; object-fit: cover; display: block; }
-    .tag-nom { font-size: 20px; font-weight: bold; color: #333; padding: 16px; text-align: center; }
+    .tag-nom { font-size: 24px; font-weight: bold; color: #333; padding: 16px 16px 4px; text-align: center; }
+    .tag-desc { font-size: 16px; color: #666; line-height: 1.5; padding: 0 16px 16px; text-align: center; }
     .provinces-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 20px; }
     .provinces-grid > a { flex: 1 1 240px; max-width: 280px; }
     .province-card { background: #f9f9f9; border-radius: 10px; overflow: hidden; border-left: 4px solid #008751; }
     .province-card img { width: 100%; height: 130px; object-fit: cover; }
     .province-card .pc-body { padding: 16px 18px; }
-    .province-card h4 { color: #008751; margin: 0 0 8px; font-size: 18px; }
-    .province-card p { color: #888; font-size: 14px; margin: 4px 0 0; }
+    .province-card h4 { color: #008751; margin: 0 0 8px; font-size: 22px; }
+    .province-card p { color: #888; font-size: 17px; margin: 4px 0 0; }
     .nav-regions { display: flex; justify-content: space-between; margin: 30px 0; gap: 10px; }
-    .nav-btn { background: #008751; color: white; padding: 12px 20px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 13px; }
+    .nav-btn { background: #008751; color: white; padding: 12px 20px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 16px; }
     .nav-btn.retour { background: white; color: #008751; border: 2px solid #008751; }
     .nav-btn:hover { opacity: 0.85; }
     footer { background: #111827; color: #aaa; text-align: center; padding: 20px; margin-top: 50px; }
@@ -203,10 +204,17 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
         $nom_p = trim($p);
         $img_p = $img_peuples[$nom_p] ?? 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=300';
       ?>
-      <div class="tag-card rouge" onclick='ouvrirInfoTagPeuple(<?php echo json_encode($infos_peuples[$nom_p] ?? ["nom"=>$nom_p,"image_url"=>$img_p,"description"=>"Aucune description disponible.","langue"=>"","population_estimee"=>"","activite_principale"=>""], JSON_UNESCAPED_UNICODE); ?>)'  style="cursor:pointer">
+      <?php
+        $desc_p_full = trim($desc_peuples[$nom_p] ?? '');
+        $desc_p_courte = $desc_p_full;
+      ?>
+      <div class="tag-card rouge" onclick='ouvrirInfoTagPeuple(<?php echo json_encode($infos_peuples[$nom_p] ?? ["nom"=>$nom_p,"image_url"=>$img_p,"description"=>"Aucune description disponible.","langue"=>"","population_estimee"=>"","activite_principale"=>""], JSON_HEX_APOS | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE); ?>)'  style="cursor:pointer">
         <img src="<?php echo htmlspecialchars($img_p); ?>" alt="<?php echo htmlspecialchars($nom_p); ?>" class="tag-photo"
              onerror="this.src='https://via.placeholder.com/300x180/EF2B2D/white?text=<?php echo urlencode($nom_p); ?>'">
         <div class="tag-nom"><?php echo htmlspecialchars($nom_p); ?></div>
+        <?php if ($desc_p_courte !== ''): ?>
+        <div class="tag-desc"><?php echo htmlspecialchars($desc_p_courte); ?></div>
+        <?php endif; ?>
       </div>
       <?php endforeach; ?>
     </div>
@@ -220,10 +228,17 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
         $nom_p = trim($p);
         $img_p = $img_potentiels[$nom_p] ?? 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=300';
       ?>
-      <div class="tag-card vert" onclick='ouvrirInfoTagPotentiel(<?php echo json_encode($infos_potentiels[$nom_p] ?? ["nom"=>$nom_p,"image_url"=>$img_p,"description"=>"Aucune description disponible.","secteur"=>"","zones_production"=>"","impact_economique"=>""], JSON_UNESCAPED_UNICODE); ?>)'  style="cursor:pointer">
+      <?php
+        $desc_pot_full = trim($desc_potentiels[$nom_p] ?? '');
+        $desc_pot_courte = $desc_pot_full;
+      ?>
+      <div class="tag-card vert" onclick='ouvrirInfoTagPotentiel(<?php echo json_encode($infos_potentiels[$nom_p] ?? ["nom"=>$nom_p,"image_url"=>$img_p,"description"=>"Aucune description disponible.","secteur"=>"","zones_production"=>"","impact_economique"=>""], JSON_HEX_APOS | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE); ?>)'  style="cursor:pointer">
         <img src="<?php echo htmlspecialchars($img_p); ?>" alt="<?php echo htmlspecialchars($nom_p); ?>" class="tag-photo"
              onerror="this.src='https://via.placeholder.com/300x180/008751/white?text=<?php echo urlencode($nom_p); ?>'">
         <div class="tag-nom"><?php echo htmlspecialchars($nom_p); ?></div>
+        <?php if ($desc_pot_courte !== ''): ?>
+        <div class="tag-desc"><?php echo htmlspecialchars($desc_pot_courte); ?></div>
+        <?php endif; ?>
       </div>
       <?php endforeach; ?>
     </div>
