@@ -29,10 +29,10 @@ $region = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM regions WHERE no
     .container { max-width: 800px; margin: 30px auto; padding: 0 20px; }
     .breadcrumb { background: white; border-radius: 8px; padding: 12px 20px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); font-size: 26px; }
     .breadcrumb a { color: #008751; text-decoration: none; }
-    .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 25px; }
-    .info-card { background: white; border-radius: 12px; padding: 18px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; margin-bottom: 25px; }
+    .info-card { background: white; border-radius: 12px; padding: 18px 10px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
     .info-card .label { color: #888; font-size: 22px; text-transform: uppercase; margin-bottom: 5px; }
-    .info-card .value { color: #008751; font-size: 36px; font-weight: bold; }
+    .info-card .value { color: #008751; font-size: 20px; font-weight: bold; }
     .section { background: white; border-radius: 12px; padding: 25px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
     .section h2 { color: #008751; border-left: 4px solid #E8B923; padding-left: 12px; margin-bottom: 15px; font-size: 36px; }
     .section p { color: #444; line-height: 1.7; font-size: 32px; }

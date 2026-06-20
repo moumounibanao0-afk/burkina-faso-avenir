@@ -1,5 +1,6 @@
 // ========== BOUTON RETOUR EN HAUT ==========
 const btnTop = document.createElement('button');
+btnTop.id = 'btn-top';
 btnTop.innerHTML = '▲';
 btnTop.title = 'Retour en haut';
 btnTop.style.cssText = `
@@ -19,6 +20,7 @@ window.addEventListener('scroll', () => {
 
 // ========== MODE SOMBRE ==========
 const darkBtn = document.createElement('button');
+darkBtn.id = 'btn-dark';
 darkBtn.innerHTML = '🌙';
 darkBtn.title = 'Mode sombre';
 darkBtn.style.cssText = `
@@ -109,6 +111,7 @@ window.addEventListener('load', () => {
 
 // ========== IMPRESSION PDF ==========
 const printBtn = document.createElement('button');
+printBtn.id = 'btn-print';
 printBtn.innerHTML = '🖨️';
 printBtn.title = 'Imprimer / Sauvegarder en PDF';
 printBtn.style.cssText = `
@@ -206,8 +209,22 @@ window.addEventListener('load', () => {
   });
 });
 
+// ========== ALLÉGEMENT DES BOUTONS FLOTTANTS SUR MOBILE ==========
+// Sur petit écran, la colonne de 4 boutons en bas à droite gêne le scroll au pouce
+// (le bouton "retour en haut" peut être touché par accident). On garde seulement
+// le bouton retour en haut sur mobile, et on l'éloigne un peu du bord.
+const mobileBtnCSS = document.createElement('style');
+mobileBtnCSS.textContent = `
+  @media (max-width: 768px) {
+    #btn-dark, #btn-print, #btn-admin { display: none !important; }
+    #btn-top { bottom: 20px !important; right: 16px !important; width: 42px !important; height: 42px !important; }
+  }
+`;
+document.head.appendChild(mobileBtnCSS);
+
 // ========== BOUTON ADMIN FLOTTANT ==========
 const adminBtn = document.createElement('a');
+adminBtn.id = 'btn-admin';
 adminBtn.href = 'admin.php';
 adminBtn.title = 'Espace Administrateur';
 adminBtn.innerHTML = '🔐 Admin';
