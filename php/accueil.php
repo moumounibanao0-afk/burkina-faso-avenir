@@ -137,7 +137,7 @@ while ($region = mysqli_fetch_assoc($result)):
     <a class="card" href="region.php?id=<?php echo $region['id']; ?>">
       <img src="<?php echo htmlspecialchars($region['image_url']); ?>"
            alt="<?php echo htmlspecialchars($region['nom']); ?>"
-           onerror="this.src='https://via.placeholder.com/600x150/008751/white?text=<?php echo urlencode($region['nom']); ?>'">
+           onerror="this.onerror=null;this.src='https://via.placeholder.com/600x150/008751/white?text=<?php echo urlencode($region['nom']); ?>'">
       <div class="card-body">
         <span class="zone-badge"><?php echo strtoupper($region['zone']); ?></span>
         <h3><?php echo htmlspecialchars($region['nom']); ?></h3>
@@ -209,7 +209,7 @@ function doSearch() {
         data.regions.forEach(r => {
           html += '<a class="s-card" href="region.php?id=' + r.id + '">' +
             '<img src="' + (r.image_url || 'https://via.placeholder.com/600x120/008751/white?text=' + encodeURIComponent(r.nom)) + '"' +
-            ' onerror="this.src=\'https://via.placeholder.com/600x120/008751/white?text=' + encodeURIComponent(r.nom) + '\'" alt="">' +
+            ' onerror="this.onerror=null;this.src=\'https://via.placeholder.com/600x120/008751/white?text=' + encodeURIComponent(r.nom) + '\'" alt="">' +
             '<div class="s-card-body">' +
             '<span class="s-badge region">RÉGION</span>' +
             '<h3>' + highlight(r.nom, q) + '</h3>' +
@@ -243,7 +243,7 @@ function doSearch() {
         data.cultures.forEach(c => {
           html += '<a class="s-card" href="culture.php?type=' + c.type + '">' +
             '<img src="' + (c.image_url || 'https://via.placeholder.com/600x120/A0522D/white?text=' + encodeURIComponent(c.nom)) + '"' +
-            ' onerror="this.src=\'https://via.placeholder.com/600x120/A0522D/white?text=' + encodeURIComponent(c.nom) + '\'" alt="">' +
+            ' onerror="this.onerror=null;this.src=\'https://via.placeholder.com/600x120/A0522D/white?text=' + encodeURIComponent(c.nom) + '\'" alt="">' +
             '<div class="s-card-body">' +
             '<span class="s-badge" style="background:#fff3e0;color:#A0522D">' + c.type.toUpperCase() + '</span>' +
             '<h3>' + highlight(c.nom, q) + '</h3>' +

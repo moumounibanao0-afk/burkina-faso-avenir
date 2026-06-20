@@ -223,7 +223,7 @@ function renderNews() {
       html += '<div class="card" style="' + (isNew ? "border:2px solid #EF2B2D;" : "") + '">' +
       '<a href="' + a.lien + '" target="_blank">' +
       '<img src="' + imgSrc + '" alt="' + a.titre.replace(/"/g, '') + '"' +
-      ' onerror="this.src=\'https://via.placeholder.com/600x180/008751/white?text=LeFaso.net\'">' +
+      ' onerror="this.onerror=null;this.src=\'https://via.placeholder.com/600x180/008751/white?text=LeFaso.net\'">' +
       '</a>' +
       '<div class="card-body">' +
       '<h3>' + (isNew ? '<span style="background:#EF2B2D;color:white;padding:2px 6px;border-radius:5px;font-size:10px;margin-right:5px">🆕 NOUVEAU</span>' : '') + a.titre + '</h3>' +

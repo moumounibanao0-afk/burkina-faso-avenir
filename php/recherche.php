@@ -133,7 +133,7 @@ function search(q) {
         data.regions.forEach(r => {
           html += `<a class="card" href="region.php?id=${r.id}">
             <img src="${r.image_url || 'https://via.placeholder.com/600x130/008751/white?text=' + encodeURIComponent(r.nom)}"
-                 alt="${r.nom}" onerror="this.src='https://via.placeholder.com/600x130/008751/white?text=${encodeURIComponent(r.nom)}'">
+                 alt="${r.nom}" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x130/008751/white?text=${encodeURIComponent(r.nom)}'">
             <div class="card-body">
               <span class="badge region">RÉGION</span>
               <h3>${highlight(r.nom, q)}</h3>
@@ -169,7 +169,7 @@ function search(q) {
         data.cultures.forEach(c => {
           html += `<a class="card" href="culture.php?type=${c.type}">
             <img src="${c.image_url || 'https://via.placeholder.com/600x130/A0522D/white?text=' + encodeURIComponent(c.nom)}"
-                 alt="${c.nom}" onerror="this.src='https://via.placeholder.com/600x130/A0522D/white?text=${encodeURIComponent(c.nom)}'">
+                 alt="${c.nom}" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x130/A0522D/white?text=${encodeURIComponent(c.nom)}'">
             <div class="card-body">
               <span class="badge culture">${c.type.toUpperCase()}</span>
               <h3>${highlight(c.nom, q)}</h3>
@@ -187,7 +187,7 @@ function search(q) {
         data.potentiels.forEach(p => {
           html += `<a class="card" href="potentiels.php?categorie=${p.categorie}">
             <img src="${p.image_url || 'https://via.placeholder.com/600x130/1B4F72/white?text=' + encodeURIComponent(p.titre)}"
-                 alt="${p.titre}" onerror="this.src='https://via.placeholder.com/600x130/1B4F72/white?text=${encodeURIComponent(p.titre)}'">
+                 alt="${p.titre}" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x130/1B4F72/white?text=${encodeURIComponent(p.titre)}'">
             <div class="card-body">
               <span class="badge potentiel">${p.categorie.toUpperCase()}</span>
               <h3>${p.icone} ${highlight(p.titre, q)}</h3>

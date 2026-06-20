@@ -137,7 +137,7 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
 <div class="hero">
   <img src="<?php echo htmlspecialchars($region['image_url']); ?>"
        alt="<?php echo htmlspecialchars($region['nom']); ?>"
-       onerror="this.src='https://via.placeholder.com/900x350/008751/white?text=<?php echo urlencode($region['nom']); ?>'">
+       onerror="this.onerror=null;this.src='https://via.placeholder.com/900x350/008751/white?text=<?php echo urlencode($region['nom']); ?>'">
   <div class="hero-overlay">
     <h1><?php echo htmlspecialchars($region['nom']); ?></h1>
     <span class="zone"><?php echo strtoupper($region['zone']); ?></span>
@@ -185,7 +185,7 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
       <a href="province.php?id=<?php echo $p['id']; ?>" class="province-card" style="text-decoration:none;display:block">
         <img src="<?php echo htmlspecialchars($p['image_url'] ?? 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=400'); ?>"
              alt="<?php echo htmlspecialchars($p['nom']); ?>"
-             onerror="this.src='https://via.placeholder.com/400x100/008751/white?text=<?php echo urlencode($p['nom']); ?>'">
+             onerror="this.onerror=null;this.src='https://via.placeholder.com/400x100/008751/white?text=<?php echo urlencode($p['nom']); ?>'">
         <div class="pc-body">
         <h4><?php echo htmlspecialchars($p['nom']); ?></h4>
         <p>🏙️ <?php echo htmlspecialchars($p['chef_lieu']); ?></p>
@@ -210,7 +210,7 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
       ?>
       <div class="tag-card rouge" onclick='ouvrirInfoTagPeuple(<?php echo json_encode($infos_peuples[$nom_p] ?? ["nom"=>$nom_p,"image_url"=>$img_p,"description"=>"Aucune description disponible.","langue"=>"","population_estimee"=>"","activite_principale"=>""], JSON_HEX_APOS | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE); ?>)'  style="cursor:pointer">
         <img src="<?php echo htmlspecialchars($img_p); ?>" alt="<?php echo htmlspecialchars($nom_p); ?>" class="tag-photo"
-             onerror="this.src='https://via.placeholder.com/300x180/EF2B2D/white?text=<?php echo urlencode($nom_p); ?>'">
+             onerror="this.onerror=null;this.src='https://via.placeholder.com/300x180/EF2B2D/white?text=<?php echo urlencode($nom_p); ?>'">
         <div class="tag-nom"><?php echo htmlspecialchars($nom_p); ?></div>
         <?php if ($desc_p_courte !== ''): ?>
         <div class="tag-desc"><?php echo htmlspecialchars($desc_p_courte); ?></div>
@@ -234,7 +234,7 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
       ?>
       <div class="tag-card vert" onclick='ouvrirInfoTagPotentiel(<?php echo json_encode($infos_potentiels[$nom_p] ?? ["nom"=>$nom_p,"image_url"=>$img_p,"description"=>"Aucune description disponible.","secteur"=>"","zones_production"=>"","impact_economique"=>""], JSON_HEX_APOS | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE); ?>)'  style="cursor:pointer">
         <img src="<?php echo htmlspecialchars($img_p); ?>" alt="<?php echo htmlspecialchars($nom_p); ?>" class="tag-photo"
-             onerror="this.src='https://via.placeholder.com/300x180/008751/white?text=<?php echo urlencode($nom_p); ?>'">
+             onerror="this.onerror=null;this.src='https://via.placeholder.com/300x180/008751/white?text=<?php echo urlencode($nom_p); ?>'">
         <div class="tag-nom"><?php echo htmlspecialchars($nom_p); ?></div>
         <?php if ($desc_pot_courte !== ''): ?>
         <div class="tag-desc"><?php echo htmlspecialchars($desc_pot_courte); ?></div>

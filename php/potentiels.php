@@ -128,7 +128,7 @@ $nb_cats  = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(DISTINCT categori
     <div class="card">
       <img src="<?php echo htmlspecialchars($p['image_url'] ?? 'https://via.placeholder.com/600x160/008751/white?text=' . urlencode($p['titre'])); ?>"
            alt="<?php echo htmlspecialchars($p['titre']); ?>"
-           onerror="this.src='https://via.placeholder.com/600x160/008751/white?text=<?php echo urlencode($p['titre']); ?>'">
+           onerror="this.onerror=null;this.src='https://via.placeholder.com/600x160/008751/white?text=<?php echo urlencode($p['titre']); ?>'">
       <div class="card-body <?php echo htmlspecialchars($p['couleur']); ?>">
         <div class="icone"><?php echo $p['icone']; ?></div>
         <span class="badge"><?php echo htmlspecialchars($p['categorie']); ?></span>

@@ -126,7 +126,7 @@ $nb_total = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM cultures"
     <div class="card">
       <img src="<?php echo htmlspecialchars($c['image_url'] ?? 'https://via.placeholder.com/600x160/A0522D/white?text=' . urlencode($c['nom'])); ?>"
            alt="<?php echo htmlspecialchars($c['nom']); ?>"
-           onerror="this.src='https://via.placeholder.com/600x160/A0522D/white?text=<?php echo urlencode($c['nom']); ?>'">
+           onerror="this.onerror=null;this.src='https://via.placeholder.com/600x160/A0522D/white?text=<?php echo urlencode($c['nom']); ?>'">
       <div class="card-body">
         <span class="badge <?php echo htmlspecialchars($c['type']); ?>">
           <?php echo htmlspecialchars($c['type']); ?>

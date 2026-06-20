@@ -117,7 +117,7 @@ $result_zones = mysqli_query($conn, $sql_zones);
     <a class="card" href="region.php?id=<?php echo $region['id']; ?>">
       <img src="<?php echo htmlspecialchars($region['image_url']); ?>"
            alt="<?php echo htmlspecialchars($region['nom']); ?>"
-           onerror="this.src='https://via.placeholder.com/600x160/008751/white?text=<?php echo urlencode($region['nom']); ?>'">
+           onerror="this.onerror=null;this.src='https://via.placeholder.com/600x160/008751/white?text=<?php echo urlencode($region['nom']); ?>'">
       <div class="card-body">
         <span class="zone-badge"><?php echo strtoupper($region['zone']); ?></span>
         <h3><?php echo htmlspecialchars($region['nom']); ?></h3>

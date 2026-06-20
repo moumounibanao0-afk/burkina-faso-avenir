@@ -452,7 +452,7 @@ while ($rg = mysqli_fetch_assoc($res_regions_liens)) {
     <input type="hidden" name="action" value="maj_photo_peuple">
     <input type="hidden" name="nom_peuple" value="<?php echo htmlspecialchars($pe['nom']); ?>">
     <img src="<?php echo htmlspecialchars($pe['image_url']); ?>" style="width:50px;height:50px;border-radius:8px;object-fit:cover"
-         onerror="this.src='https://via.placeholder.com/50/EF2B2D/white?text=?'">
+         onerror="this.onerror=null;this.src='https://via.placeholder.com/50/EF2B2D/white?text=?'">
     <strong style="width:220px"><?php echo htmlspecialchars($pe['nom']); ?> <span style="color:#999;font-weight:normal;font-size:11px">(<?php echo htmlspecialchars($regions_txt); ?>)</span></strong>
     <input type="text" name="url_peuple" value="<?php echo htmlspecialchars($pe['image_url']); ?>"
            style="flex:1;min-width:150px;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:12px">
@@ -474,7 +474,7 @@ while ($rg = mysqli_fetch_assoc($res_regions_liens)) {
     <input type="hidden" name="action" value="maj_photo_potentiel">
     <input type="hidden" name="nom_potentiel" value="<?php echo htmlspecialchars($po['nom']); ?>">
     <img src="<?php echo htmlspecialchars($po['image_url']); ?>" style="width:50px;height:50px;border-radius:8px;object-fit:cover"
-         onerror="this.src='https://via.placeholder.com/50/008751/white?text=?'">
+         onerror="this.onerror=null;this.src='https://via.placeholder.com/50/008751/white?text=?'">
     <strong style="width:250px"><?php echo htmlspecialchars($po['nom']); ?> <span style="color:#999;font-weight:normal;font-size:11px">(<?php echo htmlspecialchars($regions_txt_p); ?>)</span></strong>
     <input type="text" name="url_potentiel" value="<?php echo htmlspecialchars($po['image_url']); ?>"
            style="flex:1;min-width:150px;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:12px">
@@ -494,7 +494,7 @@ while ($rg = mysqli_fetch_assoc($res_regions_liens)) {
     <input type="hidden" name="action" value="maj_photo_province">
     <input type="hidden" name="id_province" value="<?php echo $pr['id']; ?>">
     <img src="<?php echo htmlspecialchars($pr['image_url']); ?>" style="width:50px;height:50px;border-radius:8px;object-fit:cover"
-         onerror="this.src='https://via.placeholder.com/50/E8B923/white?text=?'">
+         onerror="this.onerror=null;this.src='https://via.placeholder.com/50/E8B923/white?text=?'">
     <strong style="width:140px"><?php echo htmlspecialchars($pr['nom']); ?> <span style="color:#999;font-weight:normal">(<?php echo htmlspecialchars($pr['region_nom']); ?>)</span></strong>
     <input type="text" name="url_province" value="<?php echo htmlspecialchars($pr['image_url']); ?>"
            style="flex:1;min-width:150px;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:12px">
@@ -514,7 +514,7 @@ while ($rg = mysqli_fetch_assoc($res_regions_liens)) {
     <input type="hidden" name="action" value="maj_photo_potentiel_page">
     <input type="hidden" name="id_potentiel_page" value="<?php echo $pp['id']; ?>">
     <img src="<?php echo htmlspecialchars($pp['image_url']); ?>" style="width:50px;height:50px;border-radius:8px;object-fit:cover"
-         onerror="this.src='https://via.placeholder.com/50/1B4F72/white?text=?'">
+         onerror="this.onerror=null;this.src='https://via.placeholder.com/50/1B4F72/white?text=?'">
     <strong style="width:140px"><?php echo htmlspecialchars($pp['titre']); ?> <span style="color:#999;font-weight:normal">(<?php echo htmlspecialchars($pp['categorie']); ?>)</span></strong>
     <input type="text" name="url_potentiel_page" value="<?php echo htmlspecialchars($pp['image_url']); ?>"
            style="flex:1;min-width:150px;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:12px">
@@ -534,7 +534,7 @@ while ($rg = mysqli_fetch_assoc($res_regions_liens)) {
     <input type="hidden" name="action" value="maj_photo_culture">
     <input type="hidden" name="id_culture" value="<?php echo $cu['id']; ?>">
     <img src="<?php echo htmlspecialchars($cu['image_url']); ?>" style="width:50px;height:50px;border-radius:8px;object-fit:cover"
-         onerror="this.src='https://via.placeholder.com/50/A0522D/white?text=?'">
+         onerror="this.onerror=null;this.src='https://via.placeholder.com/50/A0522D/white?text=?'">
     <strong style="width:220px"><?php echo htmlspecialchars($cu['nom']); ?> <span style="color:#999;font-weight:normal">(<?php echo htmlspecialchars($cu['type']); ?>)</span></strong>
     <input type="text" name="url_culture" value="<?php echo htmlspecialchars($cu['image_url']); ?>"
            style="flex:1;min-width:150px;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:12px">

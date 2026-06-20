@@ -50,7 +50,7 @@ $region = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM regions WHERE no
 <div class="hero">
   <img src="<?php echo htmlspecialchars($province['image_url'] ?: 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1200'); ?>"
        alt="<?php echo htmlspecialchars($province['nom']); ?>"
-       onerror="this.src='https://via.placeholder.com/1200x280/008751/white?text=<?php echo urlencode($province['nom']); ?>'">
+       onerror="this.onerror=null;this.src='https://via.placeholder.com/1200x280/008751/white?text=<?php echo urlencode($province['nom']); ?>'">
   <div class="hero-overlay">
     <h1>🏛️ <?php echo htmlspecialchars($province['nom']); ?></h1>
   </div>
