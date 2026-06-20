@@ -155,7 +155,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
       }
     }
   }
-    if ($_POST['action'] === 'maj_photo_peuple') {
+    if ($_POST['action'] === 'maj_photo_region') {
+    $id_region = intval($_POST['id_region']);
+    $url_r = trim($_POST['url_region']);
+    $fichier_uploade = gererUpload('photo_region_simple');
+    if ($fichier_uploade) { $url_r = $fichier_uploade; }
+    $url_r = mysqli_real_escape_string($conn, $url_r);
+    if ($id_region > 0) {
+      mysqli_query($conn, "UPDATE regions SET image_url='$url_r' WHERE id=$id_region");
+      $msg = "✅ Photo de la région mise à jour !";
+    }
+  }
+  if ($_POST['action'] === 'maj_photo_peuple') {
     $nom_p = mysqli_real_escape_string($conn, trim($_POST['nom_peuple']));
     $url_p = trim($_POST['url_peuple']);
     $fichier_uploade = gererUpload('photo_peuple');
@@ -440,6 +451,26 @@ while ($rg = mysqli_fetch_assoc($res_regions_liens)) {
   }
 }
 ?>
+<div class="section">
+  <h2>📸 Photos des Régions</h2>
+  <?php
+  $liste_regions_photos = mysqli_query($conn, "SELECT id, nom, image_url FROM regions ORDER BY nom");
+  while ($rp = mysqli_fetch_assoc($liste_regions_photos)):
+  ?>
+  <form method="POST" action="admin.php" enctype="multipart/form-data" style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px;flex-wrap:wrap">
+    <input type="hidden" name="action" value="maj_photo_region">
+    <input type="hidden" name="id_region" value="<?php echo $rp['id']; ?>">
+    <img src="<?php echo htmlspecialchars($rp['image_url']); ?>" style="width:50px;height:50px;border-radius:8px;object-fit:cover"
+         onerror="this.onerror=null;this.src='https://via.placeholder.com/50/008751/white?text=?'">
+    <strong style="width:140px"><?php echo htmlspecialchars($rp['nom']); ?></strong>
+    <input type="text" name="url_region" value="<?php echo htmlspecialchars($rp['image_url']); ?>"
+           style="flex:1;min-width:150px;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:12px">
+    <input type="file" name="photo_region_simple" accept="image/png,image/jpeg,image/webp,image/gif" style="font-size:11px;max-width:160px" onchange="apercuPhoto(this)">
+    <button type="submit" class="btn btn-green" style="padding:8px 18px">💾</button>
+  </form>
+  <?php endwhile; ?>
+</div>
+
 <div class="section">
   <h2>👥 Photos des Peuples</h2>
   <?php
