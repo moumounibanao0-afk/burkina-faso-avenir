@@ -209,6 +209,13 @@ window.addEventListener('load', () => {
   });
 });
 
+// ========== SUPPRESSION DU CONTOUR DE FOCUS SUR LES LIENS DU MENU ==========
+const noOutlineCSS = document.createElement('style');
+noOutlineCSS.textContent = `
+  nav a, nav a:focus, nav a:active, nav a:focus-visible { outline: none !important; }
+`;
+document.head.appendChild(noOutlineCSS);
+
 // ========== ALLÉGEMENT DES BOUTONS FLOTTANTS SUR MOBILE ==========
 // Sur petit écran, la colonne de 4 boutons en bas à droite gêne le scroll au pouce
 // (le bouton "retour en haut" peut être touché par accident). On garde seulement

@@ -132,7 +132,6 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
     <a href="messages.php" style="color:#333;text-decoration:none;font-size:17px;font-weight:bold;padding:8px 14px">💬 Messages</a>
 
   </nav>
-</nav>
 
 <div class="hero">
   <img src="<?php echo htmlspecialchars($region['image_url']); ?>"

@@ -73,7 +73,6 @@ if (isset($_GET["export"]) && $_GET["export"] === "csv") {
     <a href="messages.php" style="color:#333;text-decoration:none;font-size:17px;font-weight:bold;padding:8px 14px">💬 Messages</a>
 
   </nav>
-</nav>
 
 <div class="container">
   <h1>📋 Messages reçus via MySQL</h1>
