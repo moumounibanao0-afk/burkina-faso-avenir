@@ -456,7 +456,7 @@ while ($rg = mysqli_fetch_assoc($res_regions_liens)) {
     <strong style="width:220px"><?php echo htmlspecialchars($pe['nom']); ?> <span style="color:#999;font-weight:normal;font-size:11px">(<?php echo htmlspecialchars($regions_txt); ?>)</span></strong>
     <input type="text" name="url_peuple" value="<?php echo htmlspecialchars($pe['image_url']); ?>"
            style="flex:1;min-width:150px;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:12px">
-    <input type="file" name="photo_peuple" accept="image/png,image/jpeg,image/webp,image/gif" style="font-size:11px;max-width:160px">
+    <input type="file" name="photo_peuple" accept="image/png,image/jpeg,image/webp,image/gif" style="font-size:11px;max-width:160px" onchange="apercuPhoto(this)">
     <button type="submit" class="btn btn-green" style="padding:8px 18px">💾</button>
   </form>
   <?php endwhile; ?>
@@ -478,7 +478,7 @@ while ($rg = mysqli_fetch_assoc($res_regions_liens)) {
     <strong style="width:250px"><?php echo htmlspecialchars($po['nom']); ?> <span style="color:#999;font-weight:normal;font-size:11px">(<?php echo htmlspecialchars($regions_txt_p); ?>)</span></strong>
     <input type="text" name="url_potentiel" value="<?php echo htmlspecialchars($po['image_url']); ?>"
            style="flex:1;min-width:150px;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:12px">
-    <input type="file" name="photo_potentiel" accept="image/png,image/jpeg,image/webp,image/gif" style="font-size:11px;max-width:160px">
+    <input type="file" name="photo_potentiel" accept="image/png,image/jpeg,image/webp,image/gif" style="font-size:11px;max-width:160px" onchange="apercuPhoto(this)">
     <button type="submit" class="btn btn-green" style="padding:8px 18px">💾</button>
   </form>
   <?php endwhile; ?>
@@ -498,7 +498,7 @@ while ($rg = mysqli_fetch_assoc($res_regions_liens)) {
     <strong style="width:140px"><?php echo htmlspecialchars($pr['nom']); ?> <span style="color:#999;font-weight:normal">(<?php echo htmlspecialchars($pr['region_nom']); ?>)</span></strong>
     <input type="text" name="url_province" value="<?php echo htmlspecialchars($pr['image_url']); ?>"
            style="flex:1;min-width:150px;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:12px">
-    <input type="file" name="photo_province" accept="image/png,image/jpeg,image/webp,image/gif" style="font-size:11px;max-width:160px">
+    <input type="file" name="photo_province" accept="image/png,image/jpeg,image/webp,image/gif" style="font-size:11px;max-width:160px" onchange="apercuPhoto(this)">
     <button type="submit" class="btn btn-green" style="padding:8px 18px">💾</button>
   </form>
   <?php endwhile; ?>
@@ -518,7 +518,7 @@ while ($rg = mysqli_fetch_assoc($res_regions_liens)) {
     <strong style="width:140px"><?php echo htmlspecialchars($pp['titre']); ?> <span style="color:#999;font-weight:normal">(<?php echo htmlspecialchars($pp['categorie']); ?>)</span></strong>
     <input type="text" name="url_potentiel_page" value="<?php echo htmlspecialchars($pp['image_url']); ?>"
            style="flex:1;min-width:150px;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:12px">
-    <input type="file" name="photo_potentiel_page" accept="image/png,image/jpeg,image/webp,image/gif" style="font-size:11px;max-width:160px">
+    <input type="file" name="photo_potentiel_page" accept="image/png,image/jpeg,image/webp,image/gif" style="font-size:11px;max-width:160px" onchange="apercuPhoto(this)">
     <button type="submit" class="btn btn-green" style="padding:8px 18px">💾</button>
   </form>
   <?php endwhile; ?>
@@ -538,7 +538,7 @@ while ($rg = mysqli_fetch_assoc($res_regions_liens)) {
     <strong style="width:220px"><?php echo htmlspecialchars($cu['nom']); ?> <span style="color:#999;font-weight:normal">(<?php echo htmlspecialchars($cu['type']); ?>)</span></strong>
     <input type="text" name="url_culture" value="<?php echo htmlspecialchars($cu['image_url']); ?>"
            style="flex:1;min-width:150px;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:12px">
-    <input type="file" name="photo_culture" accept="image/png,image/jpeg,image/webp,image/gif" style="font-size:11px;max-width:160px">
+    <input type="file" name="photo_culture" accept="image/png,image/jpeg,image/webp,image/gif" style="font-size:11px;max-width:160px" onchange="apercuPhoto(this)">
     <button type="submit" class="btn btn-green" style="padding:8px 18px">💾</button>
   </form>
   <?php endwhile; ?>
@@ -558,6 +558,18 @@ mysqli_close($conn);
 ?>
 <script src="commun.js"></script>
 <script>
+// Aperçu instantané : affiche la photo choisie immédiatement, avant l'enregistrement
+function apercuPhoto(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = input.closest('form').querySelector('img');
+      if (img) img.src = e.target.result;
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
 // Graphique zones
 const zonesLabels = <?php echo json_encode(array_column($zones_data, 'zone')); ?>;
 const zonesData   = <?php echo json_encode(array_column($zones_data, 'nb')); ?>;
