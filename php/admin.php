@@ -6,6 +6,34 @@ if (!Auth::estConnecte()) {
   exit;
 }
 require 'conn.php';
+
+/**
+ * Gère l'upload d'une photo depuis l'ordinateur de l'utilisateur.
+ * Retourne le chemin local du fichier sauvegardé, ou null si aucun
+ * fichier valide n'a été envoyé (l'appelant doit alors garder l'URL existante).
+ */
+function gererUpload($champ_fichier) {
+  if (!isset($_FILES[$champ_fichier]) || $_FILES[$champ_fichier]['error'] !== UPLOAD_ERR_OK || $_FILES[$champ_fichier]['size'] <= 0) {
+    return null;
+  }
+  $extensions_autorisees = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+  $ext = strtolower(pathinfo($_FILES[$champ_fichier]['name'], PATHINFO_EXTENSION));
+  if (!in_array($ext, $extensions_autorisees)) {
+    return null;
+  }
+  if ($_FILES[$champ_fichier]['size'] > 5 * 1024 * 1024) { // 5 Mo max
+    return null;
+  }
+  if (!is_dir('uploads')) {
+    mkdir('uploads', 0755, true);
+  }
+  $nom_fichier = uniqid('img_') . '.' . $ext;
+  $chemin_destination = 'uploads/' . $nom_fichier;
+  if (move_uploaded_file($_FILES[$champ_fichier]['tmp_name'], $chemin_destination)) {
+    return $chemin_destination;
+  }
+  return null;
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -99,6 +127,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $peuples   = mysqli_real_escape_string($conn, trim($_POST['peuples']));
     $potentiels= mysqli_real_escape_string($conn, trim($_POST['potentiels']));
     $image_url = mysqli_real_escape_string($conn, trim($_POST['image_url']));
+    $fichier_uploade = gererUpload('photo_region');
+    if ($fichier_uploade) { $image_url = $fichier_uploade; }
     $provinces = intval($_POST['provinces']);
 
     $sql = "INSERT INTO regions (nom, chef_lieu, zone, description, peuples, potentiels, image_url, provinces)
@@ -127,15 +157,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
   }
     if ($_POST['action'] === 'maj_photo_peuple') {
     $nom_p = mysqli_real_escape_string($conn, trim($_POST['nom_peuple']));
-    $url_p = mysqli_real_escape_string($conn, trim($_POST['url_peuple']));
+    $url_p = trim($_POST['url_peuple']);
+    $fichier_uploade = gererUpload('photo_peuple');
+    if ($fichier_uploade) { $url_p = $fichier_uploade; }
+    $url_p = mysqli_real_escape_string($conn, $url_p);
     mysqli_query($conn, "UPDATE images_peuples SET image_url='$url_p' WHERE nom='$nom_p'");
     $msg = "✅ Photo du peuple '$nom_p' mise à jour !";
   }
   if ($_POST['action'] === 'maj_photo_potentiel') {
     $nom_p = mysqli_real_escape_string($conn, trim($_POST['nom_potentiel']));
-    $url_p = mysqli_real_escape_string($conn, trim($_POST['url_potentiel']));
+    $url_p = trim($_POST['url_potentiel']);
+    $fichier_uploade = gererUpload('photo_potentiel');
+    if ($fichier_uploade) { $url_p = $fichier_uploade; }
+    $url_p = mysqli_real_escape_string($conn, $url_p);
     mysqli_query($conn, "UPDATE images_potentiels SET image_url='$url_p' WHERE nom='$nom_p'");
     $msg = "✅ Photo du potentiel '$nom_p' mise à jour !";
+  }
+  if ($_POST['action'] === 'maj_photo_province') {
+    $id_province = intval($_POST['id_province']);
+    $url_p = trim($_POST['url_province']);
+    $fichier_uploade = gererUpload('photo_province');
+    if ($fichier_uploade) { $url_p = $fichier_uploade; }
+    $url_p = mysqli_real_escape_string($conn, $url_p);
+    if ($id_province > 0) {
+      mysqli_query($conn, "UPDATE provinces SET image_url='$url_p' WHERE id=$id_province");
+      $msg = "✅ Photo de la province mise à jour !";
+    }
   }
   if ($_POST['action'] === 'modifier') {
     $id        = intval($_POST['region_id']);
@@ -146,6 +193,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $peuples   = mysqli_real_escape_string($conn, trim($_POST['peuples']));
     $pot       = mysqli_real_escape_string($conn, trim($_POST['potentiels']));
     $img       = mysqli_real_escape_string($conn, trim($_POST['image_url']));
+    $fichier_uploade = gererUpload('photo_region_modif');
+    if ($fichier_uploade) { $img = $fichier_uploade; }
     if ($id > 0) {
       mysqli_query($conn, "UPDATE regions SET nom='$nom',chef_lieu='$chef_lieu',zone='$zone',description='$desc',peuples='$peuples',potentiels='$pot',image_url='$img' WHERE id=$id");
       $msg = "✅ Région '$nom' modifiée !";
@@ -258,7 +307,7 @@ $nb_visites_site = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM vi
   <div class="section">
     <h2>➕ Ajouter une nouvelle région</h2>
     <?php if ($msg): ?><div class="success"><?php echo $msg; ?></div><?php endif; ?>
-    <form method="POST" action="admin.php">
+    <form method="POST" action="admin.php" enctype="multipart/form-data">
       <input type="hidden" name="action" value="ajouter">
       <div class="form-grid">
         <div class="form-group">
@@ -302,8 +351,12 @@ $nb_visites_site = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM vi
           <input type="text" name="potentiels" placeholder="Ex: Agriculture, Mines">
         </div>
         <div class="form-group full">
-          <label>URL de l'image</label>
+          <label>URL de l'image (ou choisis un fichier ci-dessous)</label>
           <input type="text" name="image_url" placeholder="https://images.unsplash.com/...">
+        </div>
+        <div class="form-group full">
+          <label>📁 Ou choisir une photo depuis l'ordinateur</label>
+          <input type="file" name="photo_region" accept="image/png,image/jpeg,image/webp,image/gif">
         </div>
         <div class="form-group full">
           <label>Description *</label>
@@ -355,14 +408,15 @@ $nb_visites_site = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM vi
   $liste_peuples = mysqli_query($conn, "SELECT * FROM images_peuples ORDER BY nom");
   while ($pe = mysqli_fetch_assoc($liste_peuples)):
   ?>
-  <form method="POST" action="admin.php" style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px">
+  <form method="POST" action="admin.php" enctype="multipart/form-data" style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px;flex-wrap:wrap">
     <input type="hidden" name="action" value="maj_photo_peuple">
     <input type="hidden" name="nom_peuple" value="<?php echo htmlspecialchars($pe['nom']); ?>">
     <img src="<?php echo htmlspecialchars($pe['image_url']); ?>" style="width:50px;height:50px;border-radius:8px;object-fit:cover"
          onerror="this.src='https://via.placeholder.com/50/EF2B2D/white?text=?'">
     <strong style="width:100px"><?php echo htmlspecialchars($pe['nom']); ?></strong>
     <input type="text" name="url_peuple" value="<?php echo htmlspecialchars($pe['image_url']); ?>"
-           style="flex:1;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:12px">
+           style="flex:1;min-width:150px;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:12px">
+    <input type="file" name="photo_peuple" accept="image/png,image/jpeg,image/webp,image/gif" style="font-size:11px;max-width:160px">
     <button type="submit" class="btn btn-green" style="padding:8px 18px">💾</button>
   </form>
   <?php endwhile; ?>
@@ -374,14 +428,35 @@ $nb_visites_site = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM vi
   $liste_potentiels = mysqli_query($conn, "SELECT * FROM images_potentiels ORDER BY nom");
   while ($po = mysqli_fetch_assoc($liste_potentiels)):
   ?>
-  <form method="POST" action="admin.php" style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px">
+  <form method="POST" action="admin.php" enctype="multipart/form-data" style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px;flex-wrap:wrap">
     <input type="hidden" name="action" value="maj_photo_potentiel">
     <input type="hidden" name="nom_potentiel" value="<?php echo htmlspecialchars($po['nom']); ?>">
     <img src="<?php echo htmlspecialchars($po['image_url']); ?>" style="width:50px;height:50px;border-radius:8px;object-fit:cover"
          onerror="this.src='https://via.placeholder.com/50/008751/white?text=?'">
     <strong style="width:140px"><?php echo htmlspecialchars($po['nom']); ?></strong>
     <input type="text" name="url_potentiel" value="<?php echo htmlspecialchars($po['image_url']); ?>"
-           style="flex:1;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:12px">
+           style="flex:1;min-width:150px;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:12px">
+    <input type="file" name="photo_potentiel" accept="image/png,image/jpeg,image/webp,image/gif" style="font-size:11px;max-width:160px">
+    <button type="submit" class="btn btn-green" style="padding:8px 18px">💾</button>
+  </form>
+  <?php endwhile; ?>
+</div>
+
+<div class="section">
+  <h2>🏘️ Photos des Provinces</h2>
+  <?php
+  $liste_provinces = mysqli_query($conn, "SELECT id, nom, region_nom, image_url FROM provinces ORDER BY region_nom, nom");
+  while ($pr = mysqli_fetch_assoc($liste_provinces)):
+  ?>
+  <form method="POST" action="admin.php" enctype="multipart/form-data" style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px;flex-wrap:wrap">
+    <input type="hidden" name="action" value="maj_photo_province">
+    <input type="hidden" name="id_province" value="<?php echo $pr['id']; ?>">
+    <img src="<?php echo htmlspecialchars($pr['image_url']); ?>" style="width:50px;height:50px;border-radius:8px;object-fit:cover"
+         onerror="this.src='https://via.placeholder.com/50/E8B923/white?text=?'">
+    <strong style="width:140px"><?php echo htmlspecialchars($pr['nom']); ?> <span style="color:#999;font-weight:normal">(<?php echo htmlspecialchars($pr['region_nom']); ?>)</span></strong>
+    <input type="text" name="url_province" value="<?php echo htmlspecialchars($pr['image_url']); ?>"
+           style="flex:1;min-width:150px;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:12px">
+    <input type="file" name="photo_province" accept="image/png,image/jpeg,image/webp,image/gif" style="font-size:11px;max-width:160px">
     <button type="submit" class="btn btn-green" style="padding:8px 18px">💾</button>
   </form>
   <?php endwhile; ?>
@@ -440,7 +515,7 @@ new Chart(document.getElementById('chartVues'), {
 <div id="modal-modif" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:9998;align-items:center;justify-content:center">
   <div style="background:white;border-radius:16px;padding:30px;max-width:600px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.3)">
     <h3 style="color:#008751;margin-bottom:20px">✏️ Modifier la région</h3>
-    <form method="POST" action="admin.php">
+    <form method="POST" action="admin.php" enctype="multipart/form-data">
       <input type="hidden" name="action" value="modifier">
       <input type="hidden" name="region_id" id="modif_id">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
@@ -449,6 +524,7 @@ new Chart(document.getElementById('chartVues'), {
         <div><label style="font-size:12px;font-weight:bold">Zone</label><select name="zone" id="modif_zone" style="width:100%;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:13px;box-sizing:border-box"><option value="nord">Nord</option><option value="nord-ouest">Nord-Ouest</option><option value="sud-ouest">Sud-Ouest</option><option value="est">Est</option><option value="ouest">Ouest</option><option value="centre">Centre</option><option value="centre-nord">Centre-Nord</option><option value="centre-est">Centre-Est</option><option value="centre-ouest">Centre-Ouest</option><option value="centre-sud">Centre-Sud</option><option value="plateau-central">Plateau-Central</option><option value="boucle-mouhoun">Boucle du Mouhoun</option><option value="cascades">Cascades</option><option value="sahel">Sahel</option></select></div>
         <div><label style="font-size:12px;font-weight:bold">Peuples</label><input type="text" name="peuples" id="modif_peuples" style="width:100%;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:13px;box-sizing:border-box"></div>
         <div style="grid-column:1/-1"><label style="font-size:12px;font-weight:bold">🖼️ URL Image</label><input type="text" name="image_url" id="modif_image" style="width:100%;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:13px;box-sizing:border-box"></div>
+        <div style="grid-column:1/-1"><label style="font-size:12px;font-weight:bold">📁 Ou choisir une photo depuis l'ordinateur</label><input type="file" name="photo_region_modif" accept="image/png,image/jpeg,image/webp,image/gif" style="width:100%"></div>
         <div style="grid-column:1/-1"><label style="font-size:12px;font-weight:bold">Potentiels</label><input type="text" name="potentiels" id="modif_potentiels" style="width:100%;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:13px;box-sizing:border-box"></div>
         <div style="grid-column:1/-1"><label style="font-size:12px;font-weight:bold">Description</label><textarea name="description" id="modif_desc" rows="3" style="width:100%;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:13px;box-sizing:border-box"></textarea></div>
       </div>
