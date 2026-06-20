@@ -22,18 +22,22 @@ $nb_provinces = mysqli_num_rows($provinces);
 // Charger les images des peuples et potentiels
 $img_peuples = [];
 $desc_peuples = [];
-$res_ip = mysqli_query($conn, "SELECT nom, image_url, description FROM images_peuples");
+$infos_peuples = [];
+$res_ip = mysqli_query($conn, "SELECT * FROM images_peuples");
 while ($row = mysqli_fetch_assoc($res_ip)) {
   $img_peuples[$row['nom']] = $row['image_url'];
   $desc_peuples[$row['nom']] = $row['description'];
+  $infos_peuples[$row['nom']] = $row;
 }
 
 $img_potentiels = [];
 $desc_potentiels = [];
-$res_iv = mysqli_query($conn, "SELECT nom, image_url, description FROM images_potentiels");
+$infos_potentiels = [];
+$res_iv = mysqli_query($conn, "SELECT * FROM images_potentiels");
 while ($row = mysqli_fetch_assoc($res_iv)) {
   $img_potentiels[$row['nom']] = $row['image_url'];
   $desc_potentiels[$row['nom']] = $row['description'];
+  $infos_potentiels[$row['nom']] = $row;
 }
 
 // Compteur de vues
@@ -199,7 +203,7 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
         $nom_p = trim($p);
         $img_p = $img_peuples[$nom_p] ?? 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=300';
       ?>
-      <div class="tag-card rouge" onclick="ouvrirInfoTag('<?php echo addslashes($nom_p); ?>', '<?php echo addslashes($desc_peuples[$nom_p] ?? "Aucune description disponible pour le moment."); ?>', '<?php echo addslashes($img_p); ?>')" style="cursor:pointer">
+      <div class="tag-card rouge" onclick='ouvrirInfoTagPeuple(<?php echo json_encode($infos_peuples[$nom_p] ?? ["nom"=>$nom_p,"image_url"=>$img_p,"description"=>"Aucune description disponible.","langue"=>"","population_estimee"=>"","activite_principale"=>""], JSON_UNESCAPED_UNICODE); ?>)'  style="cursor:pointer">
         <img src="<?php echo htmlspecialchars($img_p); ?>" alt="<?php echo htmlspecialchars($nom_p); ?>" class="tag-photo"
              onerror="this.src='https://via.placeholder.com/300x180/EF2B2D/white?text=<?php echo urlencode($nom_p); ?>'">
         <div class="tag-nom"><?php echo htmlspecialchars($nom_p); ?></div>
@@ -216,7 +220,7 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
         $nom_p = trim($p);
         $img_p = $img_potentiels[$nom_p] ?? 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=300';
       ?>
-      <div class="tag-card vert" onclick="ouvrirInfoTag('<?php echo addslashes($nom_p); ?>', '<?php echo addslashes($desc_potentiels[$nom_p] ?? "Aucune description disponible pour le moment."); ?>', '<?php echo addslashes($img_p); ?>')" style="cursor:pointer">
+      <div class="tag-card vert" onclick='ouvrirInfoTagPotentiel(<?php echo json_encode($infos_potentiels[$nom_p] ?? ["nom"=>$nom_p,"image_url"=>$img_p,"description"=>"Aucune description disponible.","secteur"=>"","zones_production"=>"","impact_economique"=>""], JSON_UNESCAPED_UNICODE); ?>)'  style="cursor:pointer">
         <img src="<?php echo htmlspecialchars($img_p); ?>" alt="<?php echo htmlspecialchars($nom_p); ?>" class="tag-photo"
              onerror="this.src='https://via.placeholder.com/300x180/008751/white?text=<?php echo urlencode($nom_p); ?>'">
         <div class="tag-nom"><?php echo htmlspecialchars($nom_p); ?></div>
@@ -243,22 +247,39 @@ $nb_vues = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions_vu
 <?php mysqli_close($conn); ?>
 <script src="commun.js"></script>
 
-<div id="modal-tag-info" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:9999;align-items:center;justify-content:center;padding:20px">
-  <div style="background:white;border-radius:18px;max-width:450px;width:100%;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.3)">
+<div id="modal-tag-info" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:9999;align-items:center;justify-content:center;padding:20px;overflow-y:auto">
+  <div style="background:white;border-radius:18px;max-width:480px;width:100%;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.3);margin:20px auto">
     <img id="modal-tag-img" src="" style="width:100%;height:220px;object-fit:cover">
     <div style="padding:25px">
-      <h3 id="modal-tag-nom" style="color:#008751;font-size:22px;margin-bottom:12px"></h3>
-      <p id="modal-tag-desc" style="color:#555;line-height:1.7;font-size:15px"></p>
+      <h3 id="modal-tag-nom" style="color:#008751;font-size:24px;margin-bottom:14px"></h3>
+      <p id="modal-tag-desc" style="color:#555;line-height:1.7;font-size:15px;margin-bottom:18px"></p>
+      <div id="modal-tag-extra" style="display:grid;gap:10px;border-top:1px solid #eee;padding-top:16px"></div>
       <button onclick="document.getElementById('modal-tag-info').style.display='none'"
         style="margin-top:20px;background:#008751;color:white;border:none;padding:10px 25px;border-radius:20px;cursor:pointer;font-weight:bold;width:100%">Fermer</button>
     </div>
   </div>
 </div>
 <script>
-function ouvrirInfoTag(nom, desc, img) {
-  document.getElementById('modal-tag-nom').textContent = nom;
-  document.getElementById('modal-tag-desc').textContent = desc;
-  document.getElementById('modal-tag-img').src = img;
+function ouvrirInfoTagPeuple(data) {
+  document.getElementById('modal-tag-nom').textContent = data.nom;
+  document.getElementById('modal-tag-desc').textContent = data.description || 'Aucune description disponible.';
+  document.getElementById('modal-tag-img').src = data.image_url;
+  let extra = '';
+  if (data.langue) extra += '<div><strong style="color:#EF2B2D">🗣️ Langue :</strong> ' + data.langue + '</div>';
+  if (data.population_estimee) extra += '<div><strong style="color:#EF2B2D">👥 Population estimée :</strong> ' + data.population_estimee + '</div>';
+  if (data.activite_principale) extra += '<div><strong style="color:#EF2B2D">⚒️ Activités :</strong> ' + data.activite_principale + '</div>';
+  document.getElementById('modal-tag-extra').innerHTML = extra;
+  document.getElementById('modal-tag-info').style.display = 'flex';
+}
+function ouvrirInfoTagPotentiel(data) {
+  document.getElementById('modal-tag-nom').textContent = data.nom;
+  document.getElementById('modal-tag-desc').textContent = data.description || 'Aucune description disponible.';
+  document.getElementById('modal-tag-img').src = data.image_url;
+  let extra = '';
+  if (data.secteur) extra += '<div><strong style="color:#008751">🏭 Secteur :</strong> ' + data.secteur + '</div>';
+  if (data.zones_production) extra += '<div><strong style="color:#008751">📍 Zones de production :</strong> ' + data.zones_production + '</div>';
+  if (data.impact_economique) extra += '<div><strong style="color:#008751">📈 Impact économique :</strong> ' + data.impact_economique + '</div>';
+  document.getElementById('modal-tag-extra').innerHTML = extra;
   document.getElementById('modal-tag-info').style.display = 'flex';
 }
 document.getElementById('modal-tag-info').addEventListener('click', function(e) {
