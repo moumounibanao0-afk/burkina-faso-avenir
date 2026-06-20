@@ -99,13 +99,14 @@ $coords = [
   'Yaadga'     => [-10.9000, 3.0500,  '#E8B923'],
 ];
 
-$regions = mysqli_query($conn, "SELECT * FROM regions ORDER BY nom");
+$regions = mysqli_query($conn, "SELECT r.*, (SELECT COUNT(*) FROM provinces p WHERE p.region_nom = r.nom) AS nb_provinces_reel FROM regions r ORDER BY r.nom");
 $regions_data = [];
 while ($r = mysqli_fetch_assoc($regions)) {
   $coord = $coords[$r['nom']] ?? [-12.3647, 1.5336, '#008751'];
   $r['lat'] = $coord[0];
   $r['lng'] = $coord[1];
   $r['color'] = $coord[2];
+  $r['provinces'] = $r['nb_provinces_reel'];
   $regions_data[] = $r;
 }
 mysqli_close($conn);

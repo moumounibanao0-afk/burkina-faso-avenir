@@ -243,10 +243,18 @@ $nb_vues_total= mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regio
           <select name="zone" required>
             <option value="">-- Choisir --</option>
             <option value="nord">Nord</option>
-            <option value="sud">Sud</option>
+            <option value="nord-ouest">Nord-Ouest</option>
+            <option value="sud-ouest">Sud-Ouest</option>
             <option value="est">Est</option>
             <option value="ouest">Ouest</option>
             <option value="centre">Centre</option>
+            <option value="centre-nord">Centre-Nord</option>
+            <option value="centre-est">Centre-Est</option>
+            <option value="centre-ouest">Centre-Ouest</option>
+            <option value="centre-sud">Centre-Sud</option>
+            <option value="plateau-central">Plateau-Central</option>
+            <option value="boucle-mouhoun">Boucle du Mouhoun</option>
+            <option value="cascades">Cascades</option>
             <option value="sahel">Sahel</option>
           </select>
         </div>
@@ -282,7 +290,7 @@ $nb_vues_total= mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regio
     <table>
       <tr><th>ID</th><th>Nom</th><th>Chef-lieu</th><th>Zone</th><th>Provinces</th><th>Action</th></tr>
       <?php
-      $regs = mysqli_query($conn, "SELECT * FROM regions ORDER BY nom");
+      $regs = mysqli_query($conn, "SELECT r.*, (SELECT COUNT(*) FROM provinces p WHERE p.region_nom = r.nom) AS nb_provinces_reel FROM regions r ORDER BY r.nom");
       while ($r = mysqli_fetch_assoc($regs)):
       ?>
       <tr>
@@ -290,7 +298,7 @@ $nb_vues_total= mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regio
         <td><a href="region.php?id=<?php echo $r['id']; ?>" style="color:#008751;font-weight:bold"><?php echo htmlspecialchars($r['nom']); ?></a></td>
         <td><?php echo htmlspecialchars($r['chef_lieu']); ?></td>
         <td><span class="badge"><?php echo $r['zone']; ?></span></td>
-        <td><?php echo $r['provinces']; ?></td>
+        <td><?php echo $r['nb_provinces_reel']; ?></td>
         <td>
           <form method="POST" action="admin.php" style="display:inline"
                 onsubmit="return confirmSuppr('Supprimer <?php echo htmlspecialchars($r['nom']); ?> ?')">
@@ -407,7 +415,7 @@ new Chart(document.getElementById('chartVues'), {
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
         <div><label style="font-size:12px;font-weight:bold">Nom</label><input type="text" name="nom" id="modif_nom" style="width:100%;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:13px;box-sizing:border-box"></div>
         <div><label style="font-size:12px;font-weight:bold">Chef-lieu</label><input type="text" name="chef_lieu" id="modif_chef" style="width:100%;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:13px;box-sizing:border-box"></div>
-        <div><label style="font-size:12px;font-weight:bold">Zone</label><select name="zone" id="modif_zone" style="width:100%;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:13px;box-sizing:border-box"><option value="nord">Nord</option><option value="sud">Sud</option><option value="est">Est</option><option value="ouest">Ouest</option><option value="centre">Centre</option><option value="sahel">Sahel</option></select></div>
+        <div><label style="font-size:12px;font-weight:bold">Zone</label><select name="zone" id="modif_zone" style="width:100%;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:13px;box-sizing:border-box"><option value="nord">Nord</option><option value="nord-ouest">Nord-Ouest</option><option value="sud-ouest">Sud-Ouest</option><option value="est">Est</option><option value="ouest">Ouest</option><option value="centre">Centre</option><option value="centre-nord">Centre-Nord</option><option value="centre-est">Centre-Est</option><option value="centre-ouest">Centre-Ouest</option><option value="centre-sud">Centre-Sud</option><option value="plateau-central">Plateau-Central</option><option value="boucle-mouhoun">Boucle du Mouhoun</option><option value="cascades">Cascades</option><option value="sahel">Sahel</option></select></div>
         <div><label style="font-size:12px;font-weight:bold">Peuples</label><input type="text" name="peuples" id="modif_peuples" style="width:100%;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:13px;box-sizing:border-box"></div>
         <div style="grid-column:1/-1"><label style="font-size:12px;font-weight:bold">🖼️ URL Image</label><input type="text" name="image_url" id="modif_image" style="width:100%;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:13px;box-sizing:border-box"></div>
         <div style="grid-column:1/-1"><label style="font-size:12px;font-weight:bold">Potentiels</label><input type="text" name="potentiels" id="modif_potentiels" style="width:100%;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:13px;box-sizing:border-box"></div>
