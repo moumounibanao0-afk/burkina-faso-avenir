@@ -1,4 +1,8 @@
-<?php require 'conn.php'; require 'tracker.php'; ?>
+<?php
+require 'conn.php';
+require 'tracker.php';
+$hero_actualites = mysqli_fetch_assoc(mysqli_query($conn, "SELECT image_url FROM images_hero WHERE page='actualites'"))['image_url'] ?? 'https://images.unsplash.com/photo-1524661135-423995f22d0b?w=1400';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -14,7 +18,7 @@
     .navbar nav a { color: #333; text-decoration: none; font-size: 13px; font-weight: bold; padding: 5px 8px; border-radius: 5px; white-space: nowrap; }
     .navbar nav a:hover { color: #008751; }
     .navbar nav a.actif { color: #008751; border-bottom: 2px solid #008751; }
-    .hero { background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.65)), url("https://images.unsplash.com/photo-1524661135-423995f22d0b?w=1400") center/cover no-repeat; color: white; padding: 60px 30px; text-align: center; }
+    .hero { background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.65)), url("<?php echo htmlspecialchars($hero_actualites); ?>") center/cover no-repeat; color: white; padding: 60px 30px; text-align: center; }
     .hero h1 { font-size: 36px; margin-bottom: 10px; }
     .hero p { font-size: 16px; opacity: 0.9; }
     .live-badge { display: inline-block; background: #EF2B2D; color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-top: 10px; animation: pulse 2s infinite; }

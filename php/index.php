@@ -1,3 +1,7 @@
+<?php
+require 'conn.php';
+$hero_index = mysqli_fetch_assoc(mysqli_query($conn, "SELECT image_url FROM images_hero WHERE page='index'"))['image_url'] ?? 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1400';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -8,7 +12,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: Arial, sans-serif; background: #F5F0E8; min-height: 100vh; display: flex; flex-direction: column; }
     .flag-stripe { height: 6px; background: linear-gradient(90deg, #EF2B2D 50%, #009A00 50%); }
-    .hero { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url("https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1400") center/cover no-repeat; color: white; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 20px; }
+    .hero { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url("<?php echo htmlspecialchars($hero_index); ?>") center/cover no-repeat; color: white; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 20px; }
     .logo { font-size: 64px; margin-bottom: 15px; }
     h1 { font-size: 42px; margin-bottom: 10px; font-weight: bold; }
     .subtitle { font-size: 18px; opacity: 0.85; margin-bottom: 50px; }

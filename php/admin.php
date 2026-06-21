@@ -166,6 +166,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
       $msg = "✅ Photo de la région mise à jour !";
     }
   }
+  if ($_POST['action'] === 'maj_photo_hero') {
+    $page_hero = mysqli_real_escape_string($conn, trim($_POST['page_hero']));
+    $url_h = trim($_POST['url_hero']);
+    $fichier_uploade = gererUpload('photo_hero');
+    if ($fichier_uploade) { $url_h = $fichier_uploade; }
+    $url_h = mysqli_real_escape_string($conn, $url_h);
+    mysqli_query($conn, "UPDATE images_hero SET image_url='$url_h' WHERE page='$page_hero'");
+    $msg = "✅ Image de fond mise à jour !";
+  }
   if ($_POST['action'] === 'maj_photo_peuple') {
     $nom_p = mysqli_real_escape_string($conn, trim($_POST['nom_peuple']));
     $url_p = trim($_POST['url_peuple']);
@@ -451,6 +460,26 @@ while ($rg = mysqli_fetch_assoc($res_regions_liens)) {
   }
 }
 ?>
+<div class="section">
+  <h2>🖼️ Images de fond (Hero) des pages</h2>
+  <?php
+  $liste_hero = mysqli_query($conn, "SELECT page, image_url FROM images_hero WHERE page != 'carte' ORDER BY page");
+  while ($he = mysqli_fetch_assoc($liste_hero)):
+  ?>
+  <form method="POST" action="admin.php" enctype="multipart/form-data" class="photo-form" style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px;flex-wrap:wrap">
+    <input type="hidden" name="action" value="maj_photo_hero">
+    <input type="hidden" name="page_hero" value="<?php echo htmlspecialchars($he['page']); ?>">
+    <img src="<?php echo htmlspecialchars($he['image_url']); ?>" style="width:80px;height:50px;border-radius:8px;object-fit:cover"
+         onerror="this.onerror=null;this.src='https://via.placeholder.com/80x50/333/white?text=?'">
+    <strong style="width:140px;text-transform:capitalize"><?php echo htmlspecialchars($he['page']); ?></strong>
+    <input type="text" name="url_hero" value="<?php echo htmlspecialchars($he['image_url']); ?>"
+           style="flex:1;min-width:150px;padding:8px;border:2px solid #e5e7eb;border-radius:6px;font-size:12px">
+    <input type="file" name="photo_hero" accept="image/png,image/jpeg,image/webp,image/gif" style="font-size:11px;max-width:160px" onchange="apercuPhoto(this)">
+    <button type="submit" class="btn btn-green" style="padding:8px 18px">💾</button>
+  </form>
+  <?php endwhile; ?>
+</div>
+
 <div class="section">
   <h2>📸 Photos des Régions</h2>
   <?php

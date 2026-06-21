@@ -1,4 +1,8 @@
-<?php require 'conn.php'; require 'tracker.php'; ?>
+<?php
+require 'conn.php';
+require 'tracker.php';
+$hero_potentiels = mysqli_fetch_assoc(mysqli_query($conn, "SELECT image_url FROM images_hero WHERE page='potentiels'"))['image_url'] ?? 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1400';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -11,7 +15,7 @@
     .navbar .logo { color: #008751; font-size: 20px; font-weight: bold; text-decoration: none; }
     .navbar nav a { margin-left: 20px; color: #333; text-decoration: none; font-size: 14px; font-weight: bold; }
     .navbar nav a:hover, .navbar nav a.actif { color: #008751; border-bottom: 2px solid #008751; }
-    .hero { background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.65)), url("https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1400") center/cover no-repeat; color: white; padding: 60px 30px; text-align: center; }
+    .hero { background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.65)), url("<?php echo htmlspecialchars($hero_potentiels); ?>") center/cover no-repeat; color: white; padding: 60px 30px; text-align: center; }
     .hero h1 { font-size: 42px; margin-bottom: 10px; }
     .hero p { font-size: 16px; opacity: 0.9; }
     .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }

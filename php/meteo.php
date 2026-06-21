@@ -1,4 +1,8 @@
-<?php require 'conn.php'; require 'tracker.php'; ?>
+<?php
+require 'conn.php';
+require 'tracker.php';
+$hero_meteo = mysqli_fetch_assoc(mysqli_query($conn, "SELECT image_url FROM images_hero WHERE page='meteo'"))['image_url'] ?? 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1400';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -13,7 +17,7 @@
     .navbar nav { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; }
     .navbar nav a { color: #333; text-decoration: none; font-size: 13px; font-weight: bold; padding: 5px 8px; border-radius: 5px; white-space: nowrap; }
     .navbar nav a:hover, .navbar nav a.actif { color: #008751; border-bottom: 2px solid #008751; }
-    .hero { background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.65)), url("https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1400") center/cover no-repeat; color: white; padding: 60px 30px; text-align: center; }
+    .hero { background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.65)), url("<?php echo htmlspecialchars($hero_meteo); ?>") center/cover no-repeat; color: white; padding: 60px 30px; text-align: center; }
     .hero h1 { font-size: 36px; margin-bottom: 10px; }
     .hero p { font-size: 16px; opacity: 0.9; }
     .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
