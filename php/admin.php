@@ -698,7 +698,17 @@ document.querySelectorAll('.delete-form').forEach(form => {
       .then(reponse => reponse.json())
       .then(data => {
         if (data.succes) {
-          if (ligne) { ligne.style.transition = 'opacity 0.3s'; ligne.style.opacity = '0'; setTimeout(() => ligne.remove(), 300); }
+          if (ligne) {
+            const positionAvant = window.scrollY;
+            ligne.style.transition = 'opacity 0.3s';
+            ligne.style.opacity = '0';
+            setTimeout(() => {
+              ligne.remove();
+              // Si la suppression de la ligne a réduit la hauteur de la page,
+              // le navigateur remonte parfois tout seul : on rétablit la position.
+              window.scrollTo(0, positionAvant);
+            }, 300);
+          }
         } else {
           alert(data.message || "La suppression n'a pas pu être effectuée.");
         }
