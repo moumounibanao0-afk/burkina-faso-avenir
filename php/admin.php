@@ -457,7 +457,7 @@ while ($rg = mysqli_fetch_assoc($res_regions_liens)) {
   $liste_regions_photos = mysqli_query($conn, "SELECT id, nom, image_url FROM regions ORDER BY nom");
   while ($rp = mysqli_fetch_assoc($liste_regions_photos)):
   ?>
-  <form method="POST" action="admin.php" enctype="multipart/form-data" style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px;flex-wrap:wrap">
+  <form method="POST" action="admin.php" enctype="multipart/form-data" class="photo-form" style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px;flex-wrap:wrap">
     <input type="hidden" name="action" value="maj_photo_region">
     <input type="hidden" name="id_region" value="<?php echo $rp['id']; ?>">
     <img src="<?php echo htmlspecialchars($rp['image_url']); ?>" style="width:50px;height:50px;border-radius:8px;object-fit:cover"
@@ -479,7 +479,7 @@ while ($rg = mysqli_fetch_assoc($res_regions_liens)) {
     $regions_liees = $regions_par_peuple[$pe['nom']] ?? [];
     $regions_txt = $regions_liees ? implode(', ', $regions_liees) : 'aucune région';
   ?>
-  <form method="POST" action="admin.php" enctype="multipart/form-data" style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px;flex-wrap:wrap">
+  <form method="POST" action="admin.php" enctype="multipart/form-data" class="photo-form" style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px;flex-wrap:wrap">
     <input type="hidden" name="action" value="maj_photo_peuple">
     <input type="hidden" name="nom_peuple" value="<?php echo htmlspecialchars($pe['nom']); ?>">
     <img src="<?php echo htmlspecialchars($pe['image_url']); ?>" style="width:50px;height:50px;border-radius:8px;object-fit:cover"
@@ -501,7 +501,7 @@ while ($rg = mysqli_fetch_assoc($res_regions_liens)) {
     $regions_liees_p = $regions_par_potentiel[$po['nom']] ?? [];
     $regions_txt_p = $regions_liees_p ? implode(', ', $regions_liees_p) : 'aucune région';
   ?>
-  <form method="POST" action="admin.php" enctype="multipart/form-data" style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px;flex-wrap:wrap">
+  <form method="POST" action="admin.php" enctype="multipart/form-data" class="photo-form" style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px;flex-wrap:wrap">
     <input type="hidden" name="action" value="maj_photo_potentiel">
     <input type="hidden" name="nom_potentiel" value="<?php echo htmlspecialchars($po['nom']); ?>">
     <img src="<?php echo htmlspecialchars($po['image_url']); ?>" style="width:50px;height:50px;border-radius:8px;object-fit:cover"
@@ -521,7 +521,7 @@ while ($rg = mysqli_fetch_assoc($res_regions_liens)) {
   $liste_provinces = mysqli_query($conn, "SELECT id, nom, region_nom, image_url FROM provinces ORDER BY region_nom, nom");
   while ($pr = mysqli_fetch_assoc($liste_provinces)):
   ?>
-  <form method="POST" action="admin.php" enctype="multipart/form-data" style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px;flex-wrap:wrap">
+  <form method="POST" action="admin.php" enctype="multipart/form-data" class="photo-form" style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px;flex-wrap:wrap">
     <input type="hidden" name="action" value="maj_photo_province">
     <input type="hidden" name="id_province" value="<?php echo $pr['id']; ?>">
     <img src="<?php echo htmlspecialchars($pr['image_url']); ?>" style="width:50px;height:50px;border-radius:8px;object-fit:cover"
@@ -541,7 +541,7 @@ while ($rg = mysqli_fetch_assoc($res_regions_liens)) {
   $liste_potentiels_page = mysqli_query($conn, "SELECT id, titre, categorie, image_url FROM potentiels ORDER BY categorie, titre");
   while ($pp = mysqli_fetch_assoc($liste_potentiels_page)):
   ?>
-  <form method="POST" action="admin.php" enctype="multipart/form-data" style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px;flex-wrap:wrap">
+  <form method="POST" action="admin.php" enctype="multipart/form-data" class="photo-form" style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px;flex-wrap:wrap">
     <input type="hidden" name="action" value="maj_photo_potentiel_page">
     <input type="hidden" name="id_potentiel_page" value="<?php echo $pp['id']; ?>">
     <img src="<?php echo htmlspecialchars($pp['image_url']); ?>" style="width:50px;height:50px;border-radius:8px;object-fit:cover"
@@ -561,7 +561,7 @@ while ($rg = mysqli_fetch_assoc($res_regions_liens)) {
   $liste_cultures = mysqli_query($conn, "SELECT id, nom, type, region, image_url FROM cultures ORDER BY type, nom");
   while ($cu = mysqli_fetch_assoc($liste_cultures)):
   ?>
-  <form method="POST" action="admin.php" enctype="multipart/form-data" style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px;flex-wrap:wrap">
+  <form method="POST" action="admin.php" enctype="multipart/form-data" class="photo-form" style="display:flex;gap:10px;align-items:center;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px;flex-wrap:wrap">
     <input type="hidden" name="action" value="maj_photo_culture">
     <input type="hidden" name="id_culture" value="<?php echo $cu['id']; ?>">
     <img src="<?php echo htmlspecialchars($cu['image_url']); ?>" style="width:50px;height:50px;border-radius:8px;object-fit:cover"
@@ -601,17 +601,26 @@ function apercuPhoto(input) {
   }
 }
 
-// Garder la position de la page après un enregistrement (ne pas remonter en haut)
-window.addEventListener('load', () => {
-  const positionSauvee = sessionStorage.getItem('admin_scroll');
-  if (positionSauvee !== null) {
-    window.scrollTo(0, parseInt(positionSauvee));
-    sessionStorage.removeItem('admin_scroll');
-  }
-});
-document.querySelectorAll('form').forEach(form => {
-  form.addEventListener('submit', () => {
-    sessionStorage.setItem('admin_scroll', window.scrollY);
+// Envoi en arrière-plan des formulaires photo : la page ne recharge jamais,
+// rien ne bouge, on reste exactement là où on était.
+document.querySelectorAll('.photo-form').forEach(form => {
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('button[type="submit"]');
+    const texteOriginal = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = '⏳';
+    const donnees = new FormData(this);
+    fetch('admin.php', { method: 'POST', body: donnees })
+      .then(reponse => {
+        if (!reponse.ok) throw new Error('Erreur serveur');
+        btn.textContent = '✅';
+        setTimeout(() => { btn.textContent = texteOriginal; btn.disabled = false; }, 1500);
+      })
+      .catch(() => {
+        btn.textContent = '❌';
+        setTimeout(() => { btn.textContent = texteOriginal; btn.disabled = false; }, 2000);
+      });
   });
 });
 
