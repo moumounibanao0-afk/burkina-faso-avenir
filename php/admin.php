@@ -251,6 +251,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
   }
 }
 
+// Réponse courte pour les requêtes envoyées en arrière-plan (sans recharger la page)
+if (($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '') === 'XMLHttpRequest') {
+  header('Content-Type: application/json');
+  $succes = isset($msg) && mb_substr($msg, 0, 1) !== '❌';
+  echo json_encode(['succes' => $succes, 'message' => $msg ?? '']);
+  exit;
+}
+
 // Stats
 $nb_regions   = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regions"))[0];
 $nb_provinces = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM provinces"))[0];
@@ -351,7 +359,7 @@ $nb_visites_site = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM vi
         <td style="white-space:nowrap">
           <a href="mailto:<?php echo htmlspecialchars($m['email']); ?>?subject=<?php echo urlencode('Re: ' . $m['sujet']); ?>"
              style="text-decoration:none;background:#1B4F72;color:white;padding:5px 10px;border-radius:5px;font-size:12px;font-weight:bold;margin-right:5px;display:inline-block">✉️ Répondre</a>
-          <form method="POST" action="admin.php" style="display:inline" onsubmit="return confirm('Supprimer ce message de <?php echo htmlspecialchars(addslashes($m['nom'])); ?> ?');">
+          <form method="POST" action="admin.php" class="delete-form" style="display:inline" data-confirm="Supprimer ce message de <?php echo htmlspecialchars(addslashes($m['nom'])); ?> ?">
             <input type="hidden" name="action" value="supprimer_message">
             <input type="hidden" name="id_message" value="<?php echo $m['id']; ?>">
             <button type="submit" style="background:#EF2B2D;color:white;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:bold">🗑️</button>
@@ -443,8 +451,8 @@ $nb_visites_site = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM vi
         <td><span class="badge"><?php echo $r['zone']; ?></span></td>
         <td><?php echo $r['nb_provinces_reel']; ?></td>
         <td>
-          <form method="POST" action="admin.php" style="display:inline"
-                onsubmit="return confirmSuppr('Supprimer <?php echo htmlspecialchars($r['nom']); ?> ?')">
+          <form method="POST" action="admin.php" class="delete-form" style="display:inline"
+                data-confirm="Supprimer <?php echo htmlspecialchars(addslashes($r['nom'])); ?> ?">
             <input type="hidden" name="action" value="supprimer">
             <input type="hidden" name="region_id" value="<?php echo $r['id']; ?>">
             <button type="submit" class="btn btn-red">🗑️ Suppr.</button>
@@ -667,6 +675,33 @@ document.querySelectorAll('.photo-form').forEach(form => {
         btn.textContent = '❌';
         setTimeout(() => { btn.textContent = texteOriginal; btn.disabled = false; }, 2000);
       });
+  });
+});
+
+// Envoi en arrière-plan des formulaires de suppression : la page ne recharge
+// jamais, on reste exactement là où on était. La ligne disparaît si la
+// suppression a réussi, ou un message s'affiche si elle a été refusée.
+document.querySelectorAll('.delete-form').forEach(form => {
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const messageConfirmation = this.dataset.confirm;
+    if (messageConfirmation && !confirm(messageConfirmation)) return;
+    const ligne = this.closest('tr');
+    const donnees = new FormData(this);
+    fetch('admin.php', {
+      method: 'POST',
+      headers: { 'X-Requested-With': 'XMLHttpRequest' },
+      body: donnees
+    })
+      .then(reponse => reponse.json())
+      .then(data => {
+        if (data.succes) {
+          if (ligne) { ligne.style.transition = 'opacity 0.3s'; ligne.style.opacity = '0'; setTimeout(() => ligne.remove(), 300); }
+        } else {
+          alert(data.message || "La suppression n'a pas pu être effectuée.");
+        }
+      })
+      .catch(() => alert("Erreur de connexion, réessaie."));
   });
 });
 
