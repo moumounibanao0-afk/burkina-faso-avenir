@@ -1,4 +1,5 @@
 <?php
+ob_start();
 require_once 'Auth.class.php';
 session_start();
 if (!Auth::estConnecte()) {
@@ -253,6 +254,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
 // Réponse courte pour les requêtes envoyées en arrière-plan (sans recharger la page)
 if (($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '') === 'XMLHttpRequest') {
+  ob_end_clean();
   header('Content-Type: application/json');
   $succes = isset($msg) && mb_substr($msg, 0, 1) !== '❌';
   echo json_encode(['succes' => $succes, 'message' => $msg ?? '']);
