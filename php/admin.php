@@ -601,6 +601,20 @@ function apercuPhoto(input) {
   }
 }
 
+// Garder la position de la page après un enregistrement (ne pas remonter en haut)
+window.addEventListener('load', () => {
+  const positionSauvee = sessionStorage.getItem('admin_scroll');
+  if (positionSauvee !== null) {
+    window.scrollTo(0, parseInt(positionSauvee));
+    sessionStorage.removeItem('admin_scroll');
+  }
+});
+document.querySelectorAll('form').forEach(form => {
+  form.addEventListener('submit', () => {
+    sessionStorage.setItem('admin_scroll', window.scrollY);
+  });
+});
+
 // Graphique zones
 const zonesLabels = <?php echo json_encode(array_column($zones_data, 'zone')); ?>;
 const zonesData   = <?php echo json_encode(array_column($zones_data, 'nb')); ?>;
