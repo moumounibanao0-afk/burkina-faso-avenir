@@ -155,6 +155,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
       }
     }
   }
+  if ($_POST['action'] === 'supprimer_message') {
+    $id_msg = intval($_POST['id_message']);
+    if ($id_msg > 0) {
+      mysqli_query($conn, "DELETE FROM messages WHERE id=$id_msg");
+      $msg = "✅ Message supprimé.";
+    }
+  }
     if ($_POST['action'] === 'maj_photo_region') {
     $id_region = intval($_POST['id_region']);
     $url_r = trim($_POST['url_region']);
@@ -329,7 +336,7 @@ $nb_visites_site = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM vi
   <div class="section">
     <h2>📋 Derniers messages reçus</h2>
     <table>
-      <tr><th>ID</th><th>Nom</th><th>Email</th><th>Sujet</th><th>Date</th></tr>
+      <tr><th>ID</th><th>Nom</th><th>Email</th><th>Sujet</th><th>Message</th><th>Date</th><th>Actions</th></tr>
       <?php
       $msgs = mysqli_query($conn, "SELECT * FROM messages ORDER BY date_envoi DESC LIMIT 10");
       while ($m = mysqli_fetch_assoc($msgs)):
@@ -339,7 +346,17 @@ $nb_visites_site = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM vi
         <td><?php echo htmlspecialchars($m['nom']); ?></td>
         <td><?php echo htmlspecialchars($m['email']); ?></td>
         <td><?php echo htmlspecialchars($m['sujet']); ?></td>
+        <td style="max-width:220px;font-size:12px;color:#555"><?php echo nl2br(htmlspecialchars(mb_strimwidth($m['message'], 0, 100, '…'))); ?></td>
         <td><?php echo $m['date_envoi']; ?></td>
+        <td style="white-space:nowrap">
+          <a href="mailto:<?php echo htmlspecialchars($m['email']); ?>?subject=<?php echo urlencode('Re: ' . $m['sujet']); ?>"
+             style="text-decoration:none;background:#1B4F72;color:white;padding:5px 10px;border-radius:5px;font-size:12px;font-weight:bold;margin-right:5px;display:inline-block">✉️ Répondre</a>
+          <form method="POST" action="admin.php" style="display:inline" onsubmit="return confirm('Supprimer ce message de <?php echo htmlspecialchars(addslashes($m['nom'])); ?> ?');">
+            <input type="hidden" name="action" value="supprimer_message">
+            <input type="hidden" name="id_message" value="<?php echo $m['id']; ?>">
+            <button type="submit" style="background:#EF2B2D;color:white;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:bold">🗑️</button>
+          </form>
+        </td>
       </tr>
       <?php endwhile; ?>
     </table>
