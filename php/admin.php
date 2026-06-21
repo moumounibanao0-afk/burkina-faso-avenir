@@ -79,6 +79,9 @@ function gererUpload($champ_fichier) {
     .btn-green:hover { background: #006a3e; }
     .btn-red { background: #EF2B2D; color: white; font-size: 12px; padding: 5px 10px; }
     .success { background: #e8f5e9; color: #008751; padding: 12px; border-radius: 8px; margin-bottom: 15px; }
+    .toast-notif { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #008751; color: white; padding: 14px 28px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.25); z-index: 99999; font-weight: bold; font-size: 14px; animation: toastEntree 0.3s ease; max-width: 90%; text-align: center; }
+    .toast-notif.toast-erreur { background: #EF2B2D; }
+    @keyframes toastEntree { from { opacity: 0; transform: translate(-50%, -20px); } to { opacity: 1; transform: translate(-50%, 0); } }
     .vues-bar { background: #e8f5e9; border-radius: 4px; height: 8px; margin-top: 4px; }
     .vues-fill { background: #008751; height: 8px; border-radius: 4px; }
     footer { background: #111827; color: #aaa; text-align: center; padding: 20px; margin-top: 50px; }
@@ -271,6 +274,10 @@ $nb_vues_total= mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM regio
 $nb_visites_site = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM visites_site"))[0];
 ?>
 
+<?php if ($msg): ?>
+<div id="toast-notif" class="toast-notif <?php echo (mb_substr($msg, 0, 1) === '❌') ? 'toast-erreur' : ''; ?>"><?php echo $msg; ?></div>
+<?php endif; ?>
+
 <div class="container">
 
   <!-- Stats globales -->
@@ -375,7 +382,6 @@ $nb_visites_site = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM vi
   <!-- Ajouter une région -->
   <div class="section">
     <h2>➕ Ajouter une nouvelle région</h2>
-    <?php if ($msg): ?><div class="success"><?php echo $msg; ?></div><?php endif; ?>
     <form method="POST" action="admin.php" enctype="multipart/form-data">
       <input type="hidden" name="action" value="ajouter">
       <div class="form-grid">
@@ -716,6 +722,16 @@ document.querySelectorAll('.delete-form').forEach(form => {
       .catch(() => alert("Erreur de connexion, réessaie."));
   });
 });
+
+// Disparition automatique de la notification après quelques secondes
+const toast = document.getElementById('toast-notif');
+if (toast) {
+  setTimeout(() => {
+    toast.style.transition = 'opacity 0.5s';
+    toast.style.opacity = '0';
+    setTimeout(() => toast.remove(), 500);
+  }, 3000);
+}
 
 // Graphique zones
 const zonesLabels = <?php echo json_encode(array_column($zones_data, 'zone')); ?>;
