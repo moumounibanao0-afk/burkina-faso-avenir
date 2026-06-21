@@ -63,6 +63,7 @@
   <p style="color:#666">Contactez-nous via ce formulaire PHP connecté à MySQL.</p>
 
 <?php
+$envoi_reussi = false;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $nom     = trim($_POST['nom']);
   $email   = trim($_POST['email']);
@@ -80,6 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (mysqli_stmt_execute($stmt)) {
       $id = mysqli_insert_id($conn);
       echo '<div class="success">✅ Message envoyé avec succès ! (ID : ' . $id . ')</div>';
+      $envoi_reussi = true;
     } else {
       echo '<div class="error">❌ Erreur lors de l\'enregistrement.</div>';
     }
@@ -91,11 +93,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <form method="POST" action="contact.php">
     <label>Nom complet *</label>
     <input type="text" name="nom" placeholder="Ex: Moumouni BANAO"
-           value="<?php echo isset($_POST['nom']) ? htmlspecialchars($_POST['nom']) : ''; ?>">
+           value="<?php echo (!$envoi_reussi && isset($_POST['nom'])) ? htmlspecialchars($_POST['nom']) : ''; ?>">
 
     <label>Email *</label>
     <input type="email" name="email" placeholder="votre@email.com"
-           value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
+           value="<?php echo (!$envoi_reussi && isset($_POST['email'])) ? htmlspecialchars($_POST['email']) : ''; ?>">
 
     <label>Sujet</label>
     <select name="sujet">
@@ -108,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <label>Message *</label>
     <textarea name="message" rows="5" placeholder="Votre message..."><?php
-      echo isset($_POST['message']) ? htmlspecialchars($_POST['message']) : '';
+      echo (!$envoi_reussi && isset($_POST['message'])) ? htmlspecialchars($_POST['message']) : '';
     ?></textarea>
 
     <button type="submit">📨 Envoyer le message</button>
